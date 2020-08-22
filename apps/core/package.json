@@ -1,6 +1,6 @@
 {
   "name": "@mindme/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "dependencies": {
     "@mindme/shared": "^0.2.1"
@@ -17,7 +17,7 @@
     "test": "craco test --maxWorkers=1 --watchAll=false  --ci --no-watchman",
     "test:coverage": "craco test --maxWorkers=1 --coverage --watchAll=false  --ci --no-watchman",
     "sprite:icons": "svg-sprite --config sprite-config/icons.json '../shared/src/Assets/Icons/./**/*.svg'"
-  }, 
+  },
   "browserslist": {
     "production": [
       ">0.2%",

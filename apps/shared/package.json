@@ -7,8 +7,8 @@
     "lint": "eslint --ext .ts,.tsx ./",
     "test": "craco test --maxWorkers=1 --watchAll=false  --ci --no-watchman",
     "test:coverage": "craco test --maxWorkers=1 --coverage --watchAll=false  --ci --no-watchman"
-  }, 
+  },
   "publishConfig": {
     "access": "restricted"
-  }  
+  }
 }
