@@ -73,9 +73,7 @@
     "react-scripts": "3.4.1",
     "rxjs": "^6.5.5",
     "shelljs": "^0.8.4",
-    "sonarqube-scanner": "^2.7.0",
     "ts-loader": "^7.0.5",
-    "uvgo-themes": "^1.0.0",
     "validatorjs": "^3.18.1"
   },
   "workspaces": [
