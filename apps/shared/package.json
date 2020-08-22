@@ -1,0 +1,35 @@
+{
+  "name": "@mindme/shared",
+  "main": "./index.ts",
+  "version": "0.2.1",
+  "private": true,
+  "scripts": {
+    "lint": "eslint --ext .ts,.tsx ./",
+    "test": "craco test --maxWorkers=1 --watchAll=false  --ci --no-watchman",
+    "test:coverage": "craco test --maxWorkers=1 --coverage --watchAll=false  --ci --no-watchman"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/uvgo-themes"
+    ]
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@microsoft/applicationinsights-web": "^2.5.7",
+    "@uvgo-shared/alert": "^1.0.4",
+    "@uvgo-shared/dialog": "^1.0.4",
+    "@uvgo-shared/dropdown": "^1.0.3",
+    "@uvgo-shared/header": "^1.0.17",
+    "@uvgo-shared/modal-keeper": "^1.0.2",
+    "ag-grid-community": "^23.2.1",
+    "ag-grid-react": "^23.2.1",
+    "oidc-client": "^1.10.1",
+    "react-virtualized": "^9.21.2"
+  },
+  "devDependencies": {
+    "@types/react-virtualized": "^9.21.10"
+  }
+}

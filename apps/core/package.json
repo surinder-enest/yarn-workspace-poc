@@ -1,0 +1,41 @@
+{
+  "name": "@mindme/core",
+  "version": "0.2.0",
+  "private": true,
+  "dependencies": {
+    "@mindme/shared": "^0.2.1"
+  },
+  "scripts": {
+    "start": "craco start && yarn sprite:icons",
+    "build:default": "craco build && yarn sprite:icons",
+    "build": "env-cmd -f ./.env.development yarn run build:default",
+    "build:test": "env-cmd  -f ./.env.test yarn run build:default",
+    "build:stage": "env-cmd  -f ./.env.stage yarn run build:default",
+    "build:prod": "env-cmd  -f ./.env.production yarn run build:default",
+    "dev-dependencies": "node ./dev-dependencies.js",
+    "lint": "eslint --ext .ts,.tsx ./",
+    "test": "craco test --maxWorkers=1 --watchAll=false  --ci --no-watchman",
+    "test:coverage": "craco test --maxWorkers=1 --coverage --watchAll=false  --ci --no-watchman",
+    "sprite:icons": "svg-sprite --config sprite-config/icons.json '../shared/src/Assets/Icons/./**/*.svg'"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/uvgo-themes"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
