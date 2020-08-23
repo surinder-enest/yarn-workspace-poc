@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "private": true,
   "dependencies": {
-    "@mindme/shared": "^0.2.1"
+    "@mindme/shared": "D:\\Projects\\YarnWorkSpace\\apps\\shared"
   },
   "scripts": {
     "start": "craco start && yarn sprite:icons",
