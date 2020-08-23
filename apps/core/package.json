@@ -1,36 +1,25 @@
 {
-  "name": "@mindme/core",
-  "version": "0.2.1",
-  "private": true,
-  "dependencies": {
-    "@mindme/shared": "D:\\Projects\\YarnWorkSpace\\apps\\shared"
-  },
+  "name": "core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "start": "craco start && yarn sprite:icons",
-    "build:default": "craco build && yarn sprite:icons",
-    "build": "env-cmd -f ./.env.development yarn run build:default",
-    "build:test": "env-cmd  -f ./.env.test yarn run build:default",
-    "build:stage": "env-cmd  -f ./.env.stage yarn run build:default",
-    "build:prod": "env-cmd  -f ./.env.production yarn run build:default",
-    "dev-dependencies": "node ./dev-dependencies.js",
-    "lint": "eslint --ext .ts,.tsx ./",
-    "test": "craco test --maxWorkers=1 --watchAll=false  --ci --no-watchman",
-    "test:coverage": "craco test --maxWorkers=1 --coverage --watchAll=false  --ci --no-watchman",
-    "sprite:icons": "svg-sprite --config sprite-config/icons.json '../shared/src/Assets/Icons/./**/*.svg'"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "react-app-polyfill": "^1.0.0",
+    "@mindme/shared": "^0.1.0"
   },
-  "publishConfig": {
-    "access": "restricted"
+  "alias": {
+    "react": "../../node_modules/react",
+    "react-dom": "../../node_modules/react-dom/profiling",
+    "scheduler/tracing": "../../node_modules/scheduler/tracing-profiling"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.8.4",
+    "parcel": "^1.12.3",
+    "typescript": "^3.4.5"
   }
 }

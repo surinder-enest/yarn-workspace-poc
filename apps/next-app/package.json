@@ -1,5 +1,5 @@
 {
-  "name": "with-typescript",
+  "name": "@mindme/next-app",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -8,9 +8,8 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "@mindme/shared": "D:\\Projects\\YarnWorkSpace\\apps\\shared",
+    "next": "latest"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
