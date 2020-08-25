@@ -22,7 +22,7 @@ class MobilePageName extends React.Component<Props>{
     render() {
         const { router } = this.props
         const pageName = router?.query?.mobilepageName;
-        const pageMainURL = `https://dev.d2bbz9wrif2z19.amplifyapp.com${router?.asPath}`;
+        const pageMainURL = `http://s.mobilepages.co:5001${router?.asPath}`;
         const pageSearchDetails = this.props?.mobilePageApiData?.mobilePageData?.seoSearchDetails;
         const isEnablePageTracking = pageSearchDetails?.isEnableMobileDiscoveryOnSeo === true;
         const pageSEOPreviewDetails = this.props?.mobilePageApiData?.mobilePageData?.mobilePageSEOPreviewDetails;
@@ -34,14 +34,13 @@ class MobilePageName extends React.Component<Props>{
                 <Head>
                     <meta charSet="utf-8" />
                     <title>{pageName}</title>
-                    {/* <meta property="og:title" content={pageName} /> */}
+                    <meta property="og:title" content={pageName} />
                     <meta property="og:type" content="website" />
-                    {/* <meta property="og:url" content={pageMainURL} /> */}
-                    <meta property="og:title" content="European Travel Destinations" />
-                    <meta property="og:description" content="Offering tour packages for individuals or groups." />
-                    <meta property="og:image" content="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" />
-                    <meta property="og:url" content="ff12e043bc57.ngrok.io/9135/title" />
-
+                    <meta property="og:url" content={pageMainURL} />
+                    {/* <meta property="og:title" content="European Travel Destinations" /> */}
+                    <meta property="og:description" content="Mindme mobile pages." />
+                    {/* <meta property="og:image" content="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" /> */}
+                    {/* <meta property="og:url" content="ff12e043bc57.ngrok.io/9135/title" /> */}
                     {
                         pageSearchDetails && pageSearchDetails.metaKeywords && <meta property="og:url" content={pageSearchDetails.metaKeywords} />
                     }
