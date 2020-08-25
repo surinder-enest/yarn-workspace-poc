@@ -34,40 +34,42 @@ class MobilePageName extends React.Component<Props>{
                 <Head>
                     <meta charSet="utf-8" />
                     <title>{pageName}</title>
-                    <meta property="og:title" content={pageName} />
+                    <meta name="title" content={pageName} />
+                    <meta name="description" content="Mindme mobile pages." />
+                    <meta name="url" content={pageMainURL} />
                     <meta property="og:type" content="website" />
+                    <meta property="og:title" content={pageName} />
                     <meta property="og:url" content={pageMainURL} />
-                    {/* <meta property="og:title" content="European Travel Destinations" /> */}
+                    <meta property="twitter:url" content={pageMainURL} />
                     <meta property="og:description" content="Mindme mobile pages." />
-                    {/* <meta property="og:image" content="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" /> */}
-                    {/* <meta property="og:url" content="ff12e043bc57.ngrok.io/9135/title" /> */}
                     {
-                        pageSearchDetails && pageSearchDetails.metaKeywords && <meta property="og:url" content={pageSearchDetails.metaKeywords} />
-                    }
+                        pageSearchDetails && pageSearchDetails.metaKeywords
+                        && <meta property="keywords" content={pageSearchDetails.metaKeywords} /> 
+                    } 
                     {
-                        pageSearchDetails && pageSearchDetails.metaKeywords && <meta property="og:url" content={pageSearchDetails.metaKeywords} />
-                    }
-                    {
-                        pageSearchDetails && pageSearchDetails.metaCategories && <>
+                        pageSearchDetails && pageSearchDetails.metaCategories
+                        && <>
                             <meta name="description" content={pageSearchDetails.metaCategories} />
                             <meta property="og:description" content={pageSearchDetails.metaCategories} />
+                            <meta property="twitter:description" content={pageSearchDetails.metaCategories} />
                         </>
                     }
                     {
                         isEnablePageTracking && <meta name="robots" content="noindex" />
                     }
                     {
-                        previewImageLink && <meta property="og:image" content={previewImageLink} />
+                        previewImageLink
+                        && <meta property="image" content={previewImageLink} />
+                        && <meta property="og:image" content={previewImageLink} />
+                        && <meta property="twitter:image" content={previewImageLink} />
                     }
                     {
                         geoLocationAddressDetails && geoLocationAddressDetails.map((geoAddreess: any) => {
                             const locationDetails = geoAddreess?.Location
                             return (<>
                                 {
-                                    locationDetails &&
-                                    <meta name="geo.position"
-                                        content={`${locationDetails.Latitude};${locationDetails.Longitutd}`}>
-                                    </meta>
+                                    locationDetails
+                                    && <meta name="geo.position" content={`${locationDetails.Latitude};${locationDetails.Longitutd}`} />
                                 }
                             </>
                             )
