@@ -5,7 +5,7 @@ import { MobilePageService } from "../../services";
 import Head from "next/head";
 
 interface Props {
-    mobilePageApiData: any;
+    mobilePageData: any;
     router: any;
 }
 
@@ -22,16 +22,15 @@ class MobilePageName extends React.Component<Props>{
     }
 
     render() {
-        const { router, mobilePageApiData } = this.props;
+        const { router, mobilePageData } = this.props;
         const pageName = router?.query?.mobilepageName || 'MindMe Mobile';
         const pageMainURL = `http://s.mobilepages.co:5001${router?.asPath}`;
-        const pageTitle = mobilePageApiData?.mobilePageData?.pageDetails?.pageTitle || pageName;
-        const pageDescription = mobilePageApiData?.mobilePageData?.pageDetails?.pageDescription || '';
-        // const pageSearchDetails = mobilePageApiData?.mobilePageData?.seoSearchDetails;
-        // const isEnablePageTracking = pageSearchDetails?.isEnableMobileDiscoveryOnSeo === true;
-        const pageSEOPreviewDetails = mobilePageApiData?.mobilePageData?.mobilePageSEOPreviewDetails;
-        const previewImageLink = pageSEOPreviewDetails?.imageLink || this.defaultPreviewImage;
+        const pageTitle = mobilePageData?.pageTitle || pageName;
+        const pageDescription = mobilePageData.pageDescription || ''; 
+        const previewImageLink = mobilePageData?.previewImageLink || this.defaultPreviewImage;
+        // const noindex = mobilePageApiData?.mobilePageData?.seoSearchDetails?.isEnableMobileDiscoveryOnSeo ? 'noindex' : '';
         // const geoLocationAddressDetails = mobilePageApiData?.mobilePageData?.geoLocationDetails.address || [];
+        const metaKeywords = mobilePageData?.metaKeywords || '';
         return (
             <div>
                 <Head>
@@ -39,38 +38,18 @@ class MobilePageName extends React.Component<Props>{
                     <title>{pageTitle}</title>
                     <meta property="og:type" content="website" />
                     <meta name="title" content={pageTitle} />
+                    <meta property="og:title" content={pageTitle} />
                     <meta name="description" content={pageDescription} />
                     <meta property="og:description" content={pageDescription} />
-                    <meta property="twitter:description" content={pageDescription} />
-                    <meta property="og:title" content={pageTitle} />
+                    <meta property="twitter:description" content={pageDescription} /> 
                     <meta name="url" content={pageMainURL} />
                     <meta property="og:url" content={pageMainURL} />
                     <meta property="twitter:url" content={pageMainURL} />
                     <meta property="image" content={previewImageLink} />
                     <meta property="og:image" content={previewImageLink} />
                     <meta property="twitter:image" content={previewImageLink} />
-
-                    {/* {
-                        pageSearchDetails && pageSearchDetails.metaKeywords
-                        && <meta property="keywords" content={pageSearchDetails.metaKeywords} />
-                    }
-                    {
-                        pageSearchDetails && pageSearchDetails.metaCategories
-                        && <>
-                            <meta name="description" content={pageSearchDetails.metaCategories} />
-                            <meta property="og:description" content={pageSearchDetails.metaCategories} />
-                            <meta property="twitter:description" content={pageSearchDetails.metaCategories} />
-                        </>
-                    }
-                    {
-                        isEnablePageTracking && <meta name="robots" content="noindex" />
-                    }  
-                    {
-                        previewImageLink
-                        && <meta property="image" content={previewImageLink} />
-                        && <meta property="og:image" content={previewImageLink} />
-                        && <meta property="twitter:image" content={previewImageLink} />
-                    }
+                    <meta property="keywords" content={metaKeywords} />
+                    {/* <meta name="robots" content={noindex} />
                     {
                         geoLocationAddressDetails && geoLocationAddressDetails.map((geoAddreess: any) => {
                             const locationDetails = geoAddreess?.Location
