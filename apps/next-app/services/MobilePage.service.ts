@@ -16,9 +16,10 @@ class MobilePageService {
                 apiUrl.getMobilePageDetailsForRender,
                 param
             );
+            let mobilePageDetail: any;
+            mobilePageDetail = {};
             if (response.data.Success) {
                 let responseData = toCamel(response.data.Data);
-                let mobilePageDetail: any;
                 if (responseData) {
                     mobilePageDetail.pageTitle = responseData?.mobilePageData?.pageDetails?.pageTitle || '';
                     mobilePageDetail.pageDescription = responseData?.mobilePageData?.pageDetails?.pageDescription || '';
@@ -30,7 +31,7 @@ class MobilePageService {
                 }
                 return mobilePageDetail;
             }
-            return '';
+            return mobilePageDetail;
         } catch (error) {
             console.log('error', error);
             return '';

@@ -15,10 +15,10 @@ class MobilePageName extends React.Component<Props>{
 
     static async getInitialProps({ query: { mobilepageDirectoryId = '0000', mobilepageName = 'test' } }) {
         if (!mobilepageDirectoryId || !mobilepageName)
-            return { mobilePageApiData: {} };
+            return { mobilePageData: {} };
 
         const apiResponse: string = await MobilePageService.getMobilePageDetailsForRender('s.mobilepages.co', mobilepageDirectoryId, mobilepageName);
-        return { mobilePageApiData: apiResponse };
+        return { mobilePageData: apiResponse };
     }
 
     render() {
@@ -26,10 +26,10 @@ class MobilePageName extends React.Component<Props>{
         const pageName = router?.query?.mobilepageName || 'MindMe Mobile';
         const pageMainURL = `http://s.mobilepages.co:5001${router?.asPath}`;
         const pageTitle = mobilePageData?.pageTitle || pageName;
-        const pageDescription = mobilePageData.pageDescription || ''; 
+        const pageDescription = mobilePageData?.pageDescription || ''; 
         const previewImageLink = mobilePageData?.previewImageLink || this.defaultPreviewImage;
-        // const noindex = mobilePageApiData?.mobilePageData?.seoSearchDetails?.isEnableMobileDiscoveryOnSeo ? 'noindex' : '';
-        // const geoLocationAddressDetails = mobilePageApiData?.mobilePageData?.geoLocationDetails.address || [];
+        // const noindex = mobilePageData?.mobilePageData?.seoSearchDetails?.isEnableMobileDiscoveryOnSeo ? 'noindex' : '';
+        // const geoLocationAddressDetails = mobilePageData?.mobilePageData?.geoLocationDetails.address || [];
         const metaKeywords = mobilePageData?.metaKeywords || '';
         return (
             <div>
