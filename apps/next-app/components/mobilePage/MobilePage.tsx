@@ -1,8 +1,8 @@
 import React from 'react'
-import { Title, Paragraph, BUILDERELEMENTS } from '@mindme/shared';
+import { Title, Paragraph, BUILDER_ELEMENTS, MobilePageModel } from '@mindme/shared';
 
 interface Props {
-    mobilePageData: any;
+    pageData: MobilePageModel;
 }
 
 class MobilePage extends React.Component<Props>{
@@ -12,22 +12,20 @@ class MobilePage extends React.Component<Props>{
             return <></>
         }
         switch (builderElement.builderElementType) {
-            case BUILDERELEMENTS.TITLE:
-                return <Title key={idx} title={builderElement.title.text} />
-            case BUILDERELEMENTS.PARAGRAPH:
-                return <Paragraph key={idx} description={builderElement.paragraph.leftParagraphTextEditorRawContent} />
+            case BUILDER_ELEMENTS.TITLE:
+                return <Title key={idx} builderElement={builderElement} />
+            case BUILDER_ELEMENTS.PARAGRAPH:
+                return <Paragraph key={idx} description={builderElement?.paragraph} />
             default:
                 return <div>No results found</div>
         }
     }
 
     render() {
-        const mobilePageBuilderComponents = this.props?.mobilePageData?.mobilePageBuilderComponents;
-        return mobilePageBuilderComponents
-            ? mobilePageBuilderComponents.map((detail: any, idx: number) => {
-                return this.builderElement(detail, idx)
-            })
-            : <div>No results found</div>
+        const { pageStyles } = this.props.pageData;
+        return <div style={pageStyles} >
+            SSR WOKRING !
+        </div>
     }
 }
 

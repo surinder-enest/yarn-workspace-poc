@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-// import { getBorderClassForBuilderElement } from "../../../utility/common";
 
 interface Props {
-  title: string;
+  builderElement: any;
 }
 
 export default class Title extends Component<Props> {
-  render() {
-    // const { builderElement } = this.props;
-    // const border = getBorderClassForBuilderElement(builderElement);
-    return <div>{this.props.title}</div>;
+  render() { 
+    const innerHtml = this.props?.builderElement?.title?.text;
+    return <div>
+      <div dangerouslySetInnerHTML={{ __html: innerHtml }} />
+    </div>
   }
 }

@@ -1,12 +1,12 @@
-import { apiUrl } from "./api-urls";
-import { HttpClient } from "./http-client";
-import { toCamel } from "../utils/apiResponse";
+ import { MobilePageModel } from '@mindme/shared';
+import { HttpClient } from './http-client';
+import { apiUrl } from './api-urls';
 
 class MobilePageService {
-    httpClient = new HttpClient({});
+    httpClient = new HttpClient({}); 
 
     async getMobilePageDetailsForRender(domain: string, directoryId: string, pageName: string) {
-        debugger
+      
         try {
             let param = new URLSearchParams();
             param.append('domain', domain);
@@ -16,25 +16,13 @@ class MobilePageService {
                 apiUrl.getMobilePageDetailsForRender,
                 param
             );
-            let mobilePageDetail: any;
-            mobilePageDetail = {};
-            if (response.data.Success) {
-                let responseData = toCamel(response.data.Data);
-                if (responseData) {
-                    mobilePageDetail.pageTitle = responseData?.mobilePageData?.pageDetails?.pageTitle || '';
-                    mobilePageDetail.pageDescription = responseData?.mobilePageData?.pageDetails?.pageDescription || '';
-                    mobilePageDetail.pageSEOPreviewDetails = responseData?.mobilePageData?.mobilePageSEOPreviewDetails || '';
-                    mobilePageDetail.previewImageLink = responseData?.mobilePageData?.mobilePageSEOPreviewDetails?.imageLink || '';
-                    mobilePageDetail.metaKeywords = responseData?.mobilePageData?.mobilePageSEOPreviewDetails?.metaKeywords || '';
-                    mobilePageDetail.isEnableMobileDiscoveryOnSeo = responseData?.mobilePageData?.mobilePageSEOPreviewDetails?.isEnableMobileDiscoveryOnSeo || false;
-                    mobilePageDetail.geoLocationAddressDetails = responseData?.mobilePageData?.geoLocationDetails.address || [];
-                }
-                return mobilePageDetail;
+            if (response.data.Success) { 
+                return MobilePageModel.deserilize(response.data.Data.MobilePageData);  
             }
-            return mobilePageDetail;
+            return MobilePageModel;
         } catch (error) {
             console.log('error', error);
-            return '';
+            return MobilePageModel;
         }
     }
 
