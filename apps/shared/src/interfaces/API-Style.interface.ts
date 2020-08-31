@@ -3,6 +3,8 @@ interface APIPosition {
     BottomPadding: number;
     RightPadding: number;
     LeftPadding: number;
+    TopMargin: number;
+    BottomMargin: number;
 }
 
 interface APIRgba {
@@ -18,14 +20,20 @@ export interface APIColor {
 }
 
 export interface APIBackground {
+    BackgroundType: string;
     BackgroundColor: APIColor;
+    Url: string;
+    Size: string;
+    BackgroundRepeat: string;
+    ImagePosition: string;
+    Opacity: number
 }
 
 export interface APIBorder {
     ElementBorderStyles: string;
     BorderSize: number;
     BorderColor: APIColor;
-} 
+}
 
 export interface APIStyle {
     Position: APIPosition;

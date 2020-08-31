@@ -2,23 +2,23 @@ import { APIPageStyles } from '../interfaces';
 
 export class PageStylesModel {
     backgroundColor: string;
-    color: string;
+    pageColor: string;
     borderStyle: string;
     borderWidth: number;
     borderColor: string;
 
     constructor(data?: PageStylesModel) {
         this.backgroundColor = data?.backgroundColor || '';
-        this.color = data?.color || '';
+        this.pageColor = data?.pageColor || '';
         this.borderStyle = data?.borderStyle || '';
         this.borderWidth = data?.borderWidth || 0;
         this.borderColor = data?.borderColor || '';
     }
 
-    static deserilize(apiModel: APIPageStyles): PageStylesModel {
+    static deserialize(apiModel: APIPageStyles): PageStylesModel {
         const data: PageStylesModel = {
             backgroundColor: apiModel?.Background?.BackgroundColor?.HexValue,
-            color: apiModel?.PageColor?.HexValue,
+            pageColor: apiModel?.PageColor?.HexValue,
             borderStyle: apiModel?.Border?.ElementBorderStyles,
             borderWidth: apiModel?.Border?.BorderSize,
             borderColor: apiModel?.Border?.BorderColor.HexValue,

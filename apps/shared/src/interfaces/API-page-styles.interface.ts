@@ -1,4 +1,4 @@
-import { APIBackground, APIBorder, APIColor } from './API-Style.interface';
+import { APIBackground, APIBorder, APIColor } from './API-style.interface';
 
 export interface APIPageStyles {
     Background: APIBackground;

@@ -2,6 +2,7 @@ import { BaseModel } from './Base.model';
 import { MetaDataModel } from './MetaData.model';
 import { APIMobilePage } from '../interfaces';
 import { PageStylesModel } from './PageStyling.model';
+import { BuilderElementModel } from './BuilderElement.model';
 
 export class MobilePageModel extends BaseModel {
     name: string;
@@ -10,6 +11,7 @@ export class MobilePageModel extends BaseModel {
     pageLink: string;
     metaData: MetaDataModel;
     pageStyles: PageStylesModel;
+    builderElements: Array<any>;
 
     constructor(data?: Partial<MobilePageModel>) {
         super(data);
@@ -19,17 +21,19 @@ export class MobilePageModel extends BaseModel {
         this.pageLink = data?.pageLink || '';
         this.pageStyles = data?.pageStyles || new PageStylesModel();
         this.metaData = data?.metaData || new MetaDataModel();
+        this.builderElements = data?.builderElements || [];
     }
 
-    static deserilize(apiModel: APIMobilePage): MobilePageModel {
+    static deserialize(apiModel: APIMobilePage): MobilePageModel {
         const data: Partial<MobilePageModel> = {
             id: apiModel?.Id,
             name: apiModel?.Name,
             userId: apiModel?.UserId,
             status: apiModel?.Status,
             pageLink: apiModel?.PageLink,
-            metaData: MetaDataModel.deserilize(apiModel),
-            pageStyles: PageStylesModel.deserilize(apiModel?.PageStyling),
+            metaData: MetaDataModel.deserialize(apiModel),
+            pageStyles: PageStylesModel.deserialize(apiModel?.PageStyling),
+            builderElements: BuilderElementModel.deserializeList(apiModel?.MobilePageBuilderComponents),
         };
         return new MobilePageModel(data)
     }

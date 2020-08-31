@@ -1,4 +1,5 @@
-import { APIPageStyles } from './API-PageStyles.interface';
+import { APIPageStyles } from './API-page-styles.interface';
+import { APIBuilderElement } from './API-builder-element.interface';
 
 interface APIPageDetail {
     PageTitle: string;
@@ -24,4 +25,5 @@ export interface APIMobilePage {
     MobilePageSEOPreviewDetails: MobilePageSEOPreviewDetails;
     SeoSearchDetails: SeoSearchDetails;
     PageStyling: APIPageStyles;
+    MobilePageBuilderComponents: Array<APIBuilderElement>;
 }

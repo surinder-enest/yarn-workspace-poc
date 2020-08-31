@@ -7,8 +7,7 @@ interface Props {
 
 class BuilderElement extends React.Component<Props>{
     render() {
-        const { builderElement } = this.props;
-        console.log(builderElement);
+        const { builderElement } = this.props; 
         switch (builderElement.builderElementType) {
             case BUILDER_ELEMENTS.TITLE:
                 return <Title builderElement={builderElement} />

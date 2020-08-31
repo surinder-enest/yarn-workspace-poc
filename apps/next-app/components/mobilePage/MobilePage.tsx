@@ -1,5 +1,5 @@
 import React from 'react'
-import { Title, Paragraph, BUILDER_ELEMENTS, MobilePageModel } from '@mindme/shared';
+import { Title, Paragraph, BUILDER_ELEMENTS, MobilePageModel, BuilderElementModel } from '@mindme/shared';
 
 interface Props {
     pageData: MobilePageModel;
@@ -7,7 +7,7 @@ interface Props {
 
 class MobilePage extends React.Component<Props>{
 
-    builderElement(builderElement: any, idx: number) {
+    builderElement(builderElement: BuilderElementModel, idx: number) {
         if (!builderElement) {
             return <></>
         }
@@ -15,16 +15,48 @@ class MobilePage extends React.Component<Props>{
             case BUILDER_ELEMENTS.TITLE:
                 return <Title key={idx} builderElement={builderElement} />
             case BUILDER_ELEMENTS.PARAGRAPH:
-                return <Paragraph key={idx} description={builderElement?.paragraph} />
+                return <Paragraph key={idx} description={''} />
             default:
                 return <div>No results found</div>
         }
     }
 
     render() {
-        const { pageStyles } = this.props.pageData;
-        return <div style={pageStyles} >
-            SSR WOKRING !
+        const { pageStyles, builderElements } = this.props.pageData;
+        const { borderStyle, borderWidth, borderColor, backgroundColor } = pageStyles;
+        return <div style={{
+            margin: "0px",
+            height: "100%"
+        }}>
+            <div style={{ 
+                backgroundColor,
+                verticalAlign: "middle",
+                height: "calc(100vh - 0px)",
+                overflowY: "auto",
+            }}>
+                <div style={{
+                    width: "100%",
+                    padding: "0px"
+                }}>
+                    <div style={{
+                        maxWidth: "600px",
+                        margin: "15px auto",
+                        backgroundColor: "rgb(255, 255, 255)",
+                    }}>
+                        <div style={{ margin: "0px" }}>
+                            <div style={{
+                                borderStyle,
+                                borderWidth,
+                                borderColor
+                            }} >
+                                {
+                                    builderElements.map((detail: BuilderElementModel, idx: number) => this.builderElement(detail, idx))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 }

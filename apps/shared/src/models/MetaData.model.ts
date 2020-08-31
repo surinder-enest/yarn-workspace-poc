@@ -15,7 +15,7 @@ export class MetaDataModel {
         this.metaCategories = data?.metaCategories || '';
     }
 
-    static deserilize(apiModel: APIMobilePage): MetaDataModel {
+    static deserialize(apiModel: APIMobilePage): MetaDataModel {
         const data: MetaDataModel = {
             pageTitle: apiModel?.PageDetails?.PageTitle,
             description: apiModel?.PageDetails?.PageDescription,

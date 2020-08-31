@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
+import { BuilderElementModel } from '../../models';
 
 interface Props {
-  builderElement: any;
+  builderElement: BuilderElementModel;
 }
 
 export default class Title extends Component<Props> {
-  render() { 
-    const innerHtml = this.props?.builderElement?.title?.text;
-    return <div>
-      <div dangerouslySetInnerHTML={{ __html: innerHtml }} />
-    </div>
+  render() {
+    const { text, styles } = this.props.builderElement.title; 
+    return <div style={styles} dangerouslySetInnerHTML={{ __html: text }} />
   }
 }

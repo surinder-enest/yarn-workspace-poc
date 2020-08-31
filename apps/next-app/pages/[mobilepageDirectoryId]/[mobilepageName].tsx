@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from 'next/router'
 import { MobilePageService } from "../../services";
 import Head from "next/head";
-import { MobilePageModel } from "@mindme/shared"; 
+import { MobilePageModel } from "@mindme/shared";
 import { MetaData, MobilePage } from "../../components";
 
 interface Props {
@@ -25,6 +25,15 @@ class MobilePageName extends React.Component<Props>{
         const { metaData, pageLink } = mobilePageData;
         return (
             <>
+                <style jsx global>
+                    {`body {  height: 100%;
+                                width: 100%;
+                                background: #fff;
+                                margin: 0;
+                                font-family: "Open Sans", Helvetica, Arial, sans-serif;
+                                min-height: 667px; 
+                            }`}
+                </style>
                 <Head>
                     <MetaData pageLink={pageLink} metaData={metaData} />
                 </Head>
