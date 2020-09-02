@@ -9,7 +9,7 @@ interface Props {
 
 export default class Field extends Component<Props> {
 
-    getBirthdayDropdown(month: string, defaultOption: string, isMonth: boolean, isDay: boolean, isYear: boolean) {
+    private getBirthdayDropdown(month: string, defaultOption: string, isMonth: boolean, isDay: boolean, isYear: boolean): ReactNode {
         const { styles } = this.props.field;
         let options: Array<any> = [];
         if (isMonth) {
@@ -43,7 +43,7 @@ export default class Field extends Component<Props> {
         />
     }
 
-    getBithdayHtml(formField: FieldModel) {
+    private getBithdayHtml(formField: FieldModel): ReactNode {
         switch (formField.birthdayFormatType) {
             case BIRTHDAY_FORMAT_TYPE.MONTH:
                 return this.getBirthdayDropdown(MONTH.JANUARY, "Month", true, false, false);
@@ -131,7 +131,7 @@ export default class Field extends Component<Props> {
         }
     }
 
-    formField(formField: FieldModel, idx: number) {
+    private formField(formField: FieldModel, idx: number): ReactNode {
         if (!formField) {
             return <></>
         }
@@ -145,6 +145,7 @@ export default class Field extends Component<Props> {
                 fontStyle: 'normal',
                 marginBottom: '5px',
                 fontSize: '16px',
+                marginBlockStart: "0em"
             }}>
                 {formField.fieldName} {formField.isRequired && <span style={{ color: "#ff0000", marginLeft }}> *</span>}
             </p>

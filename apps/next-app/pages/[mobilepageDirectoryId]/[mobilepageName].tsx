@@ -83,7 +83,7 @@ class MobilePageName extends React.Component<Props>{
                                 width: 100%;
                             }
                             .checkbox {
-                                padding-left: 20px;
+                                padding-left: 8px;
                                 white-space: nowrap;
                                 overflow: hidden !important;
                                 text-overflow: ellipsis;
@@ -91,6 +91,70 @@ class MobilePageName extends React.Component<Props>{
                                 display: block;
                                 margin-top: 10px;
                                 margin-bottom: 10px;
+                            }
+                            .circle-checkbox .checkbox label::before {
+                                border-radius: 100px;
+                            }
+                            .checkbox label::before {
+                                content: "";
+                                display: inline-block;
+                                position: absolute;
+                                width: 15px;
+                                height: 15px;
+                                left: 0;
+                                margin-left: -20px;
+                                border: 1px solid #aaaaaa;
+                                border-radius: 3px;
+                                background-color: #F8F8F8;
+                                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                            }
+                            .checkbox-primary input[type="checkbox"]:checked + label::after {
+                                color: #ffffff;
+                            }
+                            .checkbox input[type="checkbox"]:checked + label::after { 
+                                content:  '✓' ;
+                            }
+                            .checkbox-primary input[type='checkbox']:checked + label::after {
+                                color: #ffffff;
+                            }
+                            .checkbox label::after {
+                                display: inline-block;
+                                position: absolute;
+                                width: 14px;
+                                height: 14px;
+                                left: 2px;
+                                top: -2px;
+                                margin-left: -20px;
+                                padding-left: 2px;
+                                padding-top: 1px;
+                                font-size: 11px;
+                                color: #555555;
+                            }
+                            .checkbox label {
+                                display: inline-block;
+                                position: relative;
+                                padding-left: 5px;
+                                color: #555555;
+                                font-size: 14px;
+                                font-weight: 600;
+                                line-height: 1.45em;
+                            }
+                            .checkbox-primary input[type="checkbox"]:checked + label::before {
+                                background-color: #57AC2D;
+                                border-color: #57AC2D;
+                            }
+                            .circle-checkbox .checkbox label::before {
+                                border-radius: 100px;
+                            }
+                            h1, h2, h3, h4, h5, h6, p {
+                                color: #333333;
+                                line-height: 1.25;
+                                font-weight: normal;
+                                font-style: normal;
+                                font-family: "Open Sans", sans-serif;
+                                margin-bottom: 1em;
                             }`}
                 </style>
                 <Head>

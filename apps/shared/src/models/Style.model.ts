@@ -49,10 +49,9 @@ export class StyleModel {
         this.display = data?.display;
         this.width = data?.width;
         this.fontSize = data?.fontSize;
-        this.lineHeight = data?.lineHeight || 0;
         this.height = data?.height;
-        this.outline = data?.outline;
-        this.opacity = data?.opacity || "1 !important";
+        this.opacity = data?.opacity; 
+        this.outline = data?.outline; 
         this.float = data?.float;
         this.boxSizing = data?.boxSizing || "border-box";
     }
@@ -71,7 +70,6 @@ export class StyleModel {
             borderColor: apiModel?.ElementBorderStyle?.BorderColor?.HexValue,
             background: StyleModel.deserializeBackgroundCss(apiModel?.Background),
             minHeight: apiModel?.Background?.Url ? '300px' : '',
-            opacity: apiModel?.Background?.Opacity?.toString(),
         };
         return new StyleModel(data)
     }
