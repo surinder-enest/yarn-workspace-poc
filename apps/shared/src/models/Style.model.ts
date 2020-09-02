@@ -22,12 +22,14 @@ export class StyleModel {
     display?: string;
     width?: string;
     fontSize?: string;
-    lineHeight?: number;
+    lineHeight?: string;
     height?: string;
     outline?: string;
     opacity?: string;
     float?: any;
     boxSizing?: any;
+    textAlign?: any;
+    cursor?: string;
 
     constructor(data?: StyleModel) {
         this.paddingTop = data?.paddingTop;
@@ -50,10 +52,12 @@ export class StyleModel {
         this.width = data?.width;
         this.fontSize = data?.fontSize;
         this.height = data?.height;
-        this.opacity = data?.opacity; 
-        this.outline = data?.outline; 
+        this.opacity = data?.opacity;
+        this.outline = data?.outline;
         this.float = data?.float;
         this.boxSizing = data?.boxSizing || "border-box";
+        this.textAlign = data?.textAlign;
+        this.cursor = data?.cursor;
     }
 
     static deserialize(apiModel: APIStyle): StyleModel {

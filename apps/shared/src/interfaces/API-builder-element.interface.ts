@@ -37,11 +37,16 @@ export interface APIInterest {
     InterestDetail: Array<APIInterestDetail>;
 }
 
+export interface APIFormSubmitSettings {
+    ButtonText: string; 
+}
+
 export interface APIForm {
     Title: string;
     Style: APIStyle;
     FormFieldsSettings: Array<APIFormFieldsSettings>;
     Interest: APIInterest;
+    FormSubmitSettings: APIFormSubmitSettings;
 }
 
 export interface APIBuilderElement {

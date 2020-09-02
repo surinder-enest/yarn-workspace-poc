@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import { FormFieldModel, FieldModel } from '../../../models';
 import { FORM_FIELDS, FORM_FIELD_TYPE, GENDER_TYPE, BIRTHDAY_FORMAT_TYPE, MONTH, CUSTOM_FIELD_TYPE } from '../../../enums';
-import { SingleSelectDropdown, InputControl } from '..';
+import { SelectDropdown, InputControl, DatePicker } from '..';
 
 interface Props {
     field: FormFieldModel;
@@ -33,7 +33,7 @@ export default class Field extends Component<Props> {
                 });
             }
         }
-        return <SingleSelectDropdown
+        return <SelectDropdown
             valueKey={"value"}
             nameKey={"value"}
             className={`form-control birthday-select`}
@@ -73,7 +73,7 @@ export default class Field extends Component<Props> {
                     }
                     return data;
                 });
-                return <SingleSelectDropdown
+                return <SelectDropdown
                     valueKey={"value"}
                     nameKey={"value"}
                     styles={styles}
@@ -88,10 +88,12 @@ export default class Field extends Component<Props> {
                             case CUSTOM_FIELD_TYPE.LONG_TEXT:
                                 return <textarea style={styles} />
                             case CUSTOM_FIELD_TYPE.DATE:
-                                return <></>
+                                return <DatePicker
+                                    styles={styles}
+                                />
                             case CUSTOM_FIELD_TYPE.YES_NO:
                             case CUSTOM_FIELD_TYPE.SELECT_ONE:
-                                return <SingleSelectDropdown
+                                return <SelectDropdown
                                     valueKey={"value"}
                                     nameKey={"label"}
                                     options={formField.options}
@@ -99,7 +101,7 @@ export default class Field extends Component<Props> {
                                     defaultOption={"Select..."}
                                 />
                             case CUSTOM_FIELD_TYPE.SELECT_MULTIPLE:
-                                return <SingleSelectDropdown
+                                return <SelectDropdown
                                     valueKey={"value"}
                                     nameKey={"label"}
                                     options={formField.options}

@@ -50,10 +50,20 @@ export interface APIInterestStyles {
     BackgroundColor: APIColor;
 }
 
+export interface APIButton {
+    TextColor: APIColor;
+    BackgroundColor: APIColor;
+    ElementBorderStyles: string;
+    BorderSize: string;
+    BorderColor: APIColor;
+    BorderRadius: string;
+}
+
 export interface APIStyle {
     Position: APIPosition;
     Background: APIBackground;
     ElementBorderStyle: APIBorder;
     FieldsStyle: APIFieldsStyle;
     InterestStyles: APIInterestStyles;
+    Button: APIButton;
 }

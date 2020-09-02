@@ -139,7 +139,7 @@ class MobilePageName extends React.Component<Props>{
                                 color: #555555;
                                 font-size: 14px;
                                 font-weight: 600;
-                                line-height: 1.45em;
+                                line-height: 1.4em;
                             }
                             .checkbox-primary input[type="checkbox"]:checked + label::before {
                                 background-color: #57AC2D;
