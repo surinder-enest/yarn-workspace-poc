@@ -1,10 +1,10 @@
 interface APIPosition {
-    TopPadding: number;
-    BottomPadding: number;
-    RightPadding: number;
-    LeftPadding: number;
-    TopMargin: number;
-    BottomMargin: number;
+    TopPadding: string;
+    BottomPadding: string;
+    RightPadding: string;
+    LeftPadding: string;
+    TopMargin: string;
+    BottomMargin: string;
 }
 
 interface APIRgba {
@@ -35,8 +35,25 @@ export interface APIBorder {
     BorderColor: APIColor;
 }
 
+export interface APIFieldsStyle {
+    FieldLabelTextColor: APIColor;
+    FieldTextColor: APIColor;
+    FieldBackgroundColor: APIColor;
+    ElementBorderStyles: string;
+    BorderColor: APIColor;
+    BorderRadius: string;
+    BorderSize: string;
+}
+
+export interface APIInterestStyles {
+    TextColor: APIColor;
+    BackgroundColor: APIColor;
+}
+
 export interface APIStyle {
     Position: APIPosition;
     Background: APIBackground;
     ElementBorderStyle: APIBorder;
+    FieldsStyle: APIFieldsStyle;
+    InterestStyles: APIInterestStyles;
 }

@@ -7,7 +7,7 @@ interface Props {
 
 export default class Title extends Component<Props> {
   render() {
-    const { text, styles } = this.props.builderElement.title; 
+    const { text, styles } = this.props.builderElement.title;
     return <div style={styles} dangerouslySetInnerHTML={{ __html: text }} />
   }
 }

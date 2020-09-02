@@ -1,5 +1,5 @@
 import React from 'react'
-import { Title, Paragraph, BUILDER_ELEMENTS, MobilePageModel, BuilderElementModel } from '@mindme/shared';
+import { Title, BUILDER_ELEMENTS, MobilePageModel, BuilderElementModel, Form } from '@mindme/shared';
 
 interface Props {
     pageData: MobilePageModel;
@@ -14,8 +14,8 @@ class MobilePage extends React.Component<Props>{
         switch (builderElement.builderElementType) {
             case BUILDER_ELEMENTS.TITLE:
                 return <Title key={idx} builderElement={builderElement} />
-            case BUILDER_ELEMENTS.PARAGRAPH:
-                return <Paragraph key={idx} description={''} />
+            case BUILDER_ELEMENTS.FORM:
+                return <Form key={idx} builderElement={builderElement} />
             default:
                 return <div>No results found</div>
         }
@@ -28,7 +28,7 @@ class MobilePage extends React.Component<Props>{
             margin: "0px",
             height: "100%"
         }}>
-            <div style={{ 
+            <div style={{
                 backgroundColor,
                 verticalAlign: "middle",
                 height: "calc(100vh - 0px)",

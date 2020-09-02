@@ -6,13 +6,27 @@ interface APIPageDetail {
     PageDescription: string;
 }
 
-interface MobilePageSEOPreviewDetails {
+interface APIMobilePageSEOPreviewDetails {
     ImageLink: string;
 }
 
-interface SeoSearchDetails {
+interface APISeoSearchDetails {
     MetaKeywords: string;
     MetaCategories: string;
+    IsEnableMobileDiscoveryOnSeo: boolean;
+}
+
+export interface APIMapLocation {
+    Latitude: string;
+    Longitutd: string;
+}
+
+export interface APIMapAddress {
+    Location: Array<APIMapLocation>
+}
+
+export interface APIGeoLocationDetails {
+    Location: Array<APIMapAddress>
 }
 
 export interface APIMobilePage {
@@ -22,8 +36,9 @@ export interface APIMobilePage {
     Status: string;
     PageLink: string;
     PageDetails: APIPageDetail;
-    MobilePageSEOPreviewDetails: MobilePageSEOPreviewDetails;
-    SeoSearchDetails: SeoSearchDetails;
+    MobilePageSEOPreviewDetails: APIMobilePageSEOPreviewDetails;
+    SeoSearchDetails: APISeoSearchDetails;
     PageStyling: APIPageStyles;
     MobilePageBuilderComponents: Array<APIBuilderElement>;
+    GeoLocationDetails: Array<APIGeoLocationDetails>;
 }

@@ -1,23 +1,27 @@
-import { TitleModel } from './TitleModel.model';
+import { TitleModel } from './Title';
 import { APIBuilderElement } from '../interfaces';
+import { FormModel } from './Form.model';
 
 
 export class BuilderElementModel {
     key: string;
     builderElementType: string;
     title: TitleModel;
+    form: FormModel;
 
     constructor(data?: BuilderElementModel) {
         this.key = data?.key || '';
         this.builderElementType = data?.builderElementType || '';
         this.title = data?.title || new TitleModel();
+        this.form = data?.form || new FormModel();
     }
 
     static deserialize(apiModel: APIBuilderElement): BuilderElementModel {
-         const data: BuilderElementModel = {
+        const data: BuilderElementModel = {
             key: apiModel?.Key,
             builderElementType: apiModel?.BuilderElementType,
             title: TitleModel.deserialize(apiModel?.Title),
+            form: FormModel.deserialize(apiModel?.Form),
         };
         return new BuilderElementModel(data)
     }
