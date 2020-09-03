@@ -106,7 +106,7 @@ export class FormFieldModel {
             display: "block",
             width: "100%",
             fontSize: "14px",
-            lineHeight: 1.42857143,
+            lineHeight: "1.42857143",
             height: "44px",
             outline: 'unset',
             paddingTop: '4px',
