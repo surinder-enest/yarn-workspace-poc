@@ -4,3 +4,4 @@ export { default as Interest } from './interest/Interest';
 export { default as InputControl } from './common/InputControl';
 export { default as SelectDropdown } from './common/SelectDropdown';
 export { default as DatePicker } from './common/DatePicker';
+export { default as ReactSelectDropdown } from './common/ReactSelectDropdown';

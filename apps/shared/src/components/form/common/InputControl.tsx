@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 interface Props {
-    id?: string;
+    id: string;
     type?: string;
     className?: string;
     isRequired?: boolean;
@@ -20,7 +20,7 @@ export default class InputControl extends Component<Props> {
             style={styles || {}}
             required={isRequired || false}
             readOnly={readOnly || false}
-            maxLength={maxLength || 5000} 
+            maxLength={maxLength || 5000}
         />
     }
 }

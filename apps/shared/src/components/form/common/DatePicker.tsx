@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleModel } from '../../../models';
+import DatePicker from 'react-bootstrap-date-picker';
 
 interface Props {
     className?: string;
@@ -9,7 +10,10 @@ interface Props {
 
 export default class InputControl extends Component<Props> {
     render() {
-        // const { className, styles } = this.props;
-        return <></>
+        const { className, styles } = this.props;
+        return <DatePicker
+            className={className}
+            style={styles}
+        />
     }
 }

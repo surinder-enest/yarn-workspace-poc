@@ -71,19 +71,22 @@ export class FieldModel {
 export class FormFieldModel {
     fields: Array<FieldModel>;
     labelStyles: StyleModel;
-    styles: StyleModel;
+    fieldStyles: StyleModel;
+    customFieldSelectStyles: StyleModel;
 
     constructor(data?: FormFieldModel) {
         this.fields = data?.fields || [];
         this.labelStyles = data?.labelStyles || new StyleModel();
-        this.styles = data?.styles || new StyleModel();
+        this.fieldStyles = data?.fieldStyles || new StyleModel();
+        this.customFieldSelectStyles = data?.customFieldSelectStyles || new StyleModel();
     }
 
     static deserialize(apiModel: APIForm): FormFieldModel {
         const data: FormFieldModel = {
             fields: FieldModel.deserializeList(apiModel?.FormFieldsSettings),
             labelStyles: FormFieldModel.deserializeLabelStyles(apiModel?.Style?.FieldsStyle),
-            styles: FormFieldModel.deserializeStyles(apiModel?.Style?.FieldsStyle),
+            fieldStyles: FormFieldModel.deserializeStyles(apiModel?.Style?.FieldsStyle),
+            customFieldSelectStyles: FormFieldModel.deserializeCustomFieldSelectStyles(apiModel?.Style?.FieldsStyle),
         };
         return new FormFieldModel(data);
     }
@@ -114,6 +117,18 @@ export class FormFieldModel {
             paddingLeft: '8px',
             paddingRight: '8px',
             marginBottom: '5px',
+        };
+        return new StyleModel(data);
+    }
+
+    static deserializeCustomFieldSelectStyles(apiModel: APIFieldsStyle): StyleModel {
+        const data: StyleModel = {
+            borderColor: apiModel?.BorderColor?.HexValue || 'rgba(199,199,199,1)',
+            borderWidth: apiModel?.BorderSize || '1px',
+            borderRadius: apiModel?.BorderRadius || '4px',
+            borderStyle: apiModel?.ElementBorderStyles || "Solid",
+            backgroundColor: apiModel?.FieldBackgroundColor?.HexValue || '#fff',
+            color: apiModel?.FieldTextColor?.HexValue || '#333',
         };
         return new StyleModel(data);
     }

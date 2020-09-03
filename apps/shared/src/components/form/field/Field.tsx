@@ -1,7 +1,8 @@
 import React, { Component, ReactNode } from 'react';
+import NumberFormat from 'react-number-format';
 import { FormFieldModel, FieldModel } from '../../../models';
 import { FORM_FIELDS, FORM_FIELD_TYPE, GENDER_TYPE, BIRTHDAY_FORMAT_TYPE, MONTH, CUSTOM_FIELD_TYPE } from '../../../enums';
-import { SelectDropdown, InputControl, DatePicker } from '..';
+import { SelectDropdown, InputControl, DatePicker, ReactSelectDropdown } from '..';
 
 interface Props {
     field: FormFieldModel;
@@ -10,7 +11,7 @@ interface Props {
 export default class Field extends Component<Props> {
 
     private getBirthdayDropdown(month: string, defaultOption: string, isMonth: boolean, isDay: boolean, isYear: boolean): ReactNode {
-        const { styles } = this.props.field;
+        const { fieldStyles } = this.props.field;
         let options: Array<any> = [];
         if (isMonth) {
             options = Object.values(MONTH).map((value) => {
@@ -37,7 +38,7 @@ export default class Field extends Component<Props> {
             valueKey={"value"}
             nameKey={"value"}
             className={`form-control birthday-select`}
-            styles={styles}
+            styles={fieldStyles}
             defaultOption={defaultOption}
             options={options}
         />
@@ -64,7 +65,7 @@ export default class Field extends Component<Props> {
     }
 
     private getFieldTypeHtml(formField: FieldModel): ReactNode {
-        const { styles } = this.props.field;
+        const { fieldStyles, customFieldSelectStyles } = this.props.field;
         switch (formField.formFields) {
             case FORM_FIELDS.GENDER:
                 const genderOptions = Object.values(GENDER_TYPE).map((value) => {
@@ -76,7 +77,7 @@ export default class Field extends Component<Props> {
                 return <SelectDropdown
                     valueKey={"value"}
                     nameKey={"value"}
-                    styles={styles}
+                    styles={fieldStyles}
                     options={genderOptions}
                 />
             case FORM_FIELDS.BIRTHDAY:
@@ -86,31 +87,43 @@ export default class Field extends Component<Props> {
                     case FORM_FIELD_TYPE.CUSTOM:
                         switch (formField.customFieldType) {
                             case CUSTOM_FIELD_TYPE.LONG_TEXT:
-                                return <textarea style={styles} />
+                                return <textarea style={fieldStyles} />
+                            case CUSTOM_FIELD_TYPE.NUMBER:
+                                return <NumberFormat
+                                    type="text"
+                                    displayType={'input'}
+                                    style={fieldStyles}
+                                    maxLength={14}
+                                />
                             case CUSTOM_FIELD_TYPE.DATE:
                                 return <DatePicker
-                                    styles={styles}
+                                    styles={fieldStyles}
                                 />
                             case CUSTOM_FIELD_TYPE.YES_NO:
                             case CUSTOM_FIELD_TYPE.SELECT_ONE:
-                                return <SelectDropdown
+                                return <ReactSelectDropdown
                                     valueKey={"value"}
                                     nameKey={"label"}
                                     options={formField.options}
-                                    styles={styles}
+                                    styles={customFieldSelectStyles}
                                     defaultOption={"Select..."}
                                 />
                             case CUSTOM_FIELD_TYPE.SELECT_MULTIPLE:
-                                return <SelectDropdown
+                                return <ReactSelectDropdown
                                     valueKey={"value"}
                                     nameKey={"label"}
                                     options={formField.options}
-                                    styles={styles}
+                                    styles={customFieldSelectStyles}
                                     isMulti={true}
                                     defaultOption={"Select..."}
                                 />
+                            default:
+                                return <InputControl
+                                    id={formField.id}
+                                    styles={fieldStyles}
+                                    maxLength={50}
+                                />
                         }
-                        return <></>
                     case FORM_FIELD_TYPE.STANDARD:
                         let maxLength = 50;
                         switch (formField.formFields) {
@@ -122,9 +135,10 @@ export default class Field extends Component<Props> {
                                 break;
                         }
                         return <InputControl
+                            id={formField.id}
                             isRequired={formField.isRequired}
                             readOnly={false}
-                            styles={styles}
+                            styles={fieldStyles}
                             maxLength={maxLength}
                         />
                     default:
