@@ -1,4 +1,4 @@
-import { APIMobilePage, APIMapLocation } from '../interfaces'; 
+import { APIMobilePage, APIMapLocation } from '../interfaces';
 
 export class MetaDataModel {
     pageTitle: string;
@@ -7,6 +7,8 @@ export class MetaDataModel {
     metaKeywords: string;
     metaCategories: string;
     noIndex: string;
+    accountShortUniqueId: string;
+    htmlPageName: string;
     // geoLocationDetails: Array<GEOGraphicsModel>;
 
     constructor(data?: MetaDataModel) {
@@ -16,6 +18,8 @@ export class MetaDataModel {
         this.metaKeywords = data?.metaKeywords || '';
         this.metaCategories = data?.metaCategories || '';
         this.noIndex = data?.noIndex || '';
+        this.accountShortUniqueId = data?.accountShortUniqueId || '';
+        this.htmlPageName = data?.htmlPageName || '';
         // this.geoLocationDetails = data?.geoLocationDetails || [];
     }
 
@@ -27,12 +31,14 @@ export class MetaDataModel {
             metaKeywords: apiModel?.SeoSearchDetails?.MetaKeywords,
             metaCategories: apiModel?.SeoSearchDetails?.MetaCategories,
             noIndex: apiModel?.SeoSearchDetails?.IsEnableMobileDiscoveryOnSeo ? 'noindex' : '',
+            accountShortUniqueId: apiModel?.AccountShortUniqueId,
+            htmlPageName: apiModel?.HtmlPageName,
             // geoLocationDetails: GEOGraphicsModel.deserializeList(apiModel?.GeoLocationDetails),
         };
         return new MetaDataModel(data)
     }
 }
- 
+
 export class GEOGraphicsModel {
     latitude: string;
     longitute: string;
