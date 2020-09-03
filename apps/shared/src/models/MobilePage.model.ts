@@ -8,7 +8,8 @@ export class MobilePageModel extends BaseModel {
     name: string;
     userId: string;
     status: string;
-    pageLink: string;
+    accountShortUniqueId: string;
+    htmlPageName: string;
     metaData: MetaDataModel;
     pageStyles: PageStylesModel;
     builderElements: Array<any>;
@@ -18,7 +19,8 @@ export class MobilePageModel extends BaseModel {
         this.name = data?.name || '';
         this.userId = data?.userId || '';
         this.status = data?.status || '';
-        this.pageLink = data?.pageLink || '';
+        this.accountShortUniqueId = data?.accountShortUniqueId || '';
+        this.htmlPageName = data?.htmlPageName || '';
         this.pageStyles = data?.pageStyles || new PageStylesModel();
         this.metaData = data?.metaData || new MetaDataModel();
         this.builderElements = data?.builderElements || [];
@@ -30,7 +32,6 @@ export class MobilePageModel extends BaseModel {
             name: apiModel?.Name,
             userId: apiModel?.UserId,
             status: apiModel?.Status,
-            pageLink: apiModel?.PageLink,
             metaData: MetaDataModel.deserialize(apiModel),
             pageStyles: PageStylesModel.deserialize(apiModel?.PageStyling),
             builderElements: BuilderElementModel.deserializeList(apiModel?.MobilePageBuilderComponents),

@@ -17,7 +17,7 @@ class MobilePage extends React.Component<Props>{
             case BUILDER_ELEMENTS.FORM:
                 return <Form key={idx} builderElement={builderElement} />
             default:
-                return <div>No results found</div>
+                return <></>
         }
     }
 

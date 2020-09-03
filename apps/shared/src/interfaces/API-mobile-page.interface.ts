@@ -35,6 +35,8 @@ export interface APIMobilePage {
     UserId: string;
     Status: string;
     PageLink: string;
+    AccountShortUniqueId: string;
+    HtmlPageName: string;
     PageDetails: APIPageDetail;
     MobilePageSEOPreviewDetails: APIMobilePageSEOPreviewDetails;
     SeoSearchDetails: APISeoSearchDetails;
