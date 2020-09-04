@@ -35,6 +35,9 @@ export class FieldModel {
     isRequired: boolean;
     birthdayFormatType: string;
     options: Array<any>;
+    value: string;
+    errorMessage: string;
+    selectedOptions: Array<string>;
 
     constructor(data?: FieldModel) {
         this.id = data?.id || "";
@@ -45,6 +48,9 @@ export class FieldModel {
         this.options = data?.options || [];
         this.customFieldType = data?.customFieldType || "";
         this.birthdayFormatType = data?.birthdayFormatType || "";
+        this.value = data?.value || "";
+        this.errorMessage = data?.errorMessage || "";
+        this.selectedOptions = data?.selectedOptions || [];
     }
 
     static deserialize(apiModel: APIFormFieldsSettings): FieldModel {
@@ -57,6 +63,9 @@ export class FieldModel {
             options: OptionModel.deserializeList(apiModel?.Options),
             customFieldType: apiModel?.CustomFieldType,
             birthdayFormatType: apiModel?.BirthdayFormat,
+            value: "",
+            errorMessage: "",
+            selectedOptions: []
         };
         return new FieldModel(data);
     }

@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 export class HttpClient {
-    client: any;
+    private readonly baseUrl: String = 'https://stageapi.mindmemobile.com'
+    private client: AxiosInstance;
 
     constructor(params: any) {
         this.client = axios.create({
             ...params,
-            baseURL: 'https://stageapi.mindmemobile.com/',
+            baseURL: this.baseUrl,
         });
     }
 

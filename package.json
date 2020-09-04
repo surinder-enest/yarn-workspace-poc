@@ -91,7 +91,7 @@
     "sonar": "yarn test:coverage && sonar-scanner",
     "test:coverage": "yarn test:coverage:core",
     "test:coverage:core": "yarn workspace @mindme/core run test:coverage",
-    "shared": "yarn workspace @mindme/shared add",
+    "shared": "yarn workspace @mindme/shared",
     "next": "yarn workspace @mindme/next-app add G:/Officials/Projects/Yarn-work-space/apps/shared",
     "start": "yarn next && yarn workspace @mindme/next-app dev"
   },

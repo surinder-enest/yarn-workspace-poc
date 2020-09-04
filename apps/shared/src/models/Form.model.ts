@@ -21,7 +21,7 @@ class FormSubmitSettingModel {
 export class FormModel {
     title: string;
     styles: StyleModel;
-    field: FormFieldModel;
+    fieldDetails: FormFieldModel;
     interest: InterestModel;
     buttonStyles: StyleModel;
     formSubmitSettings: FormSubmitSettingModel;
@@ -29,7 +29,7 @@ export class FormModel {
     constructor(data?: FormModel) {
         this.title = data?.title || '';
         this.styles = data?.styles || new StyleModel();
-        this.field = data?.field || new FormFieldModel();
+        this.fieldDetails = data?.fieldDetails || new FormFieldModel();
         this.interest = data?.interest || new InterestModel();
         this.buttonStyles = data?.buttonStyles || new StyleModel();
         this.formSubmitSettings = data?.formSubmitSettings || new FormSubmitSettingModel();
@@ -39,7 +39,7 @@ export class FormModel {
         const data: FormModel = {
             title: apiModel?.Title,
             styles: StyleModel.deserialize(apiModel?.Style),
-            field: FormFieldModel.deserialize(apiModel),
+            fieldDetails: FormFieldModel.deserialize(apiModel),
             interest: InterestModel.deserialize(apiModel),
             buttonStyles: FormModel.deserializeButtonStyles(apiModel?.Style?.Button),
             formSubmitSettings: FormSubmitSettingModel.deserialize(apiModel?.FormSubmitSettings),
