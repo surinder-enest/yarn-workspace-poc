@@ -87,10 +87,13 @@
     "build:stage": "yarn workspace @mindme/core run build:stage",
     "build:test": "yarn workspace @mindme/core run build:test",
     "build:prod": "yarn workspace @mindme/core run build:prod",
-    "start": "set PORT=4200 && yarn workspace @mindme/core run start",
+    "start:v": "set PORT=4200 && yarn workspace @mindme/core run start",
     "sonar": "yarn test:coverage && sonar-scanner",
     "test:coverage": "yarn test:coverage:core",
-    "test:coverage:core": "yarn workspace @mindme/core run test:coverage"
+    "test:coverage:core": "yarn workspace @mindme/core run test:coverage",
+    "shared": "yarn workspace @mindme/shared add",
+    "next": "yarn workspace @mindme/next-app add G:/Officials/Projects/Yarn-work-space/apps/shared",
+    "start": "yarn next && yarn workspace @mindme/next-app dev"
   },
   "husky": {
     "hooks": {
