@@ -7,6 +7,7 @@ import {
 } from '../../../enums';
 import { FieldModel, StyleModel } from '../../../models';
 import { SelectDropdown } from '..';
+import { Utility } from '../../../utilities';
 
 interface Props {
   formField: FieldModel;
@@ -16,21 +17,62 @@ interface Props {
 }
 
 export default class StandardField extends Component<Props> {
-  private onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    let updatedField = { ...this.props.formField };
-    updatedField.value = event.currentTarget.value;
+  nameKey = 'label';
+  valueKey = 'value';
+  private onValueChange(value: string) {
+    const updatedField = this.props.validateField({
+      ...this.props.formField,
+      value,
+    });
     this.props.updatedFieldDetails(updatedField);
   }
-  private onSelectDropdownChange(
-    event: React.MouseEvent<HTMLSelectElement, MouseEvent>
+
+  private onBlurHandler() {
+    let updatedField = { ...this.props.formField };
+    if (!updatedField.errorMessage) {
+      switch (updatedField.formFields) {
+        case FORM_FIELDS.MOBILE_PHONE:
+        case FORM_FIELDS.HOME_PHONE:
+        case FORM_FIELDS.WORK_PHONE:
+          updatedField.value = Utility.formatPhoneNumber(updatedField.value);
+          break;
+      }
+      this.props.updatedFieldDetails(updatedField);
+    }
+  }
+
+  private onBirthdayDropDownChange(
+    value: number,
+    isMonth: boolean,
+    isDay: boolean,
+    isYear: boolean
   ) {
     let updatedField = { ...this.props.formField };
-    updatedField.value = event.currentTarget.value;
+    if (isMonth) {
+      updatedField.dateOfBirth.month = value;
+    } else if (isDay) {
+      updatedField.dateOfBirth.day = value;
+    } else if (isYear) {
+      updatedField.dateOfBirth.year = value;
+    }
+
+    const { month, day, year } = updatedField.dateOfBirth;
+    if (month && day && year) {
+      let today = new Date();
+      today.setFullYear(year);
+      today.setMonth(month - 1);
+      today.setDate(day);
+      updatedField.value = today.toString();
+    } else {
+      updatedField.value = '';
+    }
+    updatedField = this.props.validateField(updatedField);
     this.props.updatedFieldDetails(updatedField);
   }
 
   private getBirthdayDropdown(
-    month: string,
+    month: number,
+    year: number,
     defaultOption: string,
     isMonth: boolean,
     isDay: boolean,
@@ -38,24 +80,41 @@ export default class StandardField extends Component<Props> {
   ): ReactNode {
     const { styles } = this.props;
     let options: Array<any> = [];
+    this.nameKey = 'value';
+    var currentYear = new Date().getFullYear();
+    var date = new Date(
+      year > 0 ? year : currentYear,
+      month > 0 ? month : 1,
+      0
+    );
     if (isMonth) {
-      options = Object.values(MONTH);
+      this.nameKey = 'label';
+      options = Object.values(MONTH).map((value, idx) =>
+        Object.assign({
+          label: value,
+          value: idx + 1,
+        })
+      );
     } else if (isDay) {
-      const days = month === MONTH.FEBRUARY ? 29 : 31;
-      options = Array(days).map(value => Object.assign({ value }));
+      for (let i = 1; i <= date.getDate(); i++) {
+        options.push({ value: i });
+      }
     } else if (isYear) {
-      var currentYear = new Date().getFullYear();
-      options = Array(100).map(i => Object.assign({ value: currentYear - i }));
+      for (let i = 1; i <= 100; i++) {
+        options.push({ value: currentYear - i });
+      }
     }
     return (
       <SelectDropdown
-        valueKey={'value'}
-        nameKey={'value'}
+        valueKey={this.valueKey}
+        nameKey={this.nameKey}
         className={`form-control birthday-select`}
         styles={styles}
         defaultOption={defaultOption}
         options={options}
-        onSelectChange={this.onSelectDropdownChange}
+        onSelectChange={(value: string) =>
+          this.onBirthdayDropDownChange(parseInt(value), isMonth, isDay, isYear)
+        }
       />
     );
   }
@@ -64,7 +123,8 @@ export default class StandardField extends Component<Props> {
     switch (formField.birthdayFormatType) {
       case BIRTHDAY_FORMAT_TYPE.MONTH:
         return this.getBirthdayDropdown(
-          MONTH.JANUARY,
+          formField.dateOfBirth.month,
+          formField.dateOfBirth.year,
           'Month',
           true,
           false,
@@ -75,7 +135,8 @@ export default class StandardField extends Component<Props> {
           <div style={{ display: 'flex' }}>
             <div className={'col-md-8 no-padding'}>
               {this.getBirthdayDropdown(
-                MONTH.JANUARY,
+                formField.dateOfBirth.month,
+                formField.dateOfBirth.year,
                 'Month',
                 true,
                 false,
@@ -84,7 +145,8 @@ export default class StandardField extends Component<Props> {
             </div>
             <div className={'col-md-4 padding-right-0'}>
               {this.getBirthdayDropdown(
-                MONTH.JANUARY,
+                formField.dateOfBirth.month,
+                formField.dateOfBirth.year,
                 'Day',
                 false,
                 true,
@@ -98,7 +160,8 @@ export default class StandardField extends Component<Props> {
           <div style={{ display: 'flex' }}>
             <div className={'col-md-4 padding-left-0'}>
               {this.getBirthdayDropdown(
-                MONTH.JANUARY,
+                formField.dateOfBirth.month,
+                formField.dateOfBirth.year,
                 'Month',
                 true,
                 false,
@@ -107,7 +170,8 @@ export default class StandardField extends Component<Props> {
             </div>
             <div className={'col-md-4 no-padding'}>
               {this.getBirthdayDropdown(
-                MONTH.JANUARY,
+                formField.dateOfBirth.month,
+                formField.dateOfBirth.year,
                 'Day',
                 false,
                 true,
@@ -116,7 +180,8 @@ export default class StandardField extends Component<Props> {
             </div>
             <div className={'col-md-4 padding-right-0'}>
               {this.getBirthdayDropdown(
-                MONTH.JANUARY,
+                formField.dateOfBirth.month,
+                formField.dateOfBirth.year,
                 'Year',
                 false,
                 false,
@@ -134,15 +199,17 @@ export default class StandardField extends Component<Props> {
     const { formField, styles } = this.props;
     switch (formField.formFields) {
       case FORM_FIELDS.GENDER:
-        const genderOptions = Object.values(GENDER_TYPE);
+        const genderOptions = Object.values(GENDER_TYPE).map(value =>
+          Object.assign({ value })
+        );
+        this.nameKey = 'value';
         return (
           <SelectDropdown
-            valueKey={'value'}
-            nameKey={'value'}
+            valueKey={this.nameKey}
+            nameKey={this.nameKey}
             styles={styles}
-            selectedValue={formField.value}
             options={genderOptions}
-            onSelectChange={this.onSelectDropdownChange}
+            onSelectChange={(value: string) => this.onValueChange(value)}
           />
         );
       case FORM_FIELDS.BIRTHDAY:
@@ -164,7 +231,8 @@ export default class StandardField extends Component<Props> {
             maxLength={maxLength}
             style={styles}
             value={formField.value}
-            onChange={event => this.onInputChange(event)}
+            onChange={event => this.onValueChange(event.currentTarget.value)}
+            onBlur={() => this.onBlurHandler()}
           />
         );
     }

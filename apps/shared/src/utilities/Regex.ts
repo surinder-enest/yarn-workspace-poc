@@ -5,6 +5,8 @@ export class Regex {
     public static validateZip = /^[\d]{5,5}-[\d]{4,4}$/;
     public static validateAddress = /^[a-zA-Z0-9\s,'-]*$/;
     public static validateEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    public static validateNumber = /^[+-]?([0-9]*[.])?[0-9]+$/;
+    public static validateMobileNumberFormat = /^\(?\d{3}\)?[-\.\s]?\d{3}[-\.\s]?\d{4}$/i;
     public static validateWebsite = new RegExp(
         '^(https?:\\/\\/)?' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name

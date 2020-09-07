@@ -31,7 +31,7 @@ export default class Field extends Component<Props> {
             formField={formField}
             fieldStyles={fieldStyles}
             customFieldSelectStyles={customFieldSelectStyles}
-            onInputChange={this.props.updatedFieldDetails}
+            updatedFieldDetails={this.props.updatedFieldDetails}
             validateField={this.props.validateField}
           />
         );
@@ -40,7 +40,7 @@ export default class Field extends Component<Props> {
     }
   }
 
-  private formField(formField: FieldModel, idx: number): ReactNode {
+  private getField(formField: FieldModel, idx: number): ReactNode {
     if (!formField) {
       return <></>;
     }
@@ -77,7 +77,7 @@ export default class Field extends Component<Props> {
 
   render() {
     return this.props.fieldResponses.map((field, idx) =>
-      this.formField(field, idx)
+      this.getField(field, idx)
     );
   }
 }

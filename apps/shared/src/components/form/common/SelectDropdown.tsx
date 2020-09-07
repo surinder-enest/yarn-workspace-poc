@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleModel } from '../../../models';
 interface Props {
-  selectedValue?: string;
   className?: string;
   valueKey: string;
   nameKey: string;
@@ -14,7 +13,6 @@ interface Props {
 export default class SingleSelectDropdown extends Component<Props> {
   render() {
     const {
-      selectedValue,
       styles,
       defaultOption,
       className,
@@ -27,8 +25,7 @@ export default class SingleSelectDropdown extends Component<Props> {
       <select
         style={styles}
         className={className}
-        value={selectedValue}
-        onClick={event => onSelectChange(event)}
+        onChange={event => onSelectChange(event.currentTarget.value)}
       >
         {defaultOption && <option value="">{defaultOption}</option>}
         {options.map((option, idx) => (

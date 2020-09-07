@@ -12,11 +12,21 @@ interface Props {
   isMulti?: boolean;
   styles: StyleModel;
   options: Array<any>;
+  onSingleSelect: Function;
+  onMultiSelect: Function;
 }
 
 export default class ReactSelectDropdown extends Component<Props> {
   animatedComponents = makeAnimated();
-
+  onChangeHandler(selectedOptions: any) {
+    const { isMulti, valueKey } = this.props;
+    if (isMulti) {
+      const selectedValues = selectedOptions.map((x: any) => x[valueKey]);
+      this.props.onMultiSelect(selectedValues);
+    } else {
+      this.props.onSingleSelect(selectedOptions?.[valueKey] || '');
+    }
+  }
   render() {
     const { styles, defaultOption, className, options, isMulti } = this.props;
     const {
@@ -43,12 +53,14 @@ export default class ReactSelectDropdown extends Component<Props> {
     return (
       <Select
         style={customStyles}
-        closeMenuOnSelect={false}
+        closeMenuOnSelect={!isMulti}
         components={this.animatedComponents}
         className={className}
         isMulti={isMulti}
         options={options}
         defaultValue={defaultOption}
+        isClearable={true}
+        onChange={(event: any) => this.onChangeHandler(event)}
       />
     );
   }

@@ -109,7 +109,7 @@ class MobilePageName extends React.Component<Props> {
               width: 15px;
               height: 15px;
               left: 0;
-              margin-left: -20px;
+              margin-left: 2px;
               border: 1px solid #aaaaaa;
               border-radius: 3px;
               background-color: #f8f8f8;

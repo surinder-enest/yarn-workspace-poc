@@ -26,6 +26,19 @@ class OptionModel {
     }
 }
 
+class DateOfBirthModel {
+    dob?: Date;
+    day: number;
+    month: number;
+    year: number;
+
+    constructor(data?: DateOfBirthModel) {
+        this.day = data?.day || 0;
+        this.month = data?.month || 0;
+        this.year = data?.year || 0;
+    }
+}
+
 export class FieldModel {
     id: string;
     fieldName: string;
@@ -38,6 +51,7 @@ export class FieldModel {
     value: string;
     errorMessage: string;
     selectedOptions: Array<string>;
+    dateOfBirth: DateOfBirthModel;
 
     constructor(data?: FieldModel) {
         this.id = data?.id || "";
@@ -51,6 +65,7 @@ export class FieldModel {
         this.value = data?.value || "";
         this.errorMessage = data?.errorMessage || "";
         this.selectedOptions = data?.selectedOptions || [];
+        this.dateOfBirth = data?.dateOfBirth || new DateOfBirthModel();
     }
 
     static deserialize(apiModel: APIFormFieldsSettings): FieldModel {
@@ -65,7 +80,8 @@ export class FieldModel {
             birthdayFormatType: apiModel?.BirthdayFormat,
             value: "",
             errorMessage: "",
-            selectedOptions: []
+            selectedOptions: [],
+            dateOfBirth: new DateOfBirthModel()
         };
         return new FieldModel(data);
     }

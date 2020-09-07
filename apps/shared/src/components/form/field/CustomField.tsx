@@ -1,40 +1,65 @@
 import React, { Component } from 'react';
 import { FieldModel, StyleModel } from '../../../models';
 import { CUSTOM_FIELD_TYPE } from '../../../enums';
-import { ReactSelectDropdown, DatePicker } from '..';
+import { ReactSelectDropdown } from '..';
 import NumberFormat from 'react-number-format';
+import DatePicker from 'react-16-bootstrap-date-picker';
 
 interface Props {
   formField: FieldModel;
   fieldStyles: StyleModel;
   customFieldSelectStyles: StyleModel;
-  onInputChange: Function;
+  updatedFieldDetails: Function;
   validateField: Function;
 }
 
 export default class CustomField extends Component<Props> {
-  private onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  private onValueChange(value: string) {
+    const updatedField = this.props.validateField({
+      ...this.props.formField,
+      value,
+    });
+    this.props.updatedFieldDetails(updatedField);
+  }
+
+  private onMultiSelectChange(selectedOptions: Array<string>) {
     let updatedField = { ...this.props.formField };
-    updatedField.value = event.currentTarget.value;
-    this.props.onInputChange(updatedField);
+    updatedField.value = selectedOptions.join();
+    updatedField.selectedOptions = selectedOptions;
+    updatedField = this.props.validateField(updatedField);
+    this.props.updatedFieldDetails(updatedField);
   }
 
   private getCustomField() {
     const { formField, fieldStyles, customFieldSelectStyles } = this.props;
     switch (formField.customFieldType) {
       case CUSTOM_FIELD_TYPE.LONG_TEXT:
-        return <textarea style={fieldStyles} />;
+        return (
+          <textarea
+            style={fieldStyles}
+            onChange={event => this.onValueChange(event.currentTarget.value)}
+          />
+        );
       case CUSTOM_FIELD_TYPE.NUMBER:
         return (
           <NumberFormat
             type="text"
-            displayType={'input'}
+            displayType="input"
             style={fieldStyles}
             maxLength={14}
+            onChange={event => this.onValueChange(event.currentTarget.value)}
           />
         );
       case CUSTOM_FIELD_TYPE.DATE:
-        return <DatePicker styles={fieldStyles} />;
+        return (
+          <DatePicker
+            dateFormat={'MM/DD/YYYY'}
+            styles={fieldStyles}
+            onChange={(event: any) =>
+              this.onValueChange(event?.currentTarget?.value)
+            }
+          />
+        );
       case CUSTOM_FIELD_TYPE.YES_NO:
       case CUSTOM_FIELD_TYPE.SELECT_ONE:
       case CUSTOM_FIELD_TYPE.SELECT_MULTIPLE:
@@ -47,6 +72,10 @@ export default class CustomField extends Component<Props> {
             options={formField.options}
             styles={customFieldSelectStyles}
             isMulti={isMulti}
+            onSingleSelect={(value: string) => this.onValueChange(value)}
+            onMultiSelect={(selectedValues: Array<string>) =>
+              this.onMultiSelectChange(selectedValues)
+            }
             defaultOption={'Select...'}
           />
         );
@@ -57,11 +86,12 @@ export default class CustomField extends Component<Props> {
             type="text"
             style={fieldStyles}
             maxLength={50}
-            onChange={event => this.onInputChange(event)}
+            onChange={event => this.onValueChange(event.currentTarget.value)}
           />
         );
     }
   }
+
   render() {
     return this.getCustomField();
   }

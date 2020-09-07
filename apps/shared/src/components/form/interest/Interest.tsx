@@ -3,10 +3,25 @@ import { InterestModel, InterestOptionModel } from '../../../models';
 
 interface Props {
   interest: InterestModel;
+  errorMessage: string;
+  selectedInterest: Array<string>;
+  validateInterest: Function;
 }
 
 export default class Interest extends Component<Props> {
-  private interestOption(option: InterestOptionModel, idx: number): ReactNode {
+  private onChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { checked, id } = event.currentTarget;
+    let selectedInterests = this.props.selectedInterest.map(x => x);
+    if (checked) {
+      selectedInterests.push(id);
+    } else {
+      const index = selectedInterests.indexOf(id);
+      if (index > -1) selectedInterests.splice(index, 1);
+    }
+    this.props.validateInterest(selectedInterests);
+  }
+
+  private getOption(option: InterestOptionModel, idx: number): ReactNode {
     const { optionStyles, optionLabelStyles } = this.props.interest;
     return (
       <div key={idx} style={optionStyles} className="circle-checkbox">
@@ -21,11 +36,12 @@ export default class Interest extends Component<Props> {
           }}
         >
           <input
-            id={option.id}
+            id={option.categoryId}
             style={{ marginRight: '8px', opacity: '0', float: 'left' }}
             type="checkbox"
+            onChange={event => this.onChange(event)}
           />
-          <label style={optionLabelStyles} htmlFor={option.id}>
+          <label style={optionLabelStyles} htmlFor={option.categoryId}>
             {option.text}
           </label>
         </div>
@@ -34,7 +50,8 @@ export default class Interest extends Component<Props> {
   }
 
   render() {
-    const { title, options, isRequireResponse } = this.props.interest;
+    const { errorMessage, interest } = this.props;
+    const { title, options, isRequireResponse } = interest;
     return (
       <>
         {options.length > 0 ? (
@@ -56,22 +73,32 @@ export default class Interest extends Component<Props> {
                     fontSize: '21px',
                   }}
                 >
-                  {' '}
                   *
+                </span>
+              )}
+              {errorMessage && (
+                <span
+                  style={{
+                    color: '#FF0000',
+                    marginLeft: '100px',
+                    fontSize: '16px',
+                  }}
+                >
+                  {errorMessage}
                 </span>
               )}
             </div>
             <div className="row no-margin" style={{ display: 'flex' }}>
               <div className="col-md-12 no-padding" style={{ width: '100%' }}>
                 {options.map((interestDetail, idx) =>
-                  this.interestOption(interestDetail, idx)
+                  this.getOption(interestDetail, idx)
                 )}
               </div>
             </div>
           </>
         ) : (
-          <></>
-        )}
+            <></>
+          )}
       </>
     );
   }
