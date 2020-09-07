@@ -37,8 +37,21 @@ export interface APIInterest {
     InterestDetail: Array<APIInterestDetail>;
 }
 
+export interface APIThankYou {
+    Action: string;
+    Message: string;
+    RedirectUrl: string;
+}
+
 export interface APIFormSubmitSettings {
-    ButtonText: string; 
+    ButtonText: string;
+    RequireReCaptcha: boolean;
+    ThankYou: APIThankYou;
+    MaxMessageLimit: number;
+    ShowTermsAndConditions: boolean;
+    RequireAcceptance: boolean;
+    FormSubmitSettingType: string;
+    Terms: string;
 }
 
 export interface APIForm {
@@ -50,6 +63,7 @@ export interface APIForm {
 }
 
 export interface APIBuilderElement {
+    Id: string;
     Key: string;
     BuilderElementType: string;
     Title: APITitle;

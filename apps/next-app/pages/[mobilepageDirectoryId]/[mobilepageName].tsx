@@ -1,9 +1,8 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import { MobilePageService } from '../../services';
 import Head from 'next/head';
-import { MobilePageModel } from '@mindme/shared';
-import { MetaData, MobilePage } from '../../components';
+import { MobilePageModel, MobilePage, MobilePageService } from '@mindme/shared';
+import { MetaData } from '../../components';
 
 interface Props {
   mobilePageData: MobilePageModel;

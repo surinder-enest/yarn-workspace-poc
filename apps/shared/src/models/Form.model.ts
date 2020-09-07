@@ -1,18 +1,57 @@
 import { StyleModel } from './Style.model';
-import { APIForm, APIFormSubmitSettings, APIButton } from '../interfaces';
+import { APIForm, APIFormSubmitSettings, APIButton, APIThankYou } from '../interfaces';
 import { FormFieldModel } from './FormField.model';
 import { InterestModel } from './Interest.model';
 
-class FormSubmitSettingModel {
+class ThankYouModel {
+    action: string;
+    message: string;
+    redirectUrl: string;
+
+    constructor(data?: ThankYouModel) {
+        this.action = data?.action || '';
+        this.message = data?.message || '';
+        this.redirectUrl = data?.redirectUrl || '';
+    }
+
+    static deserialize(apiModel: APIThankYou): ThankYouModel {
+        const data: ThankYouModel = {
+            action: apiModel?.Action,
+            message: apiModel?.Message,
+            redirectUrl: apiModel?.RedirectUrl,
+        };
+        return new ThankYouModel(data)
+    }
+}
+
+export class FormSubmitSettingModel {
     buttonText: string;
+    thankYou: ThankYouModel;
+    maxMessageLimit: number;
+    showTermsAndConditions: boolean;
+    requireAcceptance: boolean;
+    formSubmitSettingType: string;
+    terms: string;
 
     constructor(data?: FormSubmitSettingModel) {
         this.buttonText = data?.buttonText || '';
+        this.thankYou = data?.thankYou || new ThankYouModel();
+        this.maxMessageLimit = data?.maxMessageLimit || 5;
+        this.showTermsAndConditions = data?.showTermsAndConditions || false;
+        this.requireAcceptance = data?.requireAcceptance || false;
+        this.formSubmitSettingType = data?.formSubmitSettingType || "";
+        this.terms = data?.terms || "";
     }
 
     static deserialize(apiModel: APIFormSubmitSettings): FormSubmitSettingModel {
         const data: FormSubmitSettingModel = {
             buttonText: apiModel?.ButtonText,
+            thankYou: ThankYouModel.deserialize(apiModel?.ThankYou),
+            maxMessageLimit: apiModel?.MaxMessageLimit,
+            showTermsAndConditions: apiModel?.ShowTermsAndConditions,
+            requireAcceptance: apiModel?.RequireAcceptance,
+            formSubmitSettingType: apiModel?.FormSubmitSettingType,
+            terms: apiModel?.Terms,
         };
         return new FormSubmitSettingModel(data)
     }
@@ -24,7 +63,7 @@ export class FormModel {
     fieldDetails: FormFieldModel;
     interest: InterestModel;
     buttonStyles: StyleModel;
-    formSubmitSettings: FormSubmitSettingModel;
+    submitSettings: FormSubmitSettingModel;
 
     constructor(data?: FormModel) {
         this.title = data?.title || '';
@@ -32,7 +71,7 @@ export class FormModel {
         this.fieldDetails = data?.fieldDetails || new FormFieldModel();
         this.interest = data?.interest || new InterestModel();
         this.buttonStyles = data?.buttonStyles || new StyleModel();
-        this.formSubmitSettings = data?.formSubmitSettings || new FormSubmitSettingModel();
+        this.submitSettings = data?.submitSettings || new FormSubmitSettingModel();
     }
 
     static deserialize(apiModel: APIForm): FormModel {
@@ -42,7 +81,7 @@ export class FormModel {
             fieldDetails: FormFieldModel.deserialize(apiModel),
             interest: InterestModel.deserialize(apiModel),
             buttonStyles: FormModel.deserializeButtonStyles(apiModel?.Style?.Button),
-            formSubmitSettings: FormSubmitSettingModel.deserialize(apiModel?.FormSubmitSettings),
+            submitSettings: FormSubmitSettingModel.deserialize(apiModel?.FormSubmitSettings),
         };
         return new FormModel(data)
     }

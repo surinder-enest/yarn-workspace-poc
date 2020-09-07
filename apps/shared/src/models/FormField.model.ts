@@ -44,6 +44,7 @@ export class FieldModel {
     fieldName: string;
     formFields: string;
     formFieldType: string;
+    customFieldId: string;
     customFieldType: string;
     isRequired: boolean;
     birthdayFormatType: string;
@@ -60,6 +61,7 @@ export class FieldModel {
         this.isRequired = data?.isRequired || false;
         this.formFieldType = data?.formFieldType || "";
         this.options = data?.options || [];
+        this.customFieldId = data?.customFieldId || "";
         this.customFieldType = data?.customFieldType || "";
         this.birthdayFormatType = data?.birthdayFormatType || "";
         this.value = data?.value || "";
@@ -76,6 +78,7 @@ export class FieldModel {
             isRequired: apiModel?.IsRequired,
             formFieldType: apiModel?.FormFieldType,
             options: OptionModel.deserializeList(apiModel?.Options),
+            customFieldId: apiModel?.CustomFieldId,
             customFieldType: apiModel?.CustomFieldType,
             birthdayFormatType: apiModel?.BirthdayFormat,
             value: "",

@@ -27,4 +27,19 @@ export class Utility {
     public static isLeapYear(year: number) {
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     }
+
+    public static redirectToOtherPage = (redirectUrl: string, isOpenInNewTab?: boolean) => {
+        if (redirectUrl) {
+            if (!Regex.httpProtocolRegex.test(redirectUrl)) {
+                redirectUrl = 'http://' + redirectUrl;
+            }
+            const redirectLink = document.createElement('a');
+            redirectLink.href = redirectUrl;
+            if (isOpenInNewTab) {
+                redirectLink.target = '_blank';
+            }
+            document.body.appendChild(redirectLink);
+            redirectLink.click();
+        }
+    };
 }

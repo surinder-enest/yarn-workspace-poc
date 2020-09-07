@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleModel } from '../../../models';
 interface Props {
+  value: string;
   className?: string;
   valueKey: string;
   nameKey: string;
@@ -19,11 +20,13 @@ export default class SingleSelectDropdown extends Component<Props> {
       options,
       valueKey,
       nameKey,
+      value,
       onSelectChange,
     } = this.props;
     return (
       <select
         style={styles}
+        value={value}
         className={className}
         onChange={event => onSelectChange(event.currentTarget.value)}
       >

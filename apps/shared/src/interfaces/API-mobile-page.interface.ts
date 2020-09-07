@@ -29,10 +29,17 @@ export interface APIGeoLocationDetails {
     Location: Array<APIMapAddress>
 }
 
+interface APIContactInfo {
+    ContactId: string;
+}
+
 export interface APIMobilePage {
     Id: string;
     Name: string;
     UserId: string;
+    AccountId: string;
+    CreatedBy: string;
+    UpdatedBy: string;
     Status: string;
     PageLink: string;
     AccountShortUniqueId: string;
@@ -43,4 +50,5 @@ export interface APIMobilePage {
     PageStyling: APIPageStyles;
     MobilePageBuilderComponents: Array<APIBuilderElement>;
     GeoLocationDetails: Array<APIGeoLocationDetails>;
+    ContactInfo: APIContactInfo;
 }

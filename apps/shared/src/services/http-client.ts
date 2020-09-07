@@ -15,7 +15,7 @@ export class HttpClient {
         return this.client.get(params ? `${url}?${params}` : url);
     }
 
-    post(url: string, data: any, progressCallback: any) {
+    post(url: string, data: any, progressCallback?: any) {
         return this.client.post(url, data, progressCallback);
     }
 

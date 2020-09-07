@@ -6,4 +6,5 @@ export * from './GenderType.enum';
 export * from './BirthdayFormatType.enum';
 export * from './Month.enum';
 export * from './CustomFieldType.enum';
-export * from './InterestResponseValue.enum'; 
+export * from './InterestResponseValue.enum';
+export * from './ThankYouActionType.enum'; 

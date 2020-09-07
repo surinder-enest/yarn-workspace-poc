@@ -16,5 +16,5 @@ export class Regex {
         '(\\#[-a-z\\d_]*)?$',
         'i'
     );
-
+    public static httpProtocolRegex = /^https?:\/\//i;
 }

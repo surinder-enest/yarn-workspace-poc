@@ -37,6 +37,7 @@ export default class CustomField extends Component<Props> {
         return (
           <textarea
             style={fieldStyles}
+            value={formField.value}
             onChange={event => this.onValueChange(event.currentTarget.value)}
           />
         );
@@ -47,17 +48,18 @@ export default class CustomField extends Component<Props> {
             displayType="input"
             style={fieldStyles}
             maxLength={14}
+            value={formField.value}
             onChange={event => this.onValueChange(event.currentTarget.value)}
           />
         );
       case CUSTOM_FIELD_TYPE.DATE:
         return (
           <DatePicker
+            type="text"
             dateFormat={'MM/DD/YYYY'}
             styles={fieldStyles}
-            onChange={(event: any) =>
-              this.onValueChange(event?.currentTarget?.value)
-            }
+            value={formField.value}
+            onChange={(event: any) => this.onValueChange(event)}
           />
         );
       case CUSTOM_FIELD_TYPE.YES_NO:
@@ -86,6 +88,7 @@ export default class CustomField extends Component<Props> {
             type="text"
             style={fieldStyles}
             maxLength={50}
+            value={formField.value}
             onChange={event => this.onValueChange(event.currentTarget.value)}
           />
         );

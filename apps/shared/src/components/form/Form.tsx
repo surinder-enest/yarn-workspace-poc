@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import { BuilderElementModel, FieldModel } from '../../models';
-import { Field, Interest } from '.';
-import { FORM_FIELD_TYPE, FORM_FIELDS, CUSTOM_FIELD_TYPE } from '../../enums';
-import { Regex } from '../../utilities';
+import { Field, Interest, Terms } from '.';
+import {
+  FORM_FIELD_TYPE,
+  FORM_FIELDS,
+  CUSTOM_FIELD_TYPE,
+  THANK_YOU_ACTION_TYPE,
+} from '../../enums';
+import { Regex, Utility } from '../../utilities';
+import { BuilderElementService } from '../../services';
 
 interface IProps {
   builderElement: BuilderElementModel;
+  mobilePageId: string;
+  contactId: string;
+  accountId: string;
+  responseCapturedFromModule: string;
 }
 
 interface IInterest {
@@ -16,6 +26,10 @@ interface IInterest {
 interface IState {
   fieldResponses: Array<FieldModel>;
   interestResponse: IInterest;
+  isShowThankYouMessage: boolean;
+  isAcceptedTerms: boolean;
+  isTermsVisible: boolean;
+  termsErrorMessage: string;
 }
 
 export default class Form extends Component<IProps, IState> {
@@ -24,6 +38,10 @@ export default class Form extends Component<IProps, IState> {
     this.state = {
       fieldResponses: [],
       interestResponse: { errorMessage: '', selectedInterest: [] },
+      isShowThankYouMessage: false,
+      termsErrorMessage: '',
+      isAcceptedTerms: false,
+      isTermsVisible: false,
     };
   }
 
@@ -158,7 +176,7 @@ export default class Form extends Component<IProps, IState> {
   }
 
   private validateForm(): boolean {
-    const { fieldResponses, interestResponse } = this.state;
+    const { fieldResponses, interestResponse, isAcceptedTerms } = this.state;
     let isValidFields = true;
     let updatedFields = fieldResponses.map(field => {
       field = this.validateField(field);
@@ -170,13 +188,78 @@ export default class Form extends Component<IProps, IState> {
     const isValidInterest = this.validateInterest(
       interestResponse.selectedInterest
     );
-    let isValidForm = isValidFields && isValidInterest;
+    if (!isAcceptedTerms) {
+      this.setState({ termsErrorMessage: 'Please accept Terms & Conditions.' });
+    }
+    let isValidForm = isValidFields && isValidInterest && isAcceptedTerms;
     return isValidForm;
+  }
+
+  private toggleTermsAcceptance(isAcceptedTerms: boolean) {
+    let { termsErrorMessage } = this.state;
+    if (isAcceptedTerms && termsErrorMessage) {
+      termsErrorMessage = '';
+    }
+    this.setState({ isAcceptedTerms, termsErrorMessage });
+  }
+
+  private toggleViewTerms(isTermsVisible: boolean) {
+    this.setState({ isTermsVisible });
   }
 
   private onSubmitButton(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     event.preventDefault();
     if (this.validateForm()) {
+      const { fieldResponses, interestResponse } = this.state;
+      const {
+        mobilePageId,
+        contactId,
+        accountId,
+        responseCapturedFromModule,
+        builderElement,
+      } = this.props;
+      const {
+        action,
+        redirectUrl,
+      } = builderElement.form.submitSettings.thankYou;
+
+      let updatedBuilderElement = { ...builderElement };
+      updatedBuilderElement.form.fieldDetails.fields = fieldResponses.map(
+        x => x
+      );
+      updatedBuilderElement.form.interest.selectedOptions = interestResponse.selectedInterest.map(
+        x => x
+      );
+      const isFormSubmitted = BuilderElementService.saveBuilderElementResponse(
+        updatedBuilderElement,
+        mobilePageId,
+        contactId,
+        accountId,
+        responseCapturedFromModule
+      );
+
+      if (isFormSubmitted) {
+        switch (action) {
+          case THANK_YOU_ACTION_TYPE.MESSAGE:
+            this.setState({ isShowThankYouMessage: true });
+            break;
+          case THANK_YOU_ACTION_TYPE.REDIRECT_TO_WEBSITE:
+          case THANK_YOU_ACTION_TYPE.REDIRECT_TO_MOBILE_PAGE:
+            let url = redirectUrl;
+            if (!Regex.httpProtocolRegex.test(url)) {
+              url = 'http://' + url;
+            }
+            if (
+              url &&
+              contactId &&
+              action === THANK_YOU_ACTION_TYPE.REDIRECT_TO_MOBILE_PAGE
+            ) {
+              url = `${url}?contId=${contactId}`;
+            }
+            Utility.redirectToOtherPage(url);
+            break;
+        }
+      }
     }
     return;
   }
@@ -188,78 +271,119 @@ export default class Form extends Component<IProps, IState> {
       fieldDetails,
       interest,
       buttonStyles,
-      formSubmitSettings,
+      submitSettings,
     } = this.props.builderElement.form;
-    const { fieldResponses, interestResponse } = this.state;
+    const {
+      fieldResponses,
+      interestResponse,
+      isShowThankYouMessage,
+      termsErrorMessage,
+      isTermsVisible,
+      isAcceptedTerms,
+    } = this.state;
     return (
-      <div style={styles}>
-        <style>{`a {
+      <div>
+        {isShowThankYouMessage ? (
+          <div style={{ padding: '10px !importants' }}>
+            <img
+              src="https://s.mobilepages.co/images/check-medium.gif"
+              height="100"
+              style={{
+                display: 'block',
+                margin: 'auto',
+              }}
+            />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: submitSettings.thankYou.message,
+              }}
+            />
+            ;
+          </div>
+        ) : (
+          <div style={styles}>
+            <style>{`a {
             text-decoration: none;
           }
         `}</style>
-        <div style={{ width: '66%', margin: '0 auto' }}>
-          <div style={{ textAlign: 'left' }}>
-            <div style={{ marginBottom: '20px', position: 'relative' }}>
-              <div dangerouslySetInnerHTML={{ __html: title }} />
+            <div style={{ width: '66%', margin: '0 auto' }}>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ marginBottom: '20px', position: 'relative' }}>
+                  <div dangerouslySetInnerHTML={{ __html: title }} />
+                </div>
+                <Field
+                  fieldDetails={fieldDetails}
+                  fieldResponses={fieldResponses}
+                  updatedFieldDetails={(updatedField: FieldModel) =>
+                    this.updatedFieldDetails(updatedField)
+                  }
+                  validateField={(updatedField: FieldModel) =>
+                    this.validateField(updatedField)
+                  }
+                />
+                <Interest
+                  interest={interest}
+                  errorMessage={interestResponse.errorMessage}
+                  selectedInterest={interestResponse.selectedInterest}
+                  validateInterest={(selectedInterest: Array<string>) =>
+                    this.validateInterest(selectedInterest)
+                  }
+                />
+                <Terms
+                  submitSettings={submitSettings}
+                  isAcceptedTerms={isAcceptedTerms}
+                  isTermsVisible={isTermsVisible}
+                  toggleViewTerms={(value: boolean) =>
+                    this.toggleViewTerms(value)
+                  }
+                  toggleTermsAcceptance={(value: boolean) =>
+                    this.toggleTermsAcceptance(value)
+                  }
+                  errorMessage={termsErrorMessage}
+                  acceptanceId={this.props.builderElement.key}
+                />
+              </div>
             </div>
-            <Field
-              fieldDetails={fieldDetails}
-              fieldResponses={fieldResponses}
-              updatedFieldDetails={(updatedField: FieldModel) =>
-                this.updatedFieldDetails(updatedField)
-              }
-              validateField={(updatedField: FieldModel) =>
-                this.validateField(updatedField)
-              }
-            />
-            <Interest
-              interest={interest}
-              errorMessage={interestResponse.errorMessage}
-              selectedInterest={interestResponse.selectedInterest}
-              validateInterest={(selectedInterest: Array<string>) =>
-                this.validateInterest(selectedInterest)
-              }
-            />
-          </div>
-        </div>
-        <div
-          style={{
-            paddingTop: '20px',
-            textAlign: 'center',
-            position: 'relative',
-          }}
-        >
-          <div
-            className="agreement-text"
-            style={{
-              width: '66%',
-              margin: '0 auto',
-              color: fieldDetails.labelStyles.color,
-              fontWeight: 'normal',
-              fontStyle: 'normal',
-              fontSize: '13px',
-              textAlign: 'left',
-            }}
-          >
-            You agree to opt-in to receive Text and/or email notifications,
-            offers, alerts and news. Msg & data rates may apply. Text STOP to
-            end. Up to {50} msg/mo.
-          </div>
-          <div
-            style={{
-              paddingTop: '20px',
-              textAlign: 'center',
-              position: 'relative',
-            }}
-          >
             <div
-              style={buttonStyles}
-              onClick={event => this.onSubmitButton(event)}
+              style={{
+                paddingTop: '20px',
+                textAlign: 'center',
+                position: 'relative',
+              }}
             >
-              {formSubmitSettings.buttonText}
+              <div
+                className="agreement-text"
+                style={{
+                  width: '66%',
+                  margin: '0 auto',
+                  color: fieldDetails.labelStyles.color,
+                  fontWeight: 'normal',
+                  fontStyle: 'normal',
+                  fontSize: '13px',
+                  textAlign: 'left',
+                }}
+              >
+                You agree to opt-in to receive Text and/or email notifications,
+                offers, alerts and news. Msg & data rates may apply. Text STOP
+                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
+              </div>
+              <div
+                style={{
+                  paddingTop: '20px',
+                  textAlign: 'center',
+                  position: 'relative',
+                }}
+              >
+                <div
+                  style={buttonStyles}
+                  onClick={event => this.onSubmitButton(event)}
+                >
+                  {submitSettings.buttonText}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

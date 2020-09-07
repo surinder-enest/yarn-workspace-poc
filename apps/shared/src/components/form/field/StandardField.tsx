@@ -72,6 +72,7 @@ export default class StandardField extends Component<Props> {
 
   private getBirthdayDropdown(
     month: number,
+    day: number,
     year: number,
     defaultOption: string,
     isMonth: boolean,
@@ -81,6 +82,7 @@ export default class StandardField extends Component<Props> {
     const { styles } = this.props;
     let options: Array<any> = [];
     this.nameKey = 'value';
+    let value = month;
     var currentYear = new Date().getFullYear();
     var date = new Date(
       year > 0 ? year : currentYear,
@@ -96,16 +98,19 @@ export default class StandardField extends Component<Props> {
         })
       );
     } else if (isDay) {
+      value = day;
       for (let i = 1; i <= date.getDate(); i++) {
         options.push({ value: i });
       }
     } else if (isYear) {
+      value = year;
       for (let i = 1; i <= 100; i++) {
         options.push({ value: currentYear - i });
       }
     }
     return (
       <SelectDropdown
+        value={value.toString()}
         valueKey={this.valueKey}
         nameKey={this.nameKey}
         className={`form-control birthday-select`}
@@ -124,6 +129,7 @@ export default class StandardField extends Component<Props> {
       case BIRTHDAY_FORMAT_TYPE.MONTH:
         return this.getBirthdayDropdown(
           formField.dateOfBirth.month,
+          formField.dateOfBirth.day,
           formField.dateOfBirth.year,
           'Month',
           true,
@@ -136,6 +142,7 @@ export default class StandardField extends Component<Props> {
             <div className={'col-md-8 no-padding'}>
               {this.getBirthdayDropdown(
                 formField.dateOfBirth.month,
+                formField.dateOfBirth.day,
                 formField.dateOfBirth.year,
                 'Month',
                 true,
@@ -146,6 +153,7 @@ export default class StandardField extends Component<Props> {
             <div className={'col-md-4 padding-right-0'}>
               {this.getBirthdayDropdown(
                 formField.dateOfBirth.month,
+                formField.dateOfBirth.day,
                 formField.dateOfBirth.year,
                 'Day',
                 false,
@@ -161,6 +169,7 @@ export default class StandardField extends Component<Props> {
             <div className={'col-md-4 padding-left-0'}>
               {this.getBirthdayDropdown(
                 formField.dateOfBirth.month,
+                formField.dateOfBirth.day,
                 formField.dateOfBirth.year,
                 'Month',
                 true,
@@ -171,6 +180,7 @@ export default class StandardField extends Component<Props> {
             <div className={'col-md-4 no-padding'}>
               {this.getBirthdayDropdown(
                 formField.dateOfBirth.month,
+                formField.dateOfBirth.day,
                 formField.dateOfBirth.year,
                 'Day',
                 false,
@@ -181,6 +191,7 @@ export default class StandardField extends Component<Props> {
             <div className={'col-md-4 padding-right-0'}>
               {this.getBirthdayDropdown(
                 formField.dateOfBirth.month,
+                formField.dateOfBirth.day,
                 formField.dateOfBirth.year,
                 'Year',
                 false,
@@ -205,6 +216,7 @@ export default class StandardField extends Component<Props> {
         this.nameKey = 'value';
         return (
           <SelectDropdown
+            value={formField.value}
             valueKey={this.nameKey}
             nameKey={this.nameKey}
             styles={styles}

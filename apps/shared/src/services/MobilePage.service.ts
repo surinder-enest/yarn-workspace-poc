@@ -1,12 +1,12 @@
- import { MobilePageModel } from '@mindme/shared';
 import { HttpClient } from './http-client';
 import { apiUrl } from './api-urls';
+import { MobilePageModel } from '../models';
 
 class MobilePageService {
-    httpClient = new HttpClient({}); 
+    private httpClient = new HttpClient({});
 
     async getMobilePageDetailsForRender(domain: string, directoryId: string, pageName: string) {
-      
+
         try {
             let param = new URLSearchParams();
             param.append('domain', domain);
@@ -16,8 +16,8 @@ class MobilePageService {
                 apiUrl.getMobilePageDetailsForRender,
                 param
             );
-            if (response.data.Success) { 
-                return MobilePageModel.deserialize(response.data.Data.MobilePageData);  
+            if (response.data.Success) {
+                return MobilePageModel.deserialize(response.data.Data.MobilePageData);
             }
             return MobilePageModel;
         } catch (error) {
@@ -25,7 +25,6 @@ class MobilePageService {
             return MobilePageModel;
         }
     }
-
 }
 
 export default new MobilePageService;

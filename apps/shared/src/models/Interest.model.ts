@@ -34,6 +34,7 @@ export class InterestModel {
     isRequireResponse: boolean;
     responseValue: number;
     options: Array<InterestOptionModel>;
+    selectedOptions: Array<string>;
 
     constructor(data?: InterestModel) {
         this.title = data?.title || '';
@@ -42,6 +43,7 @@ export class InterestModel {
         this.isRequireResponse = data?.isRequireResponse || false;
         this.options = data?.options || [];
         this.responseValue = data?.responseValue || -1;
+        this.selectedOptions = data?.selectedOptions || [];
     }
 
     static deserialize(apiModel: APIForm): InterestModel {
@@ -52,6 +54,7 @@ export class InterestModel {
             optionStyles: InterestModel.deserializeOptionStyles(apiModel?.Style?.InterestStyles),
             optionLabelStyles: InterestModel.deserializeOptionLabelStyles(apiModel?.Style?.InterestStyles),
             options: InterestOptionModel.deserializeList(apiModel?.Interest?.InterestDetail),
+            selectedOptions: [],
         };
         return new InterestModel(data)
     }
