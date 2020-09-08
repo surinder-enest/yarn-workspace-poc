@@ -26,8 +26,14 @@ class MobilePageName extends React.Component<Props> {
     const { metaData, pageLink } = mobilePageData;
     return (
       <>
+        <link
+          href="https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Dancing+Script|Abril+Fatface|Dancing+Script|Great+Vibes|Josefin+Sans|Lato|Lobster|Merriweather|Montserrat|Open+Sans|Oswald|Pacifico|Playfair+Display|Poiret+One|Poppins|Quicksand|Raleway|Roboto|Sacramento|Ubuntu|Arial|Sofia"
+          rel="stylesheet"
+        />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <script
           src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
           async
@@ -42,6 +48,7 @@ class MobilePageName extends React.Component<Props> {
               margin: 0;
               font-family: 'Open Sans', Helvetica, Arial, sans-serif;
               min-height: 667px;
+              overflow-y: hidden;
             }
             .padding-right-0 {
               padding-right: 0 !important;
@@ -77,24 +84,8 @@ class MobilePageName extends React.Component<Props> {
             .padding-top-10 {
               padding-top: 10px;
             }
-            .col-md-4,
-            .col-sm-8 {
-              position: relative;
-              min-height: 1px;
-              padding-right: 15px;
-              padding-left: 15px;
-            }
-            .col-md-4 {
-              width: 33.33333333%;
-            }
-            .col-md-8 {
-              width: 66.66666667%;
-            }
-            .col-md-12 {
-              width: 100%;
-            }
             .checkbox {
-              padding-left: 8px;
+              padding-left: 0px;
               white-space: nowrap;
               overflow: hidden !important;
               text-overflow: ellipsis;
@@ -113,19 +104,21 @@ class MobilePageName extends React.Component<Props> {
               width: 15px;
               height: 15px;
               left: 0;
-              margin-left: 2px;
+              margin-left: 0px;
               border: 1px solid #aaaaaa;
               border-radius: 3px;
               background-color: #f8f8f8;
               -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
               -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
               transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+              top: 1px;
             }
             .checkbox-primary input[type='checkbox']:checked + label::after {
               color: #ffffff;
             }
             .checkbox input[type='checkbox']:checked + label::after {
-              content: '✓';
+              font-family: 'FontAwesome';
+              content: '\f00c';
             }
             .checkbox-primary input[type='checkbox']:checked + label::after {
               color: #ffffff;
@@ -135,9 +128,9 @@ class MobilePageName extends React.Component<Props> {
               position: absolute;
               width: 14px;
               height: 14px;
-              left: 2px;
+              left: 1px;
               top: -2px;
-              margin-left: -20px;
+              margin-left: 0px;
               padding-left: 2px;
               padding-top: 1px;
               font-size: 11px;
@@ -155,6 +148,9 @@ class MobilePageName extends React.Component<Props> {
             .checkbox-primary input[type='checkbox']:checked + label::before {
               background-color: #57ac2d;
               border-color: #57ac2d;
+            }
+            .checkbox input[type="checkbox"] {
+              opacity: 0;
             }
             .circle-checkbox .checkbox label::before {
               border-radius: 100px;

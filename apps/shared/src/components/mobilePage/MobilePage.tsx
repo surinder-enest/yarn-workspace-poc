@@ -48,39 +48,43 @@ class MobilePage extends React.Component<Props> {
           height: '100%',
         }}
       >
-        <div
-          style={{
-            backgroundColor,
-            verticalAlign: 'middle',
-            height: 'calc(100vh - 0px)',
-            overflowY: 'auto',
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              padding: '0px',
-            }}
-          >
+        <div style={{ width: '100%', padding: '0px', height: '100%' }}>
+          <div style={{ display: 'table', height: '100%', width: '100%' }}>
             <div
               style={{
-                maxWidth: '600px',
-                margin: '15px auto',
-                backgroundColor: 'rgb(255, 255, 255)',
+                backgroundColor,
+                verticalAlign: 'middle',
+                height: 'calc(100vh - 0px)',
+                overflowY: 'auto',
               }}
             >
-              <div style={{ margin: '0px' }}>
+              <div
+                style={{
+                  width: '100%',
+                  padding: '0px',
+                }}
+              >
                 <div
                   style={{
-                    borderStyle,
-                    borderWidth,
-                    borderColor,
+                    maxWidth: '600px',
+                    margin: '15px auto',
+                    backgroundColor: 'rgb(255, 255, 255)',
                   }}
                 >
-                  {builderElements.map(
-                    (detail: BuilderElementModel, idx: number) =>
-                      this.builderElement(detail, idx)
-                  )}
+                  <div style={{ margin: '0px' }}>
+                    <div
+                      style={{
+                        borderStyle,
+                        borderWidth,
+                        borderColor,
+                      }}
+                    >
+                      {builderElements.map(
+                        (detail: BuilderElementModel, idx: number) =>
+                          this.builderElement(detail, idx)
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
