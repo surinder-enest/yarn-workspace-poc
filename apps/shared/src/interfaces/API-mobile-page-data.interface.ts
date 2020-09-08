@@ -1,5 +1,5 @@
 export interface IDateOfBirth {
-  DOB?: Date;
+  DOB?: string;
   Day?: number;
   Month?: number;
   Year?: number;

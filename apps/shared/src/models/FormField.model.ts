@@ -27,7 +27,7 @@ class OptionModel {
 }
 
 class DateOfBirthModel {
-    dob?: Date;
+    dob?: string;
     day: number;
     month: number;
     year: number;

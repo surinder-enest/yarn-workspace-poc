@@ -48,6 +48,7 @@ export default class StandardField extends Component<Props> {
     isYear: boolean
   ) {
     let updatedField = { ...this.props.formField };
+    updatedField.dateOfBirth.dob = '';
     if (isMonth) {
       updatedField.dateOfBirth.month = value;
     } else if (isDay) {
@@ -57,15 +58,31 @@ export default class StandardField extends Component<Props> {
     }
 
     const { month, day, year } = updatedField.dateOfBirth;
-    if (month && day && year) {
-      let today = new Date();
-      today.setFullYear(year);
-      today.setMonth(month - 1);
-      today.setDate(day);
-      updatedField.value = today.toString();
-    } else {
-      updatedField.value = '';
+    let birthday = new Date();
+    switch (updatedField.birthdayFormatType) {
+      case BIRTHDAY_FORMAT_TYPE.MONTH:
+        if (month > 0) {
+          birthday.setMonth(month - 1);
+          updatedField.dateOfBirth.dob = birthday.toString();
+        }
+        break;
+      case BIRTHDAY_FORMAT_TYPE.MONTH_DAY:
+        if (month > 0 && day > 0) {
+          birthday.setMonth(month - 1);
+          birthday.setDate(day);
+          updatedField.dateOfBirth.dob = birthday.toString();
+        }
+        break;
+      case BIRTHDAY_FORMAT_TYPE.DAY_MONTH_YEAR:
+        if (month > 0 && day > 0 && year > 0) {
+          birthday.setFullYear(year);
+          birthday.setMonth(month - 1);
+          birthday.setDate(day);
+          updatedField.dateOfBirth.dob = birthday.toString();
+        }
+        break;
     }
+    updatedField.value = updatedField.dateOfBirth.dob || '';
     updatedField = this.props.validateField(updatedField);
     this.props.updatedFieldDetails(updatedField);
   }

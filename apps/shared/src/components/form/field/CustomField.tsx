@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FieldModel, StyleModel } from '../../../models';
 import { CUSTOM_FIELD_TYPE } from '../../../enums';
-import { ReactSelectDropdown } from '..';
+import { CustomSelectDropdown } from '..';
 import NumberFormat from 'react-number-format';
 import DatePicker from 'react-16-bootstrap-date-picker';
 
@@ -68,7 +68,7 @@ export default class CustomField extends Component<Props> {
         const isMulti =
           formField.customFieldType === CUSTOM_FIELD_TYPE.SELECT_MULTIPLE;
         return (
-          <ReactSelectDropdown
+          <CustomSelectDropdown
             valueKey="value"
             nameKey="label"
             options={formField.options}

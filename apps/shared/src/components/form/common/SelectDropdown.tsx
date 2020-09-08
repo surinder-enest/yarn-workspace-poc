@@ -11,7 +11,7 @@ interface Props {
   onSelectChange: Function;
 }
 
-export default class SingleSelectDropdown extends Component<Props> {
+export default class SelectDropdown extends Component<Props> {
   render() {
     const {
       styles,

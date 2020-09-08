@@ -18,17 +18,8 @@ interface Props {
 
 export default class ReactSelectDropdown extends Component<Props> {
   animatedComponents = makeAnimated();
-  onChangeHandler(selectedOptions: any) {
-    const { isMulti, valueKey } = this.props;
-    if (isMulti) {
-      const selectedValues = selectedOptions.map((x: any) => x[valueKey]);
-      this.props.onMultiSelect(selectedValues);
-    } else {
-      this.props.onSingleSelect(selectedOptions?.[valueKey] || '');
-    }
-  }
-  render() {
-    const { styles, defaultOption, className, options, isMulti } = this.props;
+
+  private getCutomStyles() {
     const {
       borderColor,
       borderWidth,
@@ -36,7 +27,7 @@ export default class ReactSelectDropdown extends Component<Props> {
       borderStyle,
       backgroundColor,
       color,
-    } = styles;
+    } = this.props.styles;
     const customStyles = {
       control: (base: any) => ({
         ...base,
@@ -50,9 +41,23 @@ export default class ReactSelectDropdown extends Component<Props> {
       placeholder: (base: any) => ({ ...base, color }),
       indicatorContainer: (base: any) => ({ ...base, color }),
     };
+    return customStyles;
+  }
+
+  onChangeHandler(selectedOptions: any) {
+    const { isMulti, valueKey } = this.props;
+    if (isMulti) {
+      const selectedValues = selectedOptions.map((x: any) => x[valueKey]);
+      this.props.onMultiSelect(selectedValues);
+    } else {
+      this.props.onSingleSelect(selectedOptions?.[valueKey] || '');
+    }
+  }
+  render() {
+    const { defaultOption, className, options, isMulti } = this.props;
     return (
       <Select
-        style={customStyles}
+        styles={this.getCutomStyles()}
         closeMenuOnSelect={!isMulti}
         components={this.animatedComponents}
         className={className}
