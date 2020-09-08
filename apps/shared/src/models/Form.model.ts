@@ -32,6 +32,7 @@ export class FormSubmitSettingModel {
     requireAcceptance: boolean;
     formSubmitSettingType: string;
     terms: string;
+    requireReCaptcha: boolean;
 
     constructor(data?: FormSubmitSettingModel) {
         this.buttonText = data?.buttonText || '';
@@ -41,6 +42,7 @@ export class FormSubmitSettingModel {
         this.requireAcceptance = data?.requireAcceptance || false;
         this.formSubmitSettingType = data?.formSubmitSettingType || "";
         this.terms = data?.terms || "";
+        this.requireReCaptcha = data?.requireReCaptcha || false;
     }
 
     static deserialize(apiModel: APIFormSubmitSettings): FormSubmitSettingModel {
@@ -52,6 +54,7 @@ export class FormSubmitSettingModel {
             requireAcceptance: apiModel?.RequireAcceptance,
             formSubmitSettingType: apiModel?.FormSubmitSettingType,
             terms: apiModel?.Terms,
+            requireReCaptcha: apiModel?.RequireReCaptcha,
         };
         return new FormSubmitSettingModel(data)
     }

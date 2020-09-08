@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BuilderElementModel, FieldModel } from '../../models';
-import { Field, Interest, Terms } from '.';
+import { Field, Interest, Terms, ReactRecaptcha } from '.';
 import {
   FORM_FIELD_TYPE,
   FORM_FIELDS,
@@ -30,6 +30,8 @@ interface IState {
   isAcceptedTerms: boolean;
   isTermsVisible: boolean;
   termsErrorMessage: string;
+  isCaptchaConfigured: boolean;
+  captchaErrorMessage: string;
 }
 
 export default class Form extends Component<IProps, IState> {
@@ -42,6 +44,8 @@ export default class Form extends Component<IProps, IState> {
       termsErrorMessage: '',
       isAcceptedTerms: false,
       isTermsVisible: false,
+      isCaptchaConfigured: false,
+      captchaErrorMessage: '',
     };
   }
 
@@ -176,7 +180,16 @@ export default class Form extends Component<IProps, IState> {
   }
 
   private validateForm(): boolean {
-    const { fieldResponses, interestResponse, isAcceptedTerms } = this.state;
+    const {
+      fieldResponses,
+      interestResponse,
+      isAcceptedTerms,
+      isCaptchaConfigured,
+    } = this.state;
+    const {
+      requireReCaptcha,
+      requireAcceptance,
+    } = this.props.builderElement.form.submitSettings;
     let isValidFields = true;
     let updatedFields = fieldResponses.map(field => {
       field = this.validateField(field);
@@ -188,10 +201,26 @@ export default class Form extends Component<IProps, IState> {
     const isValidInterest = this.validateInterest(
       interestResponse.selectedInterest
     );
-    if (!isAcceptedTerms) {
-      this.setState({ termsErrorMessage: 'Please accept Terms & Conditions.' });
+
+    let isValidForm = isValidFields && isValidInterest;
+
+    if (requireAcceptance || requireReCaptcha) {
+      let termsErrorMessage = '';
+      let captchaErrorMessage = '';
+      if (requireAcceptance && !isAcceptedTerms) {
+        termsErrorMessage = 'Please accept Terms & Conditions.';
+        isValidForm = false;
+      }
+      if (requireReCaptcha && !isCaptchaConfigured) {
+        captchaErrorMessage =
+          requireAcceptance && !isAcceptedTerms
+            ? 'Please accept Terms & Conditions. Please check the captcha.'
+            : 'Recaptcha is required.';
+        termsErrorMessage = '';
+        isValidForm = false;
+      }
+      this.setState({ termsErrorMessage, captchaErrorMessage });
     }
-    let isValidForm = isValidFields && isValidInterest && isAcceptedTerms;
     return isValidForm;
   }
 
@@ -205,6 +234,14 @@ export default class Form extends Component<IProps, IState> {
 
   private toggleViewTerms(isTermsVisible: boolean) {
     this.setState({ isTermsVisible });
+  }
+
+  private onChangeCaptcha(isCaptchaConfigured: boolean) {
+    let { captchaErrorMessage } = { ...this.state };
+    if (isCaptchaConfigured) {
+      captchaErrorMessage = '';
+    }
+    this.setState({ isCaptchaConfigured, captchaErrorMessage });
   }
 
   private onSubmitButton(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -280,6 +317,7 @@ export default class Form extends Component<IProps, IState> {
       termsErrorMessage,
       isTermsVisible,
       isAcceptedTerms,
+      captchaErrorMessage,
     } = this.state;
     return (
       <div>
@@ -344,6 +382,15 @@ export default class Form extends Component<IProps, IState> {
                 />
               </div>
             </div>
+            {submitSettings.requireReCaptcha && (
+              <ReactRecaptcha
+                elementId={`recaptcha_${this.props.builderElement.key}`}
+                errorMessage={captchaErrorMessage}
+                onChangeCaptcha={(value: boolean) =>
+                  this.onChangeCaptcha(value)
+                }
+              />
+            )}
             <div
               style={{
                 paddingTop: '20px',

@@ -45,7 +45,7 @@ export default class Terms extends Component<IProps> {
                     id={acceptanceId}
                     type="checkbox"
                     className="selectable"
-                    checked={isAcceptedTerms}
+                    defaultChecked={isAcceptedTerms}
                     onClick={event => {
                       toggleTermsAcceptance(event.currentTarget.checked);
                     }}

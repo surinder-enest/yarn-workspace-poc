@@ -2,3 +2,4 @@ declare module 'react-select';
 declare module 'react-select/animated';
 declare module 'react-16-bootstrap-date-picker';
 declare module 'react-number-format';
+declare module 'react-recaptcha';

@@ -28,6 +28,11 @@ class MobilePageName extends React.Component<Props> {
       <>
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+        <script
+          src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+          async
+          defer
+        ></script>
         <style jsx global>
           {`
             body {
@@ -167,6 +172,18 @@ class MobilePageName extends React.Component<Props> {
               font-style: normal;
               font-family: 'Open Sans', sans-serif;
               margin-bottom: 1em;
+            }
+            .g-recaptcha + div {
+              width: 280px;
+              margin: 0 auto;
+            }
+            .g-recaptcha iframe {
+              width: 304px;
+            }
+            .g-recaptcha {
+              margin: 0 auto;
+              width: 300px;
+              position: relative;
             }
           `}
         </style>
