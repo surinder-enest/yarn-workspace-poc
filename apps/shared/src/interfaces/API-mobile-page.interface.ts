@@ -21,12 +21,12 @@ export interface APIMapLocation {
     Longitutd: string;
 }
 
-export interface APIMapAddress {
-    Location: Array<APIMapLocation>
+export interface APIGeoAddress {
+    Location: APIMapLocation
 }
 
 export interface APIGeoLocationDetails {
-    Location: Array<APIMapAddress>
+    Address: Array<APIGeoAddress>
 }
 
 interface APIContactInfo {
@@ -49,6 +49,6 @@ export interface APIMobilePage {
     SeoSearchDetails: APISeoSearchDetails;
     PageStyling: APIPageStyles;
     MobilePageBuilderComponents: Array<APIBuilderElement>;
-    GeoLocationDetails: Array<APIGeoLocationDetails>;
+    GeoLocationDetails: APIGeoLocationDetails;
     ContactInfo: APIContactInfo;
 }

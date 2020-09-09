@@ -1,4 +1,4 @@
-import { APIMobilePage, APIMapLocation } from '../interfaces';
+import { APIMobilePage, APIMapLocation, APIGeoAddress } from '../interfaces';
 
 export class MetaDataModel {
     pageTitle: string;
@@ -9,7 +9,7 @@ export class MetaDataModel {
     noIndex: string;
     accountShortUniqueId: string;
     htmlPageName: string;
-    // geoLocationDetails: Array<GEOGraphicsModel>;
+    geoLocationDetails: Array<GEOGraphicsModel>;
 
     constructor(data?: MetaDataModel) {
         this.pageTitle = data?.pageTitle || '';
@@ -20,7 +20,7 @@ export class MetaDataModel {
         this.noIndex = data?.noIndex || '';
         this.accountShortUniqueId = data?.accountShortUniqueId || '';
         this.htmlPageName = data?.htmlPageName || '';
-        // this.geoLocationDetails = data?.geoLocationDetails || [];
+        this.geoLocationDetails = data?.geoLocationDetails || [];
     }
 
     static deserialize(apiModel: APIMobilePage): MetaDataModel {
@@ -33,7 +33,7 @@ export class MetaDataModel {
             noIndex: apiModel?.SeoSearchDetails?.IsEnableMobileDiscoveryOnSeo ? 'noindex' : '',
             accountShortUniqueId: apiModel?.AccountShortUniqueId,
             htmlPageName: apiModel?.HtmlPageName,
-            // geoLocationDetails: GEOGraphicsModel.deserializeList(apiModel?.GeoLocationDetails),
+            geoLocationDetails: GEOGraphicsModel.deserializeList(apiModel?.GeoLocationDetails?.Address),
         };
         return new MetaDataModel(data)
     }
@@ -53,17 +53,14 @@ export class GEOGraphicsModel {
             latitude: apiModel?.Latitude,
             longitute: apiModel?.Longitutd,
         };
-        return new GEOGraphicsModel(data)
+        return new GEOGraphicsModel(data);
     }
 
-    // static deserializeList(apiList: APIGeoLocationDetails[]): GEOGraphicsModel[] {
-    //     return apiList
-    //         ? apiList.map((apiData: APIGeoLocationDetails) =>
-    //             apiData && apiData.Location && apiData.Location.map((apiMapAddress: APIMapAddress) =>
-    //                 apiMapAddress && apiMapAddress.Location && apiMapAddress.Location.map((apiMapLocation: APIMapLocation) =>
-    //                 return new GEOGraphicsModel.deserialize(apiMapLocation); 
-    //             )
-    //             )
-    //         : [];
-    // }
+    static deserializeList(apiList: APIGeoAddress[]): GEOGraphicsModel[] {
+        return apiList
+            ? apiList.map((apiAddress: APIGeoAddress) => {
+                return GEOGraphicsModel.deserialize(apiAddress?.Location)
+            })
+            : [];
+    }
 }

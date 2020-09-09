@@ -27,6 +27,7 @@ export default class ReactSelectDropdown extends Component<Props> {
       borderStyle,
       backgroundColor,
       color,
+      height,
     } = this.props.styles;
     const customStyles = {
       control: (base: any) => ({
@@ -36,6 +37,7 @@ export default class ReactSelectDropdown extends Component<Props> {
         borderRadius,
         borderStyle,
         backgroundColor,
+        height,
       }),
       multiValue: (base: any) => ({ ...base, color }),
       placeholder: (base: any) => ({ ...base, color }),

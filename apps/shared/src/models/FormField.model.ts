@@ -114,7 +114,7 @@ export class FormFieldModel {
             fields: FieldModel.deserializeList(apiModel?.FormFieldsSettings),
             labelStyles: FormFieldModel.deserializeLabelStyles(apiModel?.Style?.FieldsStyle),
             fieldStyles: FormFieldModel.deserializeStyles(apiModel?.Style?.FieldsStyle),
-            customFieldSelectStyles: FormFieldModel.deserializeCustomFieldSelectStyles(apiModel?.Style?.FieldsStyle),
+            customFieldSelectStyles: FormFieldModel.deserializeCustomSelectStyles(apiModel?.Style?.FieldsStyle),
         };
         return new FormFieldModel(data);
     }
@@ -149,7 +149,7 @@ export class FormFieldModel {
         return new StyleModel(data);
     }
 
-    static deserializeCustomFieldSelectStyles(apiModel: APIFieldsStyle): StyleModel {
+    static deserializeCustomSelectStyles(apiModel: APIFieldsStyle): StyleModel {
         const data: StyleModel = {
             borderColor: apiModel?.BorderColor?.HexValue || 'rgba(199,199,199,1)',
             borderWidth: apiModel?.BorderSize || '1px',
@@ -157,6 +157,7 @@ export class FormFieldModel {
             borderStyle: apiModel?.ElementBorderStyles || "Solid",
             backgroundColor: apiModel?.FieldBackgroundColor?.HexValue || '#fff',
             color: apiModel?.FieldTextColor?.HexValue || '#333',
+            height: "44px",
         };
         return new StyleModel(data);
     }
