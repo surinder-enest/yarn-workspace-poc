@@ -1,40 +1,14 @@
 import React from 'react';
 import { MobilePageModel, BuilderElementModel } from '../../models';
-import { BUILDER_ELEMENTS } from '../../enums';
-import { Title } from '..';
-import { Form } from '../form';
+import { BuilderElement } from '..';
 
 interface Props {
   pageData: MobilePageModel;
 }
 
 class MobilePage extends React.Component<Props> {
-  builderElement(builderElement: BuilderElementModel, idx: number) {
-    if (!builderElement) {
-      return <></>;
-    }
-    const { pageData } = this.props;
-    switch (builderElement.builderElementType) {
-      case BUILDER_ELEMENTS.TITLE:
-        return <Title key={idx} builderElement={builderElement} />;
-      case BUILDER_ELEMENTS.FORM:
-        return (
-          <Form
-            key={idx}
-            builderElement={builderElement}
-            mobilePageId={pageData.id}
-            contactId={pageData.contactId}
-            accountId={pageData.accountId}
-            responseCapturedFromModule={'MobilePage'}
-          />
-        );
-      default:
-        return <></>;
-    }
-  }
-
   render() {
-    const { pageStyles, builderElements } = this.props.pageData;
+    const { pageStyles, builderElements, accountId, contactId, id } = this.props.pageData;
     const {
       borderStyle,
       borderWidth,
@@ -78,11 +52,18 @@ class MobilePage extends React.Component<Props> {
                         borderWidth,
                         borderColor,
                       }}
-                    >
-                      {builderElements.map(
-                        (detail: BuilderElementModel, idx: number) =>
-                          this.builderElement(detail, idx)
-                      )}
+                    >{
+                        builderElements.map(
+                          (detail: BuilderElementModel) =>
+                            <BuilderElement builderElement={detail}
+                              moduleId={id}
+                              contactId={contactId}
+                              accountId={accountId}
+                              responseCapturedFromModule={'MobilePage'}
+                              isActualRendering={true}
+                            />
+                        )
+                      }
                     </div>
                   </div>
                 </div>

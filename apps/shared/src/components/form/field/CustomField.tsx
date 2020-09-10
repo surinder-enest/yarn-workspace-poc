@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { FieldModel, StyleModel } from '../../../models';
 import { CUSTOM_FIELD_TYPE } from '../../../enums';
 import { CustomSelectDropdown } from '..';
@@ -30,7 +30,7 @@ export default class CustomField extends Component<Props> {
     this.props.updatedFieldDetails(updatedField);
   }
 
-  private getCustomField() {
+  private getCustomField(): ReactNode {
     const { formField, fieldStyles, customFieldSelectStyles } = this.props;
     switch (formField.customFieldType) {
       case CUSTOM_FIELD_TYPE.LONG_TEXT:

@@ -7,9 +7,9 @@ class BuilderElementService {
   private httpClient = new HttpClient({});
 
   async saveBuilderElementResponse(builderElement: BuilderElementModel,
-    mobilePageId: string, contactId: string, accountId: string,
+    moduleId: string, contactId: string, accountId: string,
     responseCapturedFromModule: string) {
-    const requestModel = this.mobilePageData(builderElement, mobilePageId, contactId, accountId, responseCapturedFromModule);
+    const requestModel = this.mobilePageData(builderElement, moduleId, contactId, accountId, responseCapturedFromModule);
     const response = await this.httpClient.post(
       apiUrl.saveBuilderElementResponse,
       requestModel
@@ -26,7 +26,7 @@ class BuilderElementService {
 
 
   private mobilePageData(builderElement: BuilderElementModel,
-    mobilePageId: string, contactId: string, accountId: string,
+    moduleId: string, contactId: string, accountId: string,
     responseCapturedFromModule: string) {
     const mobilePageData: IMobilePageData = {
       AccountId: accountId,
@@ -34,7 +34,7 @@ class BuilderElementService {
       BuilderElementId: builderElement.id,
       BuilderElement: builderElement.builderElementType,
       FormResponseDetails: this.formData(builderElement?.form),
-      BuilderElementUsedInModuleId: mobilePageId,
+      BuilderElementUsedInModuleId: moduleId,
       ResponseCapturedFromModule: responseCapturedFromModule,
     }
     return mobilePageData;

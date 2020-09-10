@@ -223,7 +223,7 @@ export default class StandardField extends Component<Props> {
     }
   }
 
-  private getStandardField() {
+  private getStandardField(): ReactNode {
     const { formField, styles } = this.props;
     switch (formField.formFields) {
       case FORM_FIELDS.GENDER:

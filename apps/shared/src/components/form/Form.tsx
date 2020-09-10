@@ -12,10 +12,11 @@ import { BuilderElementService } from '../../services';
 
 interface IProps {
   builderElement: BuilderElementModel;
-  mobilePageId: string;
+  moduleId: string;
   contactId: string;
   accountId: string;
   responseCapturedFromModule: string;
+  isActualRendering: boolean;
 }
 
 interface IInterest {
@@ -249,7 +250,7 @@ export default class Form extends Component<IProps, IState> {
     if (this.validateForm()) {
       const { fieldResponses, interestResponse } = this.state;
       const {
-        mobilePageId,
+        moduleId,
         contactId,
         accountId,
         responseCapturedFromModule,
@@ -269,7 +270,7 @@ export default class Form extends Component<IProps, IState> {
       );
       const isFormSubmitted = BuilderElementService.saveBuilderElementResponse(
         updatedBuilderElement,
-        mobilePageId,
+        moduleId,
         contactId,
         accountId,
         responseCapturedFromModule
@@ -339,81 +340,58 @@ export default class Form extends Component<IProps, IState> {
             ;
           </div>
         ) : (
-          <div style={styles}>
-            <style>{`a {
+            <div style={styles}>
+              <style>{`a {
             text-decoration: none;
           }
         `}</style>
-            <div style={{ width: '66%', margin: '0 auto' }}>
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ marginBottom: '20px', position: 'relative' }}>
-                  <div dangerouslySetInnerHTML={{ __html: title }} />
+              <div style={{ width: '66%', margin: '0 auto' }}>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ marginBottom: '20px', position: 'relative' }}>
+                    <div dangerouslySetInnerHTML={{ __html: title }} />
+                  </div>
+                  <Field
+                    fieldDetails={fieldDetails}
+                    fieldResponses={fieldResponses}
+                    updatedFieldDetails={(updatedField: FieldModel) =>
+                      this.updatedFieldDetails(updatedField)
+                    }
+                    validateField={(updatedField: FieldModel) =>
+                      this.validateField(updatedField)
+                    }
+                  />
+                  <Interest
+                    interest={interest}
+                    errorMessage={interestResponse.errorMessage}
+                    selectedInterest={interestResponse.selectedInterest}
+                    validateInterest={(selectedInterest: Array<string>) =>
+                      this.validateInterest(selectedInterest)
+                    }
+                  />
+                  <Terms
+                    submitSettings={submitSettings}
+                    isAcceptedTerms={isAcceptedTerms}
+                    isTermsVisible={isTermsVisible}
+                    toggleViewTerms={(value: boolean) =>
+                      this.toggleViewTerms(value)
+                    }
+                    toggleTermsAcceptance={(value: boolean) =>
+                      this.toggleTermsAcceptance(value)
+                    }
+                    errorMessage={termsErrorMessage}
+                    acceptanceId={this.props.builderElement.key}
+                  />
                 </div>
-                <Field
-                  fieldDetails={fieldDetails}
-                  fieldResponses={fieldResponses}
-                  updatedFieldDetails={(updatedField: FieldModel) =>
-                    this.updatedFieldDetails(updatedField)
-                  }
-                  validateField={(updatedField: FieldModel) =>
-                    this.validateField(updatedField)
-                  }
-                />
-                <Interest
-                  interest={interest}
-                  errorMessage={interestResponse.errorMessage}
-                  selectedInterest={interestResponse.selectedInterest}
-                  validateInterest={(selectedInterest: Array<string>) =>
-                    this.validateInterest(selectedInterest)
-                  }
-                />
-                <Terms
-                  submitSettings={submitSettings}
-                  isAcceptedTerms={isAcceptedTerms}
-                  isTermsVisible={isTermsVisible}
-                  toggleViewTerms={(value: boolean) =>
-                    this.toggleViewTerms(value)
-                  }
-                  toggleTermsAcceptance={(value: boolean) =>
-                    this.toggleTermsAcceptance(value)
-                  }
-                  errorMessage={termsErrorMessage}
-                  acceptanceId={this.props.builderElement.key}
-                />
               </div>
-            </div>
-            {submitSettings.requireReCaptcha && (
-              <ReactRecaptcha
-                elementId={`recaptcha_${this.props.builderElement.key}`}
-                errorMessage={captchaErrorMessage}
-                onChangeCaptcha={(value: boolean) =>
-                  this.onChangeCaptcha(value)
-                }
-              />
-            )}
-            <div
-              style={{
-                paddingTop: '20px',
-                textAlign: 'center',
-                position: 'relative',
-              }}
-            >
-              <div
-                className="agreement-text"
-                style={{
-                  width: '66%',
-                  margin: '0 auto',
-                  color: fieldDetails.labelStyles.color,
-                  fontWeight: 'normal',
-                  fontStyle: 'normal',
-                  fontSize: '13px',
-                  textAlign: 'left',
-                }}
-              >
-                You agree to opt-in to receive Text and/or email notifications,
-                offers, alerts and news. Msg & data rates may apply. Text STOP
-                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
-              </div>
+              {submitSettings.requireReCaptcha && (
+                <ReactRecaptcha
+                  elementId={`recaptcha_${this.props.builderElement.key}`}
+                  errorMessage={captchaErrorMessage}
+                  onChangeCaptcha={(value: boolean) =>
+                    this.onChangeCaptcha(value)
+                  }
+                />
+              )}
               <div
                 style={{
                   paddingTop: '20px',
@@ -422,15 +400,38 @@ export default class Form extends Component<IProps, IState> {
                 }}
               >
                 <div
-                  style={buttonStyles}
-                  onClick={event => this.onSubmitButton(event)}
+                  className="agreement-text"
+                  style={{
+                    width: '66%',
+                    margin: '0 auto',
+                    color: fieldDetails.labelStyles.color,
+                    fontWeight: 'normal',
+                    fontStyle: 'normal',
+                    fontSize: '13px',
+                    textAlign: 'left',
+                  }}
                 >
-                  {submitSettings.buttonText}
+                  You agree to opt-in to receive Text and/or email notifications,
+                  offers, alerts and news. Msg & data rates may apply. Text STOP
+                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
+              </div>
+                <div
+                  style={{
+                    paddingTop: '20px',
+                    textAlign: 'center',
+                    position: 'relative',
+                  }}
+                >
+                  <div
+                    style={buttonStyles}
+                    onClick={event => this.onSubmitButton(event)}
+                  >
+                    {submitSettings.buttonText}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     );
   }

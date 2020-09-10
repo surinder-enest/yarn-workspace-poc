@@ -90,7 +90,7 @@ export class StyleModel {
                     ${1 - opacityValue})), url(${Utility.replace(Url, " ", "%20")}) 
                     ${Utility.addStringBeforeCapitalLetter(ImagePosition, " ").toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
                     ${Utility.addStringBeforeCapitalLetter(BackgroundRepeat, "-").toLowerCase()}`
-                    : BackgroundColor ? BackgroundColor : Utility.WhiteColorCode}`;
+                    : BackgroundColor?.HexValue ? BackgroundColor.HexValue : Utility.WhiteColorCode}`;
             default:
                 return "";
         }

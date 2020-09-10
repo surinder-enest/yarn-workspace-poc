@@ -7,6 +7,7 @@ export class BuilderElementModel {
     id: string;
     key: string;
     builderElementType: string;
+    isElementActive?: boolean;
     title: TitleModel;
     form: FormModel;
 
@@ -14,6 +15,7 @@ export class BuilderElementModel {
         this.id = data?.id || '';
         this.key = data?.key || '';
         this.builderElementType = data?.builderElementType || '';
+        this.isElementActive = data?.isElementActive || false;
         this.title = data?.title || new TitleModel();
         this.form = data?.form || new FormModel();
     }
