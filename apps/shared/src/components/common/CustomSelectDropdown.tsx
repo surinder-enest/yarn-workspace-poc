@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { StyleModel } from '../../../models';
+import React, { Component } from 'react'; 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { StyleModel } from '../../models';
 
 interface Props {
   selectedValue?: string;

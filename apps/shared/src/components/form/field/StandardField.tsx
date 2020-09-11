@@ -5,9 +5,9 @@ import {
   FORM_FIELDS,
   GENDER_TYPE,
 } from '../../../enums';
-import { FieldModel, StyleModel } from '../../../models';
-import { SelectDropdown } from '..';
+import { FieldModel, StyleModel } from '../../../models'; 
 import { Utility } from '../../../utilities';
+import { SelectDropdown } from '../../common';
 
 interface Props {
   formField: FieldModel;

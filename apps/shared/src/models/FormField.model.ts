@@ -2,7 +2,7 @@ import { APIFormFieldsSettings, APIForm, APIFieldsStyle, APIOptions } from '../i
 import { StyleModel } from './Style.model';
 import { Utility } from '../utilities';
 
-class OptionModel {
+export class OptionModel {
     label: string;
     value: string;
 
@@ -33,6 +33,7 @@ class DateOfBirthModel {
     year: number;
 
     constructor(data?: DateOfBirthModel) {
+        this.dob = data?.dob || "";
         this.day = data?.day || 0;
         this.month = data?.month || 0;
         this.year = data?.year || 0;
@@ -48,7 +49,7 @@ export class FieldModel {
     customFieldType: string;
     isRequired: boolean;
     birthdayFormatType: string;
-    options: Array<any>;
+    options: Array<OptionModel>;
     value: string;
     errorMessage: string;
     selectedOptions: Array<string>;
