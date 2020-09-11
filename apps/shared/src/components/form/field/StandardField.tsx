@@ -5,7 +5,7 @@ import {
   FORM_FIELDS,
   GENDER_TYPE,
 } from '../../../enums';
-import { FieldModel, StyleModel } from '../../../models'; 
+import { FieldModel, StyleModel } from '../../../models';
 import { Utility } from '../../../utilities';
 import { SelectDropdown } from '../../common';
 
@@ -256,7 +256,6 @@ export default class StandardField extends Component<Props> {
         return (
           <input
             type="text"
-            id={formField.id}
             maxLength={maxLength}
             style={styles}
             value={formField.value}

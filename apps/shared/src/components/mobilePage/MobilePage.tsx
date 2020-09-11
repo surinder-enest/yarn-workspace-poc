@@ -54,12 +54,14 @@ class MobilePage extends React.Component<Props> {
                       }}
                     >{
                         builderElements.map(
-                          (detail: BuilderElementModel) =>
-                            <BuilderElement builderElement={detail}
+                          (detail: BuilderElementModel, idx: number) =>
+                            <BuilderElement
+                              key={idx}
+                              builderElement={detail}
                               moduleId={id}
                               contactId={contactId}
                               accountId={accountId}
-                              responseCapturedFromModule={'MobilePage'}
+                              responseCapturedFromModule='MobilePage'
                               isActualRendering={true}
                             />
                         )

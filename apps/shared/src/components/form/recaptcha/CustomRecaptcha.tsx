@@ -7,7 +7,7 @@ interface Props {
   onChangeCaptcha: Function;
 }
 
-export default class ReactRecaptcha extends Component<Props> {
+export default class CustomRecaptcha extends Component<Props> {
   private sitekey = '6Le_C0YUAAAAAHQPLFx0qZ89ZFPRATD5Ym7rmqBg';
   render() {
     const { elementId, errorMessage, onChangeCaptcha } = this.props;

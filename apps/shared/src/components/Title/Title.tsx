@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { BuilderElementModel } from '../../models';
+import { TitleModel } from '../../models';
 
 interface Props {
-  builderElement: BuilderElementModel;
+  title: TitleModel;
 }
 
 export default class Title extends Component<Props> {
   render() {
-    const { text, styles } = this.props.builderElement.title;
+    const { text, styles } = this.props.title;
     return <div style={styles} dangerouslySetInnerHTML={{ __html: text }} />
   }
 }

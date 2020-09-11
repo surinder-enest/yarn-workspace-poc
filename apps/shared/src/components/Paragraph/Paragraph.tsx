@@ -1,13 +1,13 @@
 import React, { Component, ReactNode } from 'react';
-import { BuilderElementModel } from '../../models';
+import { ParagraphModel } from '../../models';
 
 interface Props {
-  builderElement: BuilderElementModel;
+  paragraph: ParagraphModel;
 }
 
 export default class Paragraph extends Component<Props> {
   private getParagraphText(): ReactNode {
-    const { styles, rightText, leftText } = this.props.builderElement.paragraph;
+    const { styles, rightText, leftText } = this.props.paragraph;
     return (
       <div style={styles}>
         {rightText ? (
@@ -22,8 +22,8 @@ export default class Paragraph extends Component<Props> {
             />
           </div>
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: leftText }} />
-        )}
+            <div dangerouslySetInnerHTML={{ __html: leftText }} />
+          )}
       </div>
     );
   }

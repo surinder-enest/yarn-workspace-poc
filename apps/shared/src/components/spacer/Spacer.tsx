@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { BuilderElementModel } from '../../models';
+import { SpacerModel } from '../../models';
 
 interface Props {
-  builderElement: BuilderElementModel;
+  spacer: SpacerModel;
 }
 
 export default class Spacer extends Component<Props> {
   render() {
-    const { styles } = this.props.builderElement.spacer;
+    const { styles } = this.props.spacer;
     return <div style={styles}></div>;
   }
 }

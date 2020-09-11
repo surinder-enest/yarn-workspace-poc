@@ -30,20 +30,19 @@ class MobilePage extends React.Component<Props> {
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.TITLE:
         return (
-          <Title key={builderElement.key} builderElement={builderElement} />
+          <Title title={builderElement.title} />
         );
       case BUILDER_ELEMENTS.PARAGRAPH:
         return (
-          <Paragraph key={builderElement.key} builderElement={builderElement} />
+          <Paragraph paragraph={builderElement.paragraph} />
         );
       case BUILDER_ELEMENTS.SPACER:
         return (
-          <Spacer key={builderElement.key} builderElement={builderElement} />
+          <Spacer spacer={builderElement.spacer} />
         );
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form
-            key={builderElement.key}
             builderElement={builderElement}
             moduleId={moduleId || ''}
             contactId={contactId || ''}
@@ -82,10 +81,15 @@ class MobilePage extends React.Component<Props> {
     );
   }
 
+  private getStyles(): any {
+    const pointerEvents = !this.props.isActualRendering ? 'none' : 'inherit';
+    return { pointerEvents };
+  }
+
   render() {
     const { builderElement, className } = this.props;
     return (
-      <div className={className}>
+      <div className={className} style={this.getStyles()}>
         {this.getBuilderSectionAction(builderElement)}
         {this.getBuilderElement(builderElement)}
       </div>

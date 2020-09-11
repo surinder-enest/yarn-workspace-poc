@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BuilderElementModel, FieldModel } from '../../models';
-import { Field, Interest, Terms} from '.';
+import { CustomRecaptcha, Field, Interest, Terms } from '.';
 import {
   FORM_FIELD_TYPE,
   FORM_FIELDS,
@@ -9,7 +9,6 @@ import {
 } from '../../enums';
 import { Regex, Utility } from '../../utilities';
 import { BuilderElementService } from '../../services';
-import { ReactRecaptcha } from '../common';
 
 interface IProps {
   builderElement: BuilderElementModel;
@@ -308,6 +307,7 @@ export default class Form extends Component<IProps, IState> {
   }
 
   render() {
+    const { isActualRendering, builderElement } = this.props;
     const {
       styles,
       title,
@@ -315,7 +315,7 @@ export default class Form extends Component<IProps, IState> {
       interest,
       buttonStyles,
       submitSettings,
-    } = this.props.builderElement.form;
+    } = builderElement.form;
     const {
       fieldResponses,
       interestResponse,
@@ -342,58 +342,80 @@ export default class Form extends Component<IProps, IState> {
                 __html: submitSettings.thankYou.message,
               }}
             />
-            ;
           </div>
         ) : (
-            <div style={{ pointerEvents: 'none' }}>
-              <div style={styles}>
-                <div style={{ width: '66%', margin: '0 auto' }}>
-                  <div style={{ textAlign: 'left' }}>
-                    <div style={{ marginBottom: '20px', position: 'relative' }}>
-                      <div dangerouslySetInnerHTML={{ __html: title }} />
-                    </div>
-                    <Field
-                      fieldDetails={fieldDetails}
-                      fieldResponses={fieldResponses}
-                      updatedFieldDetails={(updatedField: FieldModel) =>
-                        this.updatedFieldDetails(updatedField)
-                      }
-                      validateField={(updatedField: FieldModel) =>
-                        this.validateField(updatedField)
-                      }
-                    />
-                    <Interest
-                      interest={interest}
-                      errorMessage={interestResponse.errorMessage}
-                      selectedInterest={interestResponse.selectedInterest}
-                      validateInterest={(selectedInterest: Array<string>) =>
-                        this.validateInterest(selectedInterest)
-                      }
-                    />
-                    <Terms
-                      submitSettings={submitSettings}
-                      isAcceptedTerms={isAcceptedTerms}
-                      isTermsVisible={isTermsVisible}
-                      toggleViewTerms={(value: boolean) =>
-                        this.toggleViewTerms(value)
-                      }
-                      toggleTermsAcceptance={(value: boolean) =>
-                        this.toggleTermsAcceptance(value)
-                      }
-                      errorMessage={termsErrorMessage}
-                      acceptanceId={this.props.builderElement.key}
-                    />
+            <div style={styles}>
+              <div style={{ width: '66%', margin: '0 auto' }}>
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ marginBottom: '20px', position: 'relative' }}>
+                    <div dangerouslySetInnerHTML={{ __html: title }} />
                   </div>
-                </div>
-                {submitSettings.requireReCaptcha && (
-                  <ReactRecaptcha
-                    elementId={`recaptcha_${this.props.builderElement.key}`}
-                    errorMessage={captchaErrorMessage}
-                    onChangeCaptcha={(value: boolean) =>
-                      this.onChangeCaptcha(value)
+                  <Field
+                    fieldDetails={fieldDetails}
+                    //IF NOT ACTUAL RENDERING THEN SHOWS FIELDS OF MODEL
+                    fieldResponses={isActualRendering ? fieldResponses : fieldDetails.fields}
+                    updatedFieldDetails={(updatedField: FieldModel) =>
+                      this.updatedFieldDetails(updatedField)
+                    }
+                    validateField={(updatedField: FieldModel) =>
+                      this.validateField(updatedField)
                     }
                   />
-                )}
+                  <Interest
+                    interest={interest}
+                    errorMessage={interestResponse.errorMessage}
+                    selectedInterest={interestResponse.selectedInterest}
+                    validateInterest={(selectedInterest: Array<string>) =>
+                      this.validateInterest(selectedInterest)
+                    }
+                  />
+                  <Terms
+                    submitSettings={submitSettings}
+                    isAcceptedTerms={isAcceptedTerms}
+                    isTermsVisible={isTermsVisible}
+                    toggleViewTerms={(value: boolean) =>
+                      this.toggleViewTerms(value)
+                    }
+                    toggleTermsAcceptance={(value: boolean) =>
+                      this.toggleTermsAcceptance(value)
+                    }
+                    errorMessage={termsErrorMessage}
+                    acceptanceId={builderElement.key}
+                  />
+                </div>
+              </div>
+              {submitSettings.requireReCaptcha && (
+                <CustomRecaptcha
+                  elementId={`recaptcha_${builderElement.key}`}
+                  errorMessage={captchaErrorMessage}
+                  onChangeCaptcha={(value: boolean) =>
+                    this.onChangeCaptcha(value)
+                  }
+                />
+              )}
+              <div
+                style={{
+                  paddingTop: '20px',
+                  textAlign: 'center',
+                  position: 'relative',
+                }}
+              >
+                <div
+                  className="agreement-text"
+                  style={{
+                    width: '66%',
+                    margin: '0 auto',
+                    color: fieldDetails.labelStyles.color,
+                    fontWeight: 'normal',
+                    fontStyle: 'normal',
+                    fontSize: '13px',
+                    textAlign: 'left',
+                  }}
+                >
+                  You agree to opt-in to receive Text and/or email notifications,
+                  offers, alerts and news. Msg & data rates may apply. Text STOP
+                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
+              </div>
                 <div
                   style={{
                     paddingTop: '20px',
@@ -402,34 +424,10 @@ export default class Form extends Component<IProps, IState> {
                   }}
                 >
                   <div
-                    className="agreement-text"
-                    style={{
-                      width: '66%',
-                      margin: '0 auto',
-                      color: fieldDetails.labelStyles.color,
-                      fontWeight: 'normal',
-                      fontStyle: 'normal',
-                      fontSize: '13px',
-                      textAlign: 'left',
-                    }}
+                    style={buttonStyles}
+                    onClick={event => this.onSubmitButton(event)}
                   >
-                    You agree to opt-in to receive Text and/or email notifications,
-                    offers, alerts and news. Msg & data rates may apply. Text STOP
-                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
-              </div>
-                  <div
-                    style={{
-                      paddingTop: '20px',
-                      textAlign: 'center',
-                      position: 'relative',
-                    }}
-                  >
-                    <div
-                      style={buttonStyles}
-                      onClick={event => this.onSubmitButton(event)}
-                    >
-                      {submitSettings.buttonText}
-                    </div>
+                    {submitSettings.buttonText}
                   </div>
                 </div>
               </div>

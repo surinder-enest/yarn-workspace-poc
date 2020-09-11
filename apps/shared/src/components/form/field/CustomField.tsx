@@ -84,7 +84,6 @@ export default class CustomField extends Component<Props> {
       default:
         return (
           <input
-            id={formField.id}
             type="text"
             style={fieldStyles}
             maxLength={50}
