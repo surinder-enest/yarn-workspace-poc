@@ -27,6 +27,10 @@ export interface APIParagraph {
   RightParagraphText: string;
   Style: APIStyle;
 }
+export interface APISpacer {
+  Size: number;
+  Style: APIStyle;
+}
 
 export interface APIInterestDetail {
   Id: string;
@@ -72,5 +76,6 @@ export interface APIBuilderElement {
   BuilderElementType: string;
   Title: APITitle;
   Paragraph: APIParagraph;
+  Spacer: APISpacer;
   Form: APIForm;
 }

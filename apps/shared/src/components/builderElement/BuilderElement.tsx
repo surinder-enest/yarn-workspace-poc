@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import { BuilderElementModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
-import { Title, Paragraph } from '..';
+import { Title, Paragraph, Spacer } from '..';
 import { Form } from '../form';
+
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -34,6 +35,10 @@ class MobilePage extends React.Component<Props> {
       case BUILDER_ELEMENTS.PARAGRAPH:
         return (
           <Paragraph key={builderElement.key} builderElement={builderElement} />
+        );
+      case BUILDER_ELEMENTS.SPACER:
+        return (
+          <Spacer key={builderElement.key} builderElement={builderElement} />
         );
       case BUILDER_ELEMENTS.FORM:
         return (
