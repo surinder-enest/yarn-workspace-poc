@@ -1,41 +1,49 @@
 import { TitleModel } from './Title';
+import { ParagraphModel } from './Paragraph.model';
 import { APIBuilderElement } from '../interfaces';
 import { FormModel } from './Form.model';
 
-
 export class BuilderElementModel {
-    id: string;
-    key: string;
-    builderElementType: string;
-    isElementActive?: boolean;
-    title: TitleModel;
-    form: FormModel;
+  id: string;
+  key: string;
+  builderElementType: string;
+  isElementActive?: boolean;
+  title: TitleModel;
+  paragraph: ParagraphModel;
+  form: FormModel;
 
-    constructor(data?: BuilderElementModel) {
-        this.id = data?.id || '';
-        this.key = data?.key || '';
-        this.builderElementType = data?.builderElementType || '';
-        this.isElementActive = data?.isElementActive || false;
-        this.title = data?.title || new TitleModel();
-        this.form = data?.form || new FormModel();
-    }
+  constructor(data?: BuilderElementModel) {
+    this.id = data?.id || '';
+    this.key = data?.key || '';
+    this.builderElementType = data?.builderElementType || '';
+    this.isElementActive = data?.isElementActive || false;
+    this.title = data?.title || new TitleModel();
+    this.paragraph = data?.paragraph || new ParagraphModel();
+    this.form = data?.form || new FormModel();
+  }
 
-    static deserialize(apiModel: APIBuilderElement): BuilderElementModel {
-        const data: BuilderElementModel = {
-            id: apiModel?.Id,
-            key: apiModel?.Key,
-            builderElementType: apiModel?.BuilderElementType,
-            title: TitleModel.deserialize(apiModel?.Title),
-            form: FormModel.deserialize(apiModel?.Form),
-        };
-        return new BuilderElementModel(data)
-    }
+  static deserialize(apiModel: APIBuilderElement): BuilderElementModel {
+    const data: BuilderElementModel = {
+      id: apiModel?.Id,
+      key: apiModel?.Key,
+      builderElementType: apiModel?.BuilderElementType,
+      title: TitleModel.deserialize(apiModel?.Title),
+      paragraph: ParagraphModel.deserialize(apiModel?.Paragraph),
+      form: FormModel.deserialize(apiModel?.Form),
+    };
+    return new BuilderElementModel(data);
+  }
 
-
-    static deserializeList(apiBuilderElementList: APIBuilderElement[]): BuilderElementModel[] {
-        return apiBuilderElementList
-            ? apiBuilderElementList.map((apiBuilderElement: APIBuilderElement) =>
-                new BuilderElementModel(BuilderElementModel.deserialize(apiBuilderElement)))
-            : [];
-    }
+  static deserializeList(
+    apiBuilderElementList: APIBuilderElement[]
+  ): BuilderElementModel[] {
+    return apiBuilderElementList
+      ? apiBuilderElementList.map(
+          (apiBuilderElement: APIBuilderElement) =>
+            new BuilderElementModel(
+              BuilderElementModel.deserialize(apiBuilderElement)
+            )
+        )
+      : [];
+  }
 }
