@@ -1,9 +1,9 @@
 import React, { Component, ReactNode } from 'react';
 import { FieldModel, StyleModel } from '../../../models';
 import { CUSTOM_FIELD_TYPE } from '../../../enums';
-import { CustomSelectDropdown } from '..';
 import NumberFormat from 'react-number-format';
 import DatePicker from 'react-16-bootstrap-date-picker';
+import { CustomSelectDropdown } from '../../common';
 
 interface Props {
   formField: FieldModel;
