@@ -1,6 +1,6 @@
 import React, { Component, ReactNode } from 'react';
-import { FormFieldModel, FieldModel } from '../../../models';
-import { FORM_FIELDS, FORM_FIELD_TYPE } from '../../../enums';
+import { FormFieldModel, FieldModel } from '../../../../models';
+import { FORM_FIELDS, FORM_FIELD_TYPE } from '../../../../enums';
 import StandardField from './StandardField';
 import CustomField from './CustomField';
 

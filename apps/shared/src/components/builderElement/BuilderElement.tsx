@@ -1,9 +1,8 @@
 import React, { ReactNode } from 'react';
 import { BuilderElementModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
-import { Title, Paragraph, Spacer } from '..';
-import { Form } from '../form';
-
+import { Title, Paragraph, Spacer } from '..'; 
+import { Form } from './Form';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -15,7 +14,7 @@ interface Props {
   responseCapturedFromModule?: string;
 }
 
-class MobilePage extends React.Component<Props> {
+class BuilderElement extends React.Component<Props> {
   private getBuilderElement(builderElement: BuilderElementModel): ReactNode {
     if (!builderElement) {
       return <></>;
@@ -56,45 +55,63 @@ class MobilePage extends React.Component<Props> {
     }
   }
 
+  private getBuilderSectionStyles(builderElement: BuilderElementModel): any {
+    let styles: any = {};
+    styles.position = 'relative';
+    if (builderElement.isTextRoute) {
+      styles.background = '#FFFFFF'
+      styles.padding = '4px 10px'
+      styles.borderRadius = '2px 2px 0px 0px'
+      styles.borderBottom = '1px solid #DDDDDD'
+    }
+    return styles;
+  }
+
   private getBuilderSectionAction(
     builderElement: BuilderElementModel
   ): ReactNode {
     const elementKey = { 'data-key': builderElement.key };
     return (
-      <div style={{ position: 'relative' }}>
-        {builderElement.isElementActive && (
+      <div style={this.getBuilderSectionStyles(builderElement)}>
+        {(builderElement.isElementActive || builderElement.isTextRoute) && (
           <>
-            <i
-              id="deleteBuilderElement"
-              className="fa fa-trash-o response-delete clickable"
-              {...elementKey}
-            />
-            <i
-              id="copyBuilderElement"
-              {...elementKey}
-              className="fa fa-clone folder-icon clickable"
-            />
-            <i className="fa fa-bars bar-icon" />
+            {
+              builderElement.isElementActive && <i
+                id="deleteBuilderElement"
+                className="fa fa-trash-o response-delete clickable"
+                {...elementKey}
+              />
+            }
+            {
+              builderElement.isTextRoute
+                ? <span>{builderElement.elementLabel}</span>
+                : <>
+                  <i
+                    id="copyBuilderElement"
+                    {...elementKey}
+                    className="fa fa-clone folder-icon clickable"
+                  />
+                  <i className="fa fa-bars bar-icon" />
+                </>
+            }
           </>
         )}
       </div>
     );
   }
 
-  private getStyles(): any {
-    const pointerEvents = !this.props.isActualRendering ? 'none' : 'inherit';
-    return { pointerEvents };
-  }
-
   render() {
     const { builderElement, className } = this.props;
+    const pointerEvents = !this.props.isActualRendering ? 'none' : 'inherit';
     return (
-      <div className={className} style={this.getStyles()}>
+      <div className={className}>
         {this.getBuilderSectionAction(builderElement)}
-        {this.getBuilderElement(builderElement)}
+        <div style={{ pointerEvents }}>
+          {this.getBuilderElement(builderElement)}
+        </div>
       </div>
     );
   }
 }
 
-export default MobilePage;
+export default BuilderElement;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { StyleModel } from '../../models';
@@ -16,7 +16,7 @@ interface Props {
   onMultiSelect: Function;
 }
 
-export default class ReactSelectDropdown extends Component<Props> {
+export default class CustomSelectDropdown extends Component<Props> {
   animatedComponents = makeAnimated();
 
   private getCutomStyles() {

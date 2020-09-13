@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SpacerModel } from '../../models';
+import { SpacerModel } from '../../../models';
 
 interface Props {
   spacer: SpacerModel;

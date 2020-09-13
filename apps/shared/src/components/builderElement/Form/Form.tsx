@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { BuilderElementModel, FieldModel } from '../../models';
+import { BuilderElementModel, FieldModel } from '../../../models';
 import { CustomRecaptcha, Field, Interest, Terms } from '.';
 import {
   FORM_FIELD_TYPE,
   FORM_FIELDS,
   CUSTOM_FIELD_TYPE,
   THANK_YOU_ACTION_TYPE,
-} from '../../enums';
-import { Regex, Utility } from '../../utilities';
-import { BuilderElementService } from '../../services';
+} from '../../../enums';
+import { Regex, Utility } from '../../../utilities';
+import { BuilderElementService } from '../../../services';
 
 interface IProps {
   builderElement: BuilderElementModel;
@@ -51,17 +51,16 @@ export default class Form extends Component<IProps, IState> {
   }
 
   componentDidMount() {
-    const { fields } = this.props.builderElement.form.fieldDetails;
     this.setState({
-      fieldResponses: fields.map(x => x),
+      fieldResponses: [...this.props.builderElement.form.fieldDetails.fields],
     });
   }
 
   private updatedFieldDetails(updatedField: FieldModel) {
-    let updatedFields = this.state.fieldResponses.map((field: FieldModel) => {
+    const fieldResponses = this.state.fieldResponses.map((field: FieldModel) => {
       return field.id == updatedField.id ? updatedField : field;
     });
-    this.setState({ fieldResponses: updatedFields });
+    this.setState({ fieldResponses });
   }
 
   private validate(value: string, isRequired: boolean, regex?: RegExp): string {
@@ -76,7 +75,7 @@ export default class Form extends Component<IProps, IState> {
 
   private validateStandardField(field: FieldModel): FieldModel {
     const { isRequired, value } = { ...field };
-    let regex: any = null;
+    let regex = new RegExp('');
 
     switch (field.formFields) {
       case FORM_FIELDS.MOBILE_PHONE:
@@ -182,7 +181,6 @@ export default class Form extends Component<IProps, IState> {
 
   private validateForm(): boolean {
     const {
-      fieldResponses,
       interestResponse,
       isAcceptedTerms,
       isCaptchaConfigured,
@@ -192,13 +190,13 @@ export default class Form extends Component<IProps, IState> {
       requireAcceptance,
     } = this.props.builderElement.form.submitSettings;
     let isValidFields = true;
-    let updatedFields = fieldResponses.map(field => {
+    const fieldResponses = this.state.fieldResponses.map(field => {
       field = this.validateField(field);
       if (field.errorMessage) isValidFields = false;
       return field;
     });
 
-    this.setState({ fieldResponses: updatedFields });
+    this.setState({ fieldResponses });
     const isValidInterest = this.validateInterest(
       interestResponse.selectedInterest
     );
@@ -266,12 +264,8 @@ export default class Form extends Component<IProps, IState> {
       } = builderElement.form.submitSettings.thankYou;
 
       let updatedBuilderElement = { ...builderElement };
-      updatedBuilderElement.form.fieldDetails.fields = fieldResponses.map(
-        x => x
-      );
-      updatedBuilderElement.form.interest.selectedOptions = interestResponse.selectedInterest.map(
-        x => x
-      );
+      updatedBuilderElement.form.fieldDetails.fields = [...fieldResponses];
+      updatedBuilderElement.form.interest.selectedOptions = [...interestResponse.selectedInterest];
       const isFormSubmitted = BuilderElementService.saveBuilderElementResponse(
         updatedBuilderElement,
         moduleId,

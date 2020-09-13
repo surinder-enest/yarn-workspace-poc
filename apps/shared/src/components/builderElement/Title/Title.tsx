@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TitleModel } from '../../models';
+import { TitleModel } from '../../../models';
 
 interface Props {
   title: TitleModel;

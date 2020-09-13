@@ -1,9 +1,8 @@
 import React, { Component, ReactNode } from 'react';
-import { FieldModel, StyleModel } from '../../../models';
-import { CUSTOM_FIELD_TYPE } from '../../../enums';
+import { FieldModel, StyleModel } from '../../../../models';
+import { CUSTOM_FIELD_TYPE } from '../../../../enums';
 import NumberFormat from 'react-number-format';
-import DatePicker from 'react-16-bootstrap-date-picker';
-import { CustomSelectDropdown } from '../../common';
+import { CustomDatePicker, CustomSelectDropdown } from '../../..';
 
 interface Props {
   formField: FieldModel;
@@ -23,10 +22,11 @@ export default class CustomField extends Component<Props> {
   }
 
   private onMultiSelectChange(selectedOptions: Array<string>) {
-    let updatedField = { ...this.props.formField };
-    updatedField.value = selectedOptions.join();
-    updatedField.selectedOptions = selectedOptions;
-    updatedField = this.props.validateField(updatedField);
+    const updatedField = this.props.validateField({
+      ...this.props.formField,
+      selectedOptions,
+      value: selectedOptions.join(),
+    });
     this.props.updatedFieldDetails(updatedField);
   }
 
@@ -54,7 +54,7 @@ export default class CustomField extends Component<Props> {
         );
       case CUSTOM_FIELD_TYPE.DATE:
         return (
-          <DatePicker
+          <CustomDatePicker
             type="text"
             dateFormat={'MM/DD/YYYY'}
             styles={fieldStyles}

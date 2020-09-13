@@ -1,13 +1,13 @@
 import React, { Component, ReactNode } from 'react';
+import { SelectDropdown } from '../../..';
 import {
   MONTH,
   BIRTHDAY_FORMAT_TYPE,
   FORM_FIELDS,
   GENDER_TYPE,
-} from '../../../enums';
-import { FieldModel, StyleModel } from '../../../models';
-import { Utility } from '../../../utilities';
-import { SelectDropdown } from '../../common';
+} from '../../../../enums';
+import { FieldModel, StyleModel } from '../../../../models';
+import { Utility } from '../../../../utilities';
 
 interface Props {
   formField: FieldModel;
@@ -28,16 +28,20 @@ export default class StandardField extends Component<Props> {
   }
 
   private onBlurHandler() {
-    let updatedField = { ...this.props.formField };
-    if (!updatedField.errorMessage) {
-      switch (updatedField.formFields) {
+    const { value, errorMessage, formFields } = this.props.formField;
+    let updatedValue: string = value;
+    if (!errorMessage) {
+      switch (formFields) {
         case FORM_FIELDS.MOBILE_PHONE:
         case FORM_FIELDS.HOME_PHONE:
         case FORM_FIELDS.WORK_PHONE:
-          updatedField.value = Utility.formatPhoneNumber(updatedField.value);
+          updatedValue = Utility.formatPhoneNumber(updatedValue);
           break;
       }
-      this.props.updatedFieldDetails(updatedField);
+      this.props.updatedFieldDetails({
+        ...this.props.formField,
+        value: updatedValue
+      });
     }
   }
 
@@ -47,30 +51,30 @@ export default class StandardField extends Component<Props> {
     isDay: boolean,
     isYear: boolean
   ) {
-    let updatedField = { ...this.props.formField };
-    updatedField.dateOfBirth.dob = '';
+    const { birthdayFormatType } = this.props.formField;
+    let dateOfBirth = { ...this.props.formField.dateOfBirth };
+    dateOfBirth.dob = '';
     if (isMonth) {
-      updatedField.dateOfBirth.month = value;
+      dateOfBirth.month = value;
     } else if (isDay) {
-      updatedField.dateOfBirth.day = value;
+      dateOfBirth.day = value;
     } else if (isYear) {
-      updatedField.dateOfBirth.year = value;
+      dateOfBirth.year = value;
     }
-
-    const { month, day, year } = updatedField.dateOfBirth;
+    const { month, day, year } = dateOfBirth;
     let birthday = new Date();
-    switch (updatedField.birthdayFormatType) {
+    switch (birthdayFormatType) {
       case BIRTHDAY_FORMAT_TYPE.MONTH:
         if (month > 0) {
           birthday.setMonth(month - 1);
-          updatedField.dateOfBirth.dob = birthday.toString();
+          dateOfBirth.dob = birthday.toString();
         }
         break;
       case BIRTHDAY_FORMAT_TYPE.MONTH_DAY:
         if (month > 0 && day > 0) {
           birthday.setMonth(month - 1);
           birthday.setDate(day);
-          updatedField.dateOfBirth.dob = birthday.toString();
+          dateOfBirth.dob = birthday.toString();
         }
         break;
       case BIRTHDAY_FORMAT_TYPE.DAY_MONTH_YEAR:
@@ -78,12 +82,15 @@ export default class StandardField extends Component<Props> {
           birthday.setFullYear(year);
           birthday.setMonth(month - 1);
           birthday.setDate(day);
-          updatedField.dateOfBirth.dob = birthday.toString();
+          dateOfBirth.dob = birthday.toString();
         }
         break;
     }
-    updatedField.value = updatedField.dateOfBirth.dob || '';
-    updatedField = this.props.validateField(updatedField);
+    const updatedField = this.props.validateField({
+      ...this.props.formField,
+      value: dateOfBirth.dob || '',
+      dateOfBirth
+    });
     this.props.updatedFieldDetails(updatedField);
   }
 

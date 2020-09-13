@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { ParagraphModel } from '../../models';
+import { ParagraphModel } from '../../../models';
 
 interface Props {
   paragraph: ParagraphModel;

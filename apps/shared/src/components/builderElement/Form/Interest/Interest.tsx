@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { InterestModel, InterestOptionModel } from '../../../models';
+import { InterestModel, InterestOptionModel } from '../../../../models';
 
 interface Props {
   interest: InterestModel;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormSubmitSettingModel } from '../../../models';
+import { FormSubmitSettingModel } from '../../../../models';
 
 interface IProps {
   submitSettings: FormSubmitSettingModel;
@@ -56,8 +56,7 @@ export default class Terms extends Component<IProps> {
                       position: 'relative',
                       bottom: '2px',
                     }}
-                    htmlFor={acceptanceId}
-                  >
+                    htmlFor={acceptanceId}>
                     I accept Terms & Conditions.
                   </label>
                   <a
