@@ -30,7 +30,10 @@ class MobilePageName extends React.Component<Props> {
           href="https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Dancing+Script|Abril+Fatface|Dancing+Script|Great+Vibes|Josefin+Sans|Lato|Lobster|Merriweather|Montserrat|Open+Sans|Oswald|Pacifico|Playfair+Display|Poiret+One|Poppins|Quicksand|Raleway|Roboto|Sacramento|Ubuntu|Arial|Sofia"
           rel="stylesheet"
         />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap"
+          rel="stylesheet"
+        />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -39,6 +42,7 @@ class MobilePageName extends React.Component<Props> {
           async
           defer
         ></script>
+        <script type="text/javascript">document.addEventListener('DOMContentLoaded', function (event) {});</script>
         <style jsx global>
           {`
             body {
@@ -149,7 +153,7 @@ class MobilePageName extends React.Component<Props> {
               background-color: #57ac2d;
               border-color: #57ac2d;
             }
-            .checkbox input[type="checkbox"] {
+            .checkbox input[type='checkbox'] {
               opacity: 0;
             }
             .circle-checkbox .checkbox label::before {
