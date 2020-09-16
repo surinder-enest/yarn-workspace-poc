@@ -17,7 +17,7 @@ class MobilePageService {
                 param
             );
             if (response.data.Success) {
-                return MobilePageModel.deserialize(response.data.Data.MobilePageData);
+                return MobilePageModel.deserialize(response.data.Data);
             }
             return MobilePageModel;
         } catch (error) {

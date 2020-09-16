@@ -97,8 +97,8 @@ export default class Interest extends Component<Props> {
             </div>
           </>
         ) : (
-            <></>
-          )}
+          <></>
+        )}
       </>
     );
   }

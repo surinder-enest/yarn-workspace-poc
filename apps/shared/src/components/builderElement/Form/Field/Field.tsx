@@ -1,17 +1,45 @@
 import React, { Component, ReactNode } from 'react';
-import { FormFieldModel, FieldModel } from '../../../../models';
+import { FormFieldModel, FieldModel, CountryModel } from '../../../../models';
 import { FORM_FIELDS, FORM_FIELD_TYPE } from '../../../../enums';
 import StandardField from './StandardField';
 import CustomField from './CustomField';
 
-interface Props {
+interface IProps {
   fieldDetails: FormFieldModel;
   fieldResponses: Array<FieldModel>;
   updatedFieldDetails: Function;
   validateField: Function;
+  countriesAndStates: Array<CountryModel>;
+  accountCountryId: string;
 }
 
-export default class Field extends Component<Props> {
+interface IState {
+  countryId: string;
+}
+
+export default class Field extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      countryId: '',
+    };
+  }
+
+  componentDidMount() {
+    const { accountCountryId } = this.props;
+    const hasCountryField = this.props.fieldResponses.some(
+      field => field.formFields === FORM_FIELDS.COUNTRY
+    );
+    debugger;
+    if (!hasCountryField) {
+      this.setState({ countryId: accountCountryId });
+    }
+  }
+
+  private onCountryChange(countryId: string) {
+    this.setState({ countryId });
+  }
+
   private getFieldTypeHtml(formField: FieldModel): ReactNode {
     const { fieldStyles, customFieldSelectStyles } = this.props.fieldDetails;
 
@@ -20,6 +48,9 @@ export default class Field extends Component<Props> {
         return (
           <StandardField
             formField={formField}
+            countryId={this.state.countryId}
+            onCountryChange={(value: string) => this.onCountryChange(value)}
+            countriesAndStates={this.props.countriesAndStates}
             styles={fieldStyles}
             updatedFieldDetails={this.props.updatedFieldDetails}
             validateField={this.props.validateField}

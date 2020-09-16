@@ -15,30 +15,32 @@ declare global {
 
 export default class CustomRecaptcha extends Component<Props> {
   private sitekey = '6Le_C0YUAAAAAHQPLFx0qZ89ZFPRATD5Ym7rmqBg';
-
+  componentDidMount() {
+    this.props.onChangeCaptcha(false);
+  }
   render() {
     const { elementId, errorMessage, onChangeCaptcha } = this.props;
-    const render =
-      typeof window !== 'undefined' &&
-      typeof window.grecaptcha !== 'undefined' &&
-      typeof window.grecaptcha.render === 'function'
-        ? 'explicit'
-        : '';
     return (
       <div style={{ paddingTop: '20px' }}>
-        <Recaptcha
-          elementID={elementId}
-          style={
-            'transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;'
-          }
-          sitekey={this.sitekey}
-          render={render}
-          onloadCallback={() => {
-            console.log('load');
-          }}
-          verifyCallback={() => onChangeCaptcha(true)}
-          expiredCallback={() => onChangeCaptcha(false)}
-        />
+        {typeof window !== 'undefined' &&
+          typeof window.grecaptcha !== 'undefined' &&
+          typeof window.grecaptcha.render === 'function' && (
+            <div className="g-recaptcha">
+              <Recaptcha
+                elementID={elementId}
+                style={
+                  'transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;'
+                }
+                sitekey={this.sitekey}
+                render="explicit"
+                onloadCallback={() => {
+                  console.log('load');
+                }}
+                verifyCallback={() => onChangeCaptcha(true)}
+                expiredCallback={() => onChangeCaptcha(false)}
+              />
+            </div>
+          )}
         {errorMessage && (
           <div
             style={{

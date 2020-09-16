@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import { BuilderElementModel } from '../../models';
+import { BuilderElementModel, CountryModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
-import { Title, Paragraph, Spacer } from '..'; 
+import { Title, Paragraph, Spacer } from '..';
 import { Form } from './Form';
 
 interface Props {
@@ -12,6 +12,8 @@ interface Props {
   className?: string;
   isActualRendering: boolean;
   responseCapturedFromModule?: string;
+  countriesAndStates?: Array<CountryModel>;
+  accountCountryId?: string;
 }
 
 class BuilderElement extends React.Component<Props> {
@@ -25,20 +27,16 @@ class BuilderElement extends React.Component<Props> {
       accountId,
       responseCapturedFromModule,
       isActualRendering,
+      countriesAndStates,
+      accountCountryId,
     } = this.props;
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.TITLE:
-        return (
-          <Title title={builderElement.title} />
-        );
+        return <Title title={builderElement.title} />;
       case BUILDER_ELEMENTS.PARAGRAPH:
-        return (
-          <Paragraph paragraph={builderElement.paragraph} />
-        );
+        return <Paragraph paragraph={builderElement.paragraph} />;
       case BUILDER_ELEMENTS.SPACER:
-        return (
-          <Spacer spacer={builderElement.spacer} />
-        );
+        return <Spacer spacer={builderElement.spacer} />;
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form
@@ -48,6 +46,8 @@ class BuilderElement extends React.Component<Props> {
             accountId={accountId || ''}
             responseCapturedFromModule={responseCapturedFromModule || ''}
             isActualRendering={isActualRendering}
+            countriesAndStates={countriesAndStates || []}
+            accountCountryId={accountCountryId || ''}
           />
         );
       default:
@@ -59,10 +59,10 @@ class BuilderElement extends React.Component<Props> {
     let styles: any = {};
     styles.position = 'relative';
     if (builderElement.isTextRoute) {
-      styles.background = '#FFFFFF'
-      styles.padding = '4px 10px'
-      styles.borderRadius = '2px 2px 0px 0px'
-      styles.borderBottom = '1px solid #DDDDDD'
+      styles.background = '#FFFFFF';
+      styles.padding = '4px 10px';
+      styles.borderRadius = '2px 2px 0px 0px';
+      styles.borderBottom = '1px solid #DDDDDD';
     }
     return styles;
   }
@@ -75,25 +75,25 @@ class BuilderElement extends React.Component<Props> {
       <div style={this.getBuilderSectionStyles(builderElement)}>
         {(builderElement.isElementActive || builderElement.isTextRoute) && (
           <>
-            {
-              builderElement.isElementActive && <i
+            {builderElement.isElementActive && (
+              <i
                 id="deleteBuilderElement"
                 className="fa fa-trash-o response-delete clickable"
                 {...elementKey}
               />
-            }
-            {
-              builderElement.isTextRoute
-                ? <span>{builderElement.elementLabel}</span>
-                : <>
-                  <i
-                    id="copyBuilderElement"
-                    {...elementKey}
-                    className="fa fa-clone folder-icon clickable"
-                  />
-                  <i className="fa fa-bars bar-icon" />
-                </>
-            }
+            )}
+            {builderElement.isTextRoute ? (
+              <span>{builderElement.elementLabel}</span>
+            ) : (
+              <>
+                <i
+                  id="copyBuilderElement"
+                  {...elementKey}
+                  className="fa fa-clone folder-icon clickable"
+                />
+                <i className="fa fa-bars bar-icon" />
+              </>
+            )}
           </>
         )}
       </div>

@@ -6,7 +6,7 @@ import {
   FORM_FIELDS,
   GENDER_TYPE,
 } from '../../../../enums';
-import { FieldModel, StyleModel } from '../../../../models';
+import { CountryModel, FieldModel, StyleModel } from '../../../../models';
 import { Utility } from '../../../../utilities';
 
 interface Props {
@@ -14,17 +14,26 @@ interface Props {
   styles: StyleModel;
   updatedFieldDetails: Function;
   validateField: Function;
+  countriesAndStates: Array<CountryModel>;
+  onCountryChange: Function;
+  countryId: string;
 }
 
 export default class StandardField extends Component<Props> {
   nameKey = 'label';
   valueKey = 'value';
+
   private onValueChange(value: string) {
     const updatedField = this.props.validateField({
       ...this.props.formField,
       value,
     });
     this.props.updatedFieldDetails(updatedField);
+  }
+
+  private onCountryChange(countryId: string) {
+    this.onValueChange(countryId);
+    this.props.onCountryChange(countryId);
   }
 
   private onBlurHandler() {
@@ -40,7 +49,7 @@ export default class StandardField extends Component<Props> {
       }
       this.props.updatedFieldDetails({
         ...this.props.formField,
-        value: updatedValue
+        value: updatedValue,
       });
     }
   }
@@ -89,7 +98,7 @@ export default class StandardField extends Component<Props> {
     const updatedField = this.props.validateField({
       ...this.props.formField,
       value: dateOfBirth.dob || '',
-      dateOfBirth
+      dateOfBirth,
     });
     this.props.updatedFieldDetails(updatedField);
   }
@@ -105,7 +114,7 @@ export default class StandardField extends Component<Props> {
   ): ReactNode {
     const { styles } = this.props;
     let options: Array<any> = [];
-    this.nameKey = 'value';
+    let nameKey = this.valueKey;
     let value = month;
     var currentYear = new Date().getFullYear();
     var date = new Date(
@@ -114,7 +123,7 @@ export default class StandardField extends Component<Props> {
       0
     );
     if (isMonth) {
-      this.nameKey = 'label';
+      nameKey = this.nameKey;
       options = Object.values(MONTH).map((value, idx) =>
         Object.assign({
           label: value,
@@ -136,7 +145,7 @@ export default class StandardField extends Component<Props> {
       <SelectDropdown
         value={value.toString()}
         valueKey={this.valueKey}
-        nameKey={this.nameKey}
+        nameKey={nameKey}
         className={`form-control birthday-select`}
         styles={styles}
         defaultOption={defaultOption}
@@ -231,18 +240,18 @@ export default class StandardField extends Component<Props> {
   }
 
   private getStandardField(): ReactNode {
-    const { formField, styles } = this.props;
+    const { formField, styles, countryId, countriesAndStates } = this.props;
+
     switch (formField.formFields) {
       case FORM_FIELDS.GENDER:
         const genderOptions = Object.values(GENDER_TYPE).map(value =>
           Object.assign({ value })
         );
-        this.nameKey = 'value';
         return (
           <SelectDropdown
             value={formField.value}
-            valueKey={this.nameKey}
-            nameKey={this.nameKey}
+            valueKey={this.valueKey}
+            nameKey={this.valueKey}
             styles={styles}
             options={genderOptions}
             onSelectChange={(value: string) => this.onValueChange(value)}
@@ -250,6 +259,34 @@ export default class StandardField extends Component<Props> {
         );
       case FORM_FIELDS.BIRTHDAY:
         return this.getBithdayHtml(formField);
+      case FORM_FIELDS.COUNTRY:
+        return (
+          <SelectDropdown
+            value={formField.value}
+            valueKey={this.valueKey}
+            nameKey={this.nameKey}
+            defaultOption="Select"
+            styles={styles}
+            options={countriesAndStates}
+            onSelectChange={(value: string) => this.onCountryChange(value)}
+          />
+        );
+      case FORM_FIELDS.STATE:
+        const country = countriesAndStates.find(
+          country => country.value === countryId
+        );
+        const states = country?.states || [];
+        return (
+          <SelectDropdown
+            value={formField.value}
+            valueKey={this.valueKey}
+            nameKey={this.nameKey}
+            defaultOption="Select"
+            styles={styles}
+            options={states}
+            onSelectChange={(value: string) => this.onValueChange(value)}
+          />
+        );
       default:
         let maxLength = 50;
         switch (formField.formFields) {
@@ -272,6 +309,7 @@ export default class StandardField extends Component<Props> {
         );
     }
   }
+
   render() {
     return this.getStandardField();
   }

@@ -33,6 +33,17 @@ interface APIContactInfo {
     ContactId: string;
 }
 
+export interface APIStates {
+    StateId: string;
+    Name: string;
+}
+
+export interface APICountriesAndStates {
+    CountryId: string;
+    Name: string;
+    States: Array<APIStates>;
+}
+
 export interface APIMobilePage {
     Id: string;
     Name: string;
@@ -51,4 +62,10 @@ export interface APIMobilePage {
     MobilePageBuilderComponents: Array<APIBuilderElement>;
     GeoLocationDetails: APIGeoLocationDetails;
     ContactInfo: APIContactInfo;
+    CountryId: string;
+}
+
+export interface APIMobileData {
+    MobilePageData: APIMobilePage;
+    CountriesAndStates: Array<APICountriesAndStates>;
 }

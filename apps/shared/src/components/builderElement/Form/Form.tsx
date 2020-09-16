@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BuilderElementModel, FieldModel } from '../../../models';
+import { BuilderElementModel, CountryModel, FieldModel } from '../../../models';
 import { CustomRecaptcha, Field, Interest, Terms } from '.';
 import {
   FORM_FIELD_TYPE,
@@ -17,6 +17,8 @@ interface IProps {
   accountId: string;
   responseCapturedFromModule: string;
   isActualRendering: boolean;
+  countriesAndStates: Array<CountryModel>;
+  accountCountryId: string;
 }
 
 interface IInterest {
@@ -57,9 +59,11 @@ export default class Form extends Component<IProps, IState> {
   }
 
   private updatedFieldDetails(updatedField: FieldModel) {
-    const fieldResponses = this.state.fieldResponses.map((field: FieldModel) => {
-      return field.id == updatedField.id ? updatedField : field;
-    });
+    const fieldResponses = this.state.fieldResponses.map(
+      (field: FieldModel) => {
+        return field.id == updatedField.id ? updatedField : field;
+      }
+    );
     this.setState({ fieldResponses });
   }
 
@@ -265,7 +269,9 @@ export default class Form extends Component<IProps, IState> {
 
       let updatedBuilderElement = { ...builderElement };
       updatedBuilderElement.form.fieldDetails.fields = [...fieldResponses];
-      updatedBuilderElement.form.interest.selectedOptions = [...interestResponse.selectedInterest];
+      updatedBuilderElement.form.interest.selectedOptions = [
+        ...interestResponse.selectedInterest,
+      ];
       const isFormSubmitted = BuilderElementService.saveBuilderElementResponse(
         updatedBuilderElement,
         moduleId,
@@ -301,7 +307,12 @@ export default class Form extends Component<IProps, IState> {
   }
 
   render() {
-    const { isActualRendering, builderElement } = this.props;
+    const {
+      isActualRendering,
+      builderElement,
+      countriesAndStates,
+      accountCountryId,
+    } = this.props;
     const {
       styles,
       title,
@@ -338,55 +349,82 @@ export default class Form extends Component<IProps, IState> {
             />
           </div>
         ) : (
-            <div style={styles}>
-              <div style={{ width: '66%', margin: '0 auto' }}>
-                <div style={{ textAlign: 'left' }}>
-                  <div style={{ marginBottom: '20px', position: 'relative' }}>
-                    <div dangerouslySetInnerHTML={{ __html: title }} />
-                  </div>
-                  <Field
-                    fieldDetails={fieldDetails}
-                    //IF NOT ACTUAL RENDERING THEN SHOWS FIELDS OF MODEL
-                    fieldResponses={isActualRendering ? fieldResponses : fieldDetails.fields}
-                    updatedFieldDetails={(updatedField: FieldModel) =>
-                      this.updatedFieldDetails(updatedField)
-                    }
-                    validateField={(updatedField: FieldModel) =>
-                      this.validateField(updatedField)
-                    }
-                  />
-                  <Interest
-                    interest={interest}
-                    errorMessage={interestResponse.errorMessage}
-                    selectedInterest={interestResponse.selectedInterest}
-                    validateInterest={(selectedInterest: Array<string>) =>
-                      this.validateInterest(selectedInterest)
-                    }
-                  />
-                  <Terms
-                    submitSettings={submitSettings}
-                    isAcceptedTerms={isAcceptedTerms}
-                    isTermsVisible={isTermsVisible}
-                    toggleViewTerms={(value: boolean) =>
-                      this.toggleViewTerms(value)
-                    }
-                    toggleTermsAcceptance={(value: boolean) =>
-                      this.toggleTermsAcceptance(value)
-                    }
-                    errorMessage={termsErrorMessage}
-                    acceptanceId={builderElement.key}
-                  />
+          <div style={styles}>
+            <div style={{ width: '66%', margin: '0 auto' }}>
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ marginBottom: '20px', position: 'relative' }}>
+                  <div dangerouslySetInnerHTML={{ __html: title }} />
                 </div>
-              </div>
-              {submitSettings.requireReCaptcha && (
-                <CustomRecaptcha
-                  elementId={`recaptcha_${builderElement.key}`}
-                  errorMessage={captchaErrorMessage}
-                  onChangeCaptcha={(value: boolean) =>
-                    this.onChangeCaptcha(value)
+                <Field
+                  fieldDetails={fieldDetails}
+                  countriesAndStates={countriesAndStates}
+                  accountCountryId={accountCountryId}
+                  //IF NOT ACTUAL RENDERING THEN SHOWS FIELDS OF MODEL
+                  fieldResponses={
+                    isActualRendering ? fieldResponses : fieldDetails.fields
+                  }
+                  updatedFieldDetails={(updatedField: FieldModel) =>
+                    this.updatedFieldDetails(updatedField)
+                  }
+                  validateField={(updatedField: FieldModel) =>
+                    this.validateField(updatedField)
                   }
                 />
-              )}
+                <Interest
+                  interest={interest}
+                  errorMessage={interestResponse.errorMessage}
+                  selectedInterest={interestResponse.selectedInterest}
+                  validateInterest={(selectedInterest: Array<string>) =>
+                    this.validateInterest(selectedInterest)
+                  }
+                />
+                <Terms
+                  submitSettings={submitSettings}
+                  isAcceptedTerms={isAcceptedTerms}
+                  isTermsVisible={isTermsVisible}
+                  toggleViewTerms={(value: boolean) =>
+                    this.toggleViewTerms(value)
+                  }
+                  toggleTermsAcceptance={(value: boolean) =>
+                    this.toggleTermsAcceptance(value)
+                  }
+                  errorMessage={termsErrorMessage}
+                  acceptanceId={builderElement.key}
+                />
+              </div>
+            </div>
+            {submitSettings.requireReCaptcha && (
+              <CustomRecaptcha
+                elementId={`recaptcha_${builderElement.key}`}
+                errorMessage={captchaErrorMessage}
+                onChangeCaptcha={(value: boolean) =>
+                  this.onChangeCaptcha(value)
+                }
+              />
+            )}
+            <div
+              style={{
+                paddingTop: '20px',
+                textAlign: 'center',
+                position: 'relative',
+              }}
+            >
+              <div
+                className="agreement-text"
+                style={{
+                  width: '66%',
+                  margin: '0 auto',
+                  color: fieldDetails.labelStyles.color,
+                  fontWeight: 'normal',
+                  fontStyle: 'normal',
+                  fontSize: '13px',
+                  textAlign: 'left',
+                }}
+              >
+                You agree to opt-in to receive Text and/or email notifications,
+                offers, alerts and news. Msg & data rates may apply. Text STOP
+                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
+              </div>
               <div
                 style={{
                   paddingTop: '20px',
@@ -395,38 +433,15 @@ export default class Form extends Component<IProps, IState> {
                 }}
               >
                 <div
-                  className="agreement-text"
-                  style={{
-                    width: '66%',
-                    margin: '0 auto',
-                    color: fieldDetails.labelStyles.color,
-                    fontWeight: 'normal',
-                    fontStyle: 'normal',
-                    fontSize: '13px',
-                    textAlign: 'left',
-                  }}
+                  style={buttonStyles}
+                  onClick={event => this.onSubmitButton(event)}
                 >
-                  You agree to opt-in to receive Text and/or email notifications,
-                  offers, alerts and news. Msg & data rates may apply. Text STOP
-                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
-              </div>
-                <div
-                  style={{
-                    paddingTop: '20px',
-                    textAlign: 'center',
-                    position: 'relative',
-                  }}
-                >
-                  <div
-                    style={buttonStyles}
-                    onClick={event => this.onSubmitButton(event)}
-                  >
-                    {submitSettings.buttonText}
-                  </div>
+                  {submitSettings.buttonText}
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
       </div>
     );
   }

@@ -8,7 +8,15 @@ interface Props {
 
 class MobilePage extends React.Component<Props> {
   render() {
-    const { pageStyles, builderElements, accountId, contactId, id } = this.props.pageData;
+    const {
+      pageStyles,
+      builderElements,
+      accountId,
+      contactId,
+      id,
+      countriesAndStates,
+      accountCountryId,
+    } = this.props.pageData;
     const {
       borderStyle,
       borderWidth,
@@ -52,20 +60,22 @@ class MobilePage extends React.Component<Props> {
                         borderWidth,
                         borderColor,
                       }}
-                    >{
-                        builderElements.map(
-                          (detail: BuilderElementModel, idx: number) =>
-                            <BuilderElement
-                              key={idx}
-                              builderElement={detail}
-                              moduleId={id}
-                              contactId={contactId}
-                              accountId={accountId}
-                              responseCapturedFromModule='MobilePage'
-                              isActualRendering={true}
-                            />
+                    >
+                      {builderElements.map(
+                        (detail: BuilderElementModel, idx: number) => (
+                          <BuilderElement
+                            key={idx}
+                            builderElement={detail}
+                            moduleId={id}
+                            contactId={contactId}
+                            accountId={accountId}
+                            accountCountryId={accountCountryId}
+                            responseCapturedFromModule="MobilePage"
+                            countriesAndStates={countriesAndStates}
+                            isActualRendering={true}
+                          />
                         )
-                      }
+                      )}
                     </div>
                   </div>
                 </div>
