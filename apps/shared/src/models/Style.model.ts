@@ -1,4 +1,4 @@
-import { APIStyle, APIBackground } from '../interfaces';
+import { APIStyle, APIBackground, APIButton } from '../interfaces';
 import { Utility } from '../utilities';
 import { BACKGROUND_TYPE } from '../enums';
 
@@ -98,29 +98,51 @@ export class StyleModel {
     switch (BackgroundType) {
       case BACKGROUND_TYPE.IMAGE:
         const opacityValue = Opacity ? Opacity / 100 : 1;
-        return `${
-          Url
-            ? `linear-gradient(rgba(255, 255, 255, 
+        return `${Url
+          ? `linear-gradient(rgba(255, 255, 255, 
                     ${1 - opacityValue}), rgba(255,255, 255,
                     ${1 - opacityValue})), url(${Utility.replace(
-                Url,
-                ' ',
-                '%20'
-              )}) 
+            Url,
+            ' ',
+            '%20'
+          )}) 
                     ${Utility.addStringBeforeCapitalLetter(
-                      ImagePosition,
-                      ' '
-                    ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
+            ImagePosition,
+            ' '
+          ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
                     ${Utility.addStringBeforeCapitalLetter(
-                      BackgroundRepeat,
-                      '-'
-                    ).toLowerCase()}`
-            : BackgroundColor?.HexValue
+            BackgroundRepeat,
+            '-'
+          ).toLowerCase()}`
+          : BackgroundColor?.HexValue
             ? BackgroundColor.HexValue
             : Utility.WhiteColorCode
-        }`;
+          }`;
       default:
         return '';
     }
+  }
+
+  static deserializeButtonStyles(apiButton?: APIButton): StyleModel {
+    const data: StyleModel = {
+      color: apiButton?.TextColor?.HexValue,
+      background: apiButton?.BackgroundColor?.HexValue,
+      borderStyle: apiButton?.ElementBorderStyles,
+      borderWidth: `${apiButton?.BorderSize || 0}px`,
+      borderColor: apiButton?.BorderColor?.HexValue,
+      borderRadius: `${apiButton?.BorderRadius || 0}px`,
+      display: "inline-block",
+      marginBottom: '0',
+      textAlign: 'center',
+      lineHeight: '20px',
+      fontSize: '18px',
+      cursor: 'pointer',
+      paddingTop: '10px',
+      paddingBottom: '10px',
+      paddingLeft: '10px',
+      paddingRight: '10px',
+      width: '300px'
+    };
+    return new StyleModel(data);
   }
 }
