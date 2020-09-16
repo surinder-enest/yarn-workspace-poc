@@ -66,4 +66,13 @@ export interface APIStyle {
   FieldsStyle: APIFieldsStyle;
   InterestStyles: APIInterestStyles;
   Button: APIButton;
+  Align: string;
+}
+
+export interface APIDividerStyle {
+  Style: string;
+  Thickness: number;
+  Width: number;
+  HexValue: string;
+  RgbValue: APIRgba;
 }

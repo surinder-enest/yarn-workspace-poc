@@ -43,12 +43,12 @@ class MobilePageName extends React.Component<Props> {
           defer
         ></script>
         <script type="text/javascript">document.addEventListener('DOMContentLoaded', function (event) {});</script>
-        <style jsx global>
+        <style>
           {`
             body {
               height: 100%;
               width: 100%;
-              background: #fff;
+              background: #ededed;
               margin: 0;
               font-family: 'Open Sans', Helvetica, Arial, sans-serif;
               min-height: 667px;
@@ -173,6 +173,10 @@ class MobilePageName extends React.Component<Props> {
               font-family: 'Open Sans', sans-serif;
               margin-bottom: 1em;
             }
+             h1{
+              font-size:2em;
+              margin: 0.67em 0;
+             }
             .g-recaptcha + div {
               width: 280px;
               margin: 0 auto;

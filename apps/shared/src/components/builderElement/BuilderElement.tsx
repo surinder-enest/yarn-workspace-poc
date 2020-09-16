@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { BuilderElementModel, CountryModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
-import { Title, Paragraph, Spacer } from '..';
+import { Title, Paragraph, Spacer, Embed, Divider } from '..';
 import { Form } from './Form';
 
 interface Props {
@@ -37,6 +37,10 @@ class BuilderElement extends React.Component<Props> {
         return <Paragraph paragraph={builderElement.paragraph} />;
       case BUILDER_ELEMENTS.SPACER:
         return <Spacer spacer={builderElement.spacer} />;
+      case BUILDER_ELEMENTS.EMBED:
+        return <Embed embed={builderElement.embed} />;
+      case BUILDER_ELEMENTS.DIVIDER:
+        return <Divider divider={builderElement.divider} />;
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form

@@ -8,10 +8,13 @@ export class SpacerModel {
   }
 
   static deserialize(apiModel: APISpacer): SpacerModel {
-    let styles = StyleModel.deserialize(apiModel?.Style);
-    styles.height = apiModel?.Size ? `${apiModel.Size}px` : '';
-    styles.paddingTop = '0';
-    styles.paddingBottom = '0';
+    let styles = new StyleModel({
+      ...StyleModel.deserialize(apiModel?.Style),
+      height: apiModel?.Size ? `${apiModel.Size}px` : '',
+      paddingTop: '0',
+      paddingBottom: '0',
+    });
+
     const data: SpacerModel = {
       styles: styles,
     };

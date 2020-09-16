@@ -1,4 +1,4 @@
-import { APIStyle } from './API-style.interface';
+import { APIDividerStyle, APIStyle } from './API-style.interface';
 
 export interface APIOptions {
   Id: string;
@@ -29,6 +29,13 @@ export interface APIParagraph {
 }
 export interface APISpacer {
   Size: number;
+  Style: APIStyle;
+}
+export interface APIEmbed {
+  Text: string;
+}
+export interface APIDivider {
+  DividerStyle: APIDividerStyle;
   Style: APIStyle;
 }
 
@@ -77,5 +84,7 @@ export interface APIBuilderElement {
   Title: APITitle;
   Paragraph: APIParagraph;
   Spacer: APISpacer;
+  Embed: APIEmbed;
+  Divider: APIDivider;
   Form: APIForm;
 }

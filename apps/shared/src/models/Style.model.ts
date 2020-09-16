@@ -7,11 +7,13 @@ export class StyleModel {
   paddingBottom?: string;
   paddingLeft?: string;
   paddingRight?: string;
+  margin?: string;
   marginTop?: string;
   marginBottom?: string;
   marginLeft?: string;
   marginRight?: string;
   backgroundColor?: string;
+  borderTop?: string;
   borderStyle?: string;
   borderWidth?: string;
   borderRadius?: string;
@@ -36,6 +38,7 @@ export class StyleModel {
     this.paddingBottom = data?.paddingBottom;
     this.paddingLeft = data?.paddingLeft;
     this.paddingRight = data?.paddingRight;
+    this.margin = data?.margin;
     this.marginTop = data?.marginTop;
     this.marginBottom = data?.marginBottom;
     this.marginLeft = data?.marginLeft;
@@ -58,6 +61,7 @@ export class StyleModel {
     this.boxSizing = data?.boxSizing || 'border-box';
     this.textAlign = data?.textAlign;
     this.cursor = data?.cursor;
+    this.borderTop = data?.borderTop;
   }
 
   static deserialize(apiModel: APIStyle): StyleModel {
