@@ -54,9 +54,9 @@ export interface APIButton {
   TextColor: APIColor;
   BackgroundColor: APIColor;
   ElementBorderStyles: string;
-  BorderSize: string;
+  BorderSize: number;
   BorderColor: APIColor;
-  BorderRadius: string;
+  BorderRadius: number;
 }
 
 export interface APIStyle {

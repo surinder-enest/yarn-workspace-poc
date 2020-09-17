@@ -1,5 +1,5 @@
 import { StyleModel } from './Style.model';
-import { APIForm, APIFormSubmitSettings, APIButton, APIThankYou } from '../interfaces';
+import { APIForm, APIFormSubmitSettings, APIThankYou } from '../interfaces';
 import { FormFieldModel } from './FormField.model';
 import { InterestModel } from './Interest.model';
 
@@ -83,32 +83,9 @@ export class FormModel {
             styles: StyleModel.deserialize(apiModel?.Style),
             fieldDetails: FormFieldModel.deserialize(apiModel),
             interest: InterestModel.deserialize(apiModel),
-            buttonStyles: FormModel.deserializeButtonStyles(apiModel?.Style?.Button),
+            buttonStyles: StyleModel.deserializeButtonStyles(apiModel?.Style?.Button),
             submitSettings: FormSubmitSettingModel.deserialize(apiModel?.FormSubmitSettings),
         };
         return new FormModel(data)
-    }
-
-    static deserializeButtonStyles(apiButtonStyle: APIButton): StyleModel {
-        const data: StyleModel = {
-            color: apiButtonStyle?.TextColor?.HexValue,
-            backgroundColor: apiButtonStyle?.BackgroundColor?.HexValue,
-            borderStyle: apiButtonStyle?.ElementBorderStyles,
-            borderWidth: apiButtonStyle?.BorderSize,
-            borderColor: apiButtonStyle?.BorderColor?.HexValue,
-            borderRadius: apiButtonStyle?.BorderRadius,
-            display: 'inline-block',
-            marginBottom: '0',
-            textAlign: 'center',
-            lineHeight: '20px',
-            fontSize: '18px',
-            cursor: 'pointer',
-            paddingTop: '10px',
-            paddingBottom: '10px',
-            paddingLeft: '10px',
-            paddingRight: '10px',
-            width: '300px'
-        };
-        return new StyleModel(data)
     }
 }

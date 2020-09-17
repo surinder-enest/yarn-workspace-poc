@@ -42,4 +42,8 @@ export class Utility {
             redirectLink.click();
         }
     };
+
+    public static getYoutubeEmbedUrl(embedId: string) {
+        return `https://www.youtube.com/embed/${embedId}`;
+    } 
 }

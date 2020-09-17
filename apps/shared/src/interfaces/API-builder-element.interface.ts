@@ -83,6 +83,15 @@ export interface APIForm {
   FormSubmitSettings: APIFormSubmitSettings;
 }
 
+export interface APIVideo {
+  Style: APIStyle;
+  LinkType: string;
+  Url: string;
+  VideoSourceType: string;
+  VideoShowType: string;
+  ButtonText: string;
+}
+
 export interface APIBuilderElement {
   Id: string;
   Key: string;
@@ -94,4 +103,5 @@ export interface APIBuilderElement {
   Divider: APIDivider;
   Phone: APIPhone;
   Form: APIForm;
+  Video: APIVideo;
 }

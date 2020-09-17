@@ -3,6 +3,7 @@ import { BuilderElementModel, CountryModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
 import { Title, Paragraph, Spacer, Embed, Divider, Phone } from '..';
 import { Form } from './Form';
+import { Video } from '.';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 class BuilderElement extends React.Component<Props> {
+
   private getBuilderElement(builderElement: BuilderElementModel): ReactNode {
     if (!builderElement) {
       return <></>;
@@ -43,6 +45,8 @@ class BuilderElement extends React.Component<Props> {
         return <Divider divider={builderElement.divider} />;
       case BUILDER_ELEMENTS.PHONE:
         return <Phone phone={builderElement.phone} />;
+      case BUILDER_ELEMENTS.VIDEO:
+        return <Video video={builderElement.video} />;
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form
@@ -91,15 +95,15 @@ class BuilderElement extends React.Component<Props> {
             {builderElement.isTextRoute ? (
               <span>{builderElement.elementLabel}</span>
             ) : (
-              <>
-                <i
-                  id="copyBuilderElement"
-                  {...elementKey}
-                  className="fa fa-clone folder-icon clickable"
-                />
-                <i className="fa fa-bars bar-icon" />
-              </>
-            )}
+                <>
+                  <i
+                    id="copyBuilderElement"
+                    {...elementKey}
+                    className="fa fa-clone folder-icon clickable"
+                  />
+                  <i className="fa fa-bars bar-icon" />
+                </>
+              )}
           </>
         )}
       </div>

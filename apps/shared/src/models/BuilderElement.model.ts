@@ -6,6 +6,7 @@ import { SpacerModel } from './Spacer.model';
 import { EmbedModel } from './Embed.model';
 import { DividerModel } from './Divider.model';
 import { PhoneModel } from './Phone.model';
+import { VideoModel } from './Video.model';
 
 export class BuilderElementModel {
   id: string;
@@ -21,6 +22,7 @@ export class BuilderElementModel {
   embed: EmbedModel;
   phone: PhoneModel;
   form: FormModel;
+  video: VideoModel;
 
   constructor(data?: BuilderElementModel) {
     this.id = data?.id || '';
@@ -36,6 +38,7 @@ export class BuilderElementModel {
     this.divider = data?.divider || new DividerModel();
     this.phone = data?.phone || new PhoneModel();
     this.form = data?.form || new FormModel();
+    this.video = data?.video || new VideoModel();
   }
 
   static deserialize(apiModel: APIBuilderElement): BuilderElementModel {
@@ -50,6 +53,7 @@ export class BuilderElementModel {
       divider: DividerModel.deserialize(apiModel?.Divider),
       phone: PhoneModel.deserialize(apiModel?.Phone),
       form: FormModel.deserialize(apiModel?.Form),
+      video: VideoModel.deserialize(apiModel?.Video),
     };
     return new BuilderElementModel(data);
   }

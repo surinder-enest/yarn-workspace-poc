@@ -92,6 +92,7 @@ export class StyleModel {
       Opacity,
       Size,
     } = apiBackgroundModel;
+    const backgroundColor = BackgroundColor?.HexValue || Utility.WhiteColorCode;
     switch (BackgroundType) {
       case BACKGROUND_TYPE.IMAGE:
         const opacityValue = Opacity ? Opacity / 100 : 1;
@@ -109,15 +110,13 @@ export class StyleModel {
                       ' '
                     ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
                     ${Utility.addStringBeforeCapitalLetter(
-                      BackgroundRepeat,
-                      '-'
-                    ).toLowerCase()}`
-            : BackgroundColor?.HexValue
-            ? BackgroundColor.HexValue
-            : Utility.WhiteColorCode
-        }`;
+            BackgroundRepeat,
+            '-'
+          ).toLowerCase()}`
+          : backgroundColor
+          }`;
       default:
-        return '';
+        return backgroundColor;
     }
   }
 

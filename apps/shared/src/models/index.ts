@@ -13,3 +13,4 @@ export * from './BuilderElement.model';
 export * from './Form.model';
 export * from './FormField.model';
 export * from './Interest.model';
+export * from './Video.model';
