@@ -1,5 +1,5 @@
-import { APIPageStyles } from './API-page-styles.interface';
 import { APIBuilderElement } from './API-builder-element.interface';
+import { APIBackground, APIBorder, APIColor } from './API-style.interface';
 
 interface APIPageDetail {
     PageTitle: string;
@@ -44,6 +44,13 @@ export interface APICountriesAndStates {
     States: Array<APIStates>;
 }
 
+
+export interface APIPageStyles {
+    Background: APIBackground;
+    Border: APIBorder;
+    PageColor: APIColor;
+}
+
 export interface APIMobilePage {
     Id: string;
     Name: string;
@@ -64,7 +71,7 @@ export interface APIMobilePage {
     ContactInfo: APIContactInfo;
     CountryId: string;
 }
-
+ 
 export interface APIMobileData {
     MobilePageData: APIMobilePage;
     CountriesAndStates: Array<APICountriesAndStates>;

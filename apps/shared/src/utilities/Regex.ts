@@ -19,4 +19,6 @@ export class Regex {
     public static httpProtocolRegex = /^https?:\/\//i;
     public static youtubeUrl = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
     public static frameSourceValue = /(?:(?:<iframe.*?src=")|(?:\[embed\]))(.*?)(?:\"|(?=\[\/embed\]))/;
+    public static vimeoUrl = /(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(external\/)?(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
+    public static wistiaUrl = /(?:wistia\.com|wi\.st)\/(medias|embed)\/.*/;
 }

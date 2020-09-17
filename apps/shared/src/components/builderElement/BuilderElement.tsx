@@ -46,7 +46,7 @@ class BuilderElement extends React.Component<Props> {
       case BUILDER_ELEMENTS.PHONE:
         return <Phone phone={builderElement.phone} />;
       case BUILDER_ELEMENTS.VIDEO:
-        return <Video video={builderElement.video} />;
+        return <Video elementId={builderElement.id} video={builderElement.video} />;
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form

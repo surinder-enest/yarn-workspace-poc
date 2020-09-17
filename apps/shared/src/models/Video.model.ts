@@ -2,7 +2,7 @@ import { StyleModel } from './Style.model';
 import { APIVideo } from '../interfaces';
 import { VIDEO_SOURCE } from '../enums';
 import { MEDIA_LINK_TYPE } from '../enums/MediaLinkType.enum';
-import { Regex, Utility } from '../utilities';
+import { Utility } from '../utilities';
 
 export class VideoModel {
   isDefaultMedia?: boolean;
@@ -25,10 +25,10 @@ export class VideoModel {
     this.iframe = data?.iframe || '';
   }
 
-  static deserialize(apiModel: APIVideo): VideoModel {
+  static deserialize(apiModel: APIVideo): VideoModel { 
     const data: VideoModel = {
       styles: StyleModel.deserialize(apiModel?.Style),
-      url: apiModel?.Url,
+      url: apiModel?.Url?.replace(/\n/g, ''),
       videoSourceType: apiModel?.VideoSourceType,
       isVideoButton: apiModel?.VideoShowType === "Button",
       buttonText: apiModel?.ButtonText,
@@ -38,24 +38,40 @@ export class VideoModel {
     return new VideoModel(data);
   }
 
-  static deserializeIframe(apiModel: APIVideo): string {
-    const { LinkType, Url } = apiModel;
-    debugger
-    switch (apiModel?.VideoSourceType) {
+  static getUrl(url: string, videoSourceType: string): string {
+    switch (videoSourceType) {
       case VIDEO_SOURCE.YOU_TUBE:
-        switch (LinkType) {
-          case MEDIA_LINK_TYPE.URL:
-            const youtubeId = Url?.trim()?.match(Regex.youtubeUrl) ? RegExp.$1 : '';
-            if (youtubeId) {
-              const embedUrl = Utility.getYoutubeEmbedUrl(youtubeId);
-              return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`
-            }
-            break;
-          case MEDIA_LINK_TYPE.EMBED_CODE:
-            const embedCode = Url?.trim()?.match(Regex.frameSourceValue) ? RegExp.$1 : '';
-            return embedCode ? Url : '';
-        }
-        break;
+        return Utility.getYoutubeEmbedUrl(url);
+      case VIDEO_SOURCE.VIMEO:
+        return Utility.getVimeoUrl(url);
+      case VIDEO_SOURCE.WISTIA:
+        return Utility.getWistiaUrl(url);
+      default:
+        return url;
+    }
+  }
+
+  static getEmbededUrl(url: string, videoSourceType: string): string {
+    switch (videoSourceType) {
+      case VIDEO_SOURCE.WISTIA:
+        const embedUrl = Utility.getEmbedWistiaUrl(url);
+        return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
+      case VIDEO_SOURCE.VIDEO_EMBED:
+        const embededCode = Utility.getFrameSourceValue(url);
+        return Utility.getIframeWithStyle(embededCode);
+      default:
+        return Utility.getFrameSourceValue(url) ? url : '';
+    }
+  }
+
+  static deserializeIframe(apiModel: APIVideo): string {
+    switch (apiModel?.LinkType) {
+      case MEDIA_LINK_TYPE.URL:
+        const embedUrl = this.getUrl(apiModel?.Url?.trim(), apiModel?.VideoSourceType);
+        return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
+      case MEDIA_LINK_TYPE.EMBED_CODE:
+      case MEDIA_LINK_TYPE.HOSTED_CODE:
+        return this.getEmbededUrl(apiModel?.Url?.trim(), apiModel?.VideoSourceType);
     }
     return "";
   }

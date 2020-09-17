@@ -24,7 +24,7 @@ export class Utility {
         return "";
     }
 
-    public static isLeapYear(year: number) {
+    public static isLeapYear(year: number): boolean {
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     }
 
@@ -43,7 +43,47 @@ export class Utility {
         }
     };
 
-    public static getYoutubeEmbedUrl(embedId: string) {
-        return `https://www.youtube.com/embed/${embedId}`;
-    } 
+    public static getYoutubeEmbedUrl(url: string): string {
+        const youtubeId = url?.match(Regex.youtubeUrl) ? RegExp.$1 : '';
+        if (youtubeId) return `https://www.youtube.com/embed/${youtubeId}`;
+        return '';
+    }
+
+    public static getVimeoUrl(url: string): string {
+        const parsed = url?.match(Regex.vimeoUrl);
+        if (parsed) return `//player.vimeo.com/video/${parsed[5]}`;
+        return '';
+    }
+
+    public static getWistiaUrl(url: string): string {
+        const parsed = url.match(Regex.wistiaUrl);
+        if (parsed) return '//fast.wistia.net/embed/iframe/' + parsed[0].split('/')[2];
+        return '';
+    }
+
+    public static getEmbedWistiaUrl(url: string): string {
+        const parsed = url.match(Regex.wistiaUrl);
+        if (parsed) {
+            const embededCode = parsed[0].split('.jsonp');
+            return '//fast.wistia.net/embed/iframe/' + embededCode[0].split('/medias/')[1];
+        }
+        return '';
+    }
+
+    public static getFrameSourceValue(value: string): string {
+        return value?.trim()?.match(Regex.frameSourceValue) ? RegExp.$1 : ''
+    }
+
+    public static getIframeWithStyle(embedCode: string): string {
+        return '';
+        if (!embedCode || !document) return '';
+        console.log("document")
+        console.log(document)
+        let tmp: HTMLElement = document.createElement('DIV');
+        tmp.innerHTML = embedCode;
+        let iframeElement: HTMLCollectionOf<HTMLIFrameElement> = tmp.getElementsByTagName('iframe');
+        iframeElement[0].setAttribute('style', 'position:absolute;height:100vh;min-width:641px');
+        const iframe: HTMLElement = iframeElement[0];
+        return iframe.outerHTML;
+    }
 }
