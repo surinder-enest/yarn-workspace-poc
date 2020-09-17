@@ -173,6 +173,9 @@ class MobilePageName extends React.Component<Props> {
               font-family: 'Open Sans', sans-serif;
               margin-bottom: 1em;
             }
+            .btn-builder p{
+              line-height: 1.12;
+            }
              h1{
               font-size:2em;
               margin: 0.67em 0;

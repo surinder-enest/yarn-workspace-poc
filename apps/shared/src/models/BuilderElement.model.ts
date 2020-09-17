@@ -5,6 +5,7 @@ import { FormModel } from './Form.model';
 import { SpacerModel } from './Spacer.model';
 import { EmbedModel } from './Embed.model';
 import { DividerModel } from './Divider.model';
+import { PhoneModel } from './Phone.model';
 
 export class BuilderElementModel {
   id: string;
@@ -18,6 +19,7 @@ export class BuilderElementModel {
   spacer: SpacerModel;
   divider: DividerModel;
   embed: EmbedModel;
+  phone: PhoneModel;
   form: FormModel;
 
   constructor(data?: BuilderElementModel) {
@@ -32,6 +34,7 @@ export class BuilderElementModel {
     this.spacer = data?.spacer || new SpacerModel();
     this.embed = data?.embed || new EmbedModel();
     this.divider = data?.divider || new DividerModel();
+    this.phone = data?.phone || new PhoneModel();
     this.form = data?.form || new FormModel();
   }
 
@@ -45,6 +48,7 @@ export class BuilderElementModel {
       spacer: SpacerModel.deserialize(apiModel?.Spacer),
       embed: EmbedModel.deserialize(apiModel?.Embed),
       divider: DividerModel.deserialize(apiModel?.Divider),
+      phone: PhoneModel.deserialize(apiModel?.Phone),
       form: FormModel.deserialize(apiModel?.Form),
     };
     return new BuilderElementModel(data);

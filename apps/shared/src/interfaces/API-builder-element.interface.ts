@@ -39,6 +39,12 @@ export interface APIDivider {
   Style: APIStyle;
 }
 
+export interface APIPhone {
+  Text: string;
+  PhoneNumber: number;
+  Style: APIStyle;
+}
+
 export interface APIInterestDetail {
   Id: string;
   CategoryId: string;
@@ -86,5 +92,6 @@ export interface APIBuilderElement {
   Spacer: APISpacer;
   Embed: APIEmbed;
   Divider: APIDivider;
+  Phone: APIPhone;
   Form: APIForm;
 }

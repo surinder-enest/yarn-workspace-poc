@@ -7,13 +7,11 @@ export class StyleModel {
   paddingBottom?: string;
   paddingLeft?: string;
   paddingRight?: string;
-  margin?: string;
   marginTop?: string;
   marginBottom?: string;
   marginLeft?: string;
   marginRight?: string;
   backgroundColor?: string;
-  borderTop?: string;
   borderStyle?: string;
   borderWidth?: string;
   borderRadius?: string;
@@ -38,7 +36,6 @@ export class StyleModel {
     this.paddingBottom = data?.paddingBottom;
     this.paddingLeft = data?.paddingLeft;
     this.paddingRight = data?.paddingRight;
-    this.margin = data?.margin;
     this.marginTop = data?.marginTop;
     this.marginBottom = data?.marginBottom;
     this.marginLeft = data?.marginLeft;
@@ -61,7 +58,7 @@ export class StyleModel {
     this.boxSizing = data?.boxSizing || 'border-box';
     this.textAlign = data?.textAlign;
     this.cursor = data?.cursor;
-    this.borderTop = data?.borderTop;
+    this.lineHeight = data?.lineHeight;
   }
 
   static deserialize(apiModel: APIStyle): StyleModel {
@@ -98,26 +95,27 @@ export class StyleModel {
     switch (BackgroundType) {
       case BACKGROUND_TYPE.IMAGE:
         const opacityValue = Opacity ? Opacity / 100 : 1;
-        return `${Url
-          ? `linear-gradient(rgba(255, 255, 255, 
+        return `${
+          Url
+            ? `linear-gradient(rgba(255, 255, 255, 
                     ${1 - opacityValue}), rgba(255,255, 255,
                     ${1 - opacityValue})), url(${Utility.replace(
-            Url,
-            ' ',
-            '%20'
-          )}) 
+                Url,
+                ' ',
+                '%20'
+              )}) 
                     ${Utility.addStringBeforeCapitalLetter(
-            ImagePosition,
-            ' '
-          ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
+                      ImagePosition,
+                      ' '
+                    ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
                     ${Utility.addStringBeforeCapitalLetter(
-            BackgroundRepeat,
-            '-'
-          ).toLowerCase()}`
-          : BackgroundColor?.HexValue
+                      BackgroundRepeat,
+                      '-'
+                    ).toLowerCase()}`
+            : BackgroundColor?.HexValue
             ? BackgroundColor.HexValue
             : Utility.WhiteColorCode
-          }`;
+        }`;
       default:
         return '';
     }
@@ -131,7 +129,7 @@ export class StyleModel {
       borderWidth: `${apiButton?.BorderSize || 0}px`,
       borderColor: apiButton?.BorderColor?.HexValue,
       borderRadius: `${apiButton?.BorderRadius || 0}px`,
-      display: "inline-block",
+      display: 'inline-block',
       marginBottom: '0',
       textAlign: 'center',
       lineHeight: '20px',
@@ -141,7 +139,7 @@ export class StyleModel {
       paddingBottom: '10px',
       paddingLeft: '10px',
       paddingRight: '10px',
-      width: '300px'
+      width: '300px',
     };
     return new StyleModel(data);
   }

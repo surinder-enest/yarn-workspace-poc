@@ -8,6 +8,7 @@ export * from './Paragraph.model';
 export * from './Spacer.model';
 export * from './Embed.model';
 export * from './Divider.model';
+export * from './Phone.model';
 export * from './BuilderElement.model';
 export * from './Form.model';
 export * from './FormField.model';
