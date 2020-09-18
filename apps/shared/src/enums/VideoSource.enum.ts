@@ -7,4 +7,5 @@ export enum VIDEO_SOURCE {
     TWITCH = 'Twitch',
     FACEBOOK = 'Facebook',
     SOUND_CLOUD = 'SoundCloud',
+    OTHERS = 'Others',
 };

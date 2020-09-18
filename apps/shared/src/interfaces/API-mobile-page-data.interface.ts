@@ -30,7 +30,7 @@ export interface IMobilePageData {
   ContactId: string;
   BuilderElementId: string;
   BuilderElement: string;
-  FormResponseDetails: IFormData;
+  FormResponseDetails: IFormData | null;
   BuilderElementUsedInModuleId: string;
   ResponseCapturedFromModule: string;
 }

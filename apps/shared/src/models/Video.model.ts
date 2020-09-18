@@ -25,7 +25,7 @@ export class VideoModel {
     this.iframe = data?.iframe || '';
   }
 
-  static deserialize(apiModel: APIVideo): VideoModel { 
+  static deserialize(apiModel: APIVideo): VideoModel {
     const data: VideoModel = {
       styles: StyleModel.deserialize(apiModel?.Style),
       url: apiModel?.Url?.replace(/\n/g, ''),
@@ -56,10 +56,7 @@ export class VideoModel {
       case VIDEO_SOURCE.WISTIA:
         const embedUrl = Utility.getEmbedWistiaUrl(url);
         return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
-      case VIDEO_SOURCE.VIDEO_EMBED:
-        const embededCode = Utility.getFrameSourceValue(url);
-        return Utility.getIframeWithStyle(embededCode);
-      default:
+     default:
         return Utility.getFrameSourceValue(url) ? url : '';
     }
   }
@@ -67,6 +64,7 @@ export class VideoModel {
   static deserializeIframe(apiModel: APIVideo): string {
     switch (apiModel?.LinkType) {
       case MEDIA_LINK_TYPE.URL:
+      case MEDIA_LINK_TYPE.HTTP_STREAMING_FILE:
         const embedUrl = this.getUrl(apiModel?.Url?.trim(), apiModel?.VideoSourceType);
         return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
       case MEDIA_LINK_TYPE.EMBED_CODE:

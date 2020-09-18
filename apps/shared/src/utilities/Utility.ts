@@ -1,6 +1,5 @@
 import { Regex } from './Regex';
-
-
+  
 export class Utility {
     public static WhiteColorCode = "#ffffff";
     public static BlackColorCode = "#000000";
@@ -72,18 +71,5 @@ export class Utility {
 
     public static getFrameSourceValue(value: string): string {
         return value?.trim()?.match(Regex.frameSourceValue) ? RegExp.$1 : ''
-    }
-
-    public static getIframeWithStyle(embedCode: string): string {
-        return '';
-        if (!embedCode || !document) return '';
-        console.log("document")
-        console.log(document)
-        let tmp: HTMLElement = document.createElement('DIV');
-        tmp.innerHTML = embedCode;
-        let iframeElement: HTMLCollectionOf<HTMLIFrameElement> = tmp.getElementsByTagName('iframe');
-        iframeElement[0].setAttribute('style', 'position:absolute;height:100vh;min-width:641px');
-        const iframe: HTMLElement = iframeElement[0];
-        return iframe.outerHTML;
-    }
+    } 
 }
