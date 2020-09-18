@@ -45,6 +45,16 @@ export interface APIPhone {
   Style: APIStyle;
 }
 
+export interface APILink {
+  Text: string;
+  URL: string;
+  Style: APIStyle;
+}
+export interface APIMobilePageElement {
+  ButtonText: string;
+  PageURL: string;
+  Style: APIStyle;
+}
 export interface APIInterestDetail {
   Id: string;
   CategoryId: string;
@@ -102,6 +112,8 @@ export interface APIBuilderElement {
   Embed: APIEmbed;
   Divider: APIDivider;
   Phone: APIPhone;
+  Link: APILink;
+  MobilePage: APIMobilePageElement;
   Form: APIForm;
   Video: APIVideo;
 }

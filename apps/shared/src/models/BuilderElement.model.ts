@@ -7,6 +7,8 @@ import { EmbedModel } from './Embed.model';
 import { DividerModel } from './Divider.model';
 import { PhoneModel } from './Phone.model';
 import { VideoModel } from './Video.model';
+import { LinkModel } from './Link.model';
+import { MobilePageElementModel } from './MobilePageElement.model';
 
 export class BuilderElementModel {
   id: string;
@@ -21,6 +23,8 @@ export class BuilderElementModel {
   divider: DividerModel;
   embed: EmbedModel;
   phone: PhoneModel;
+  link: LinkModel;
+  mobilePageElement: MobilePageElementModel;
   form: FormModel;
   video: VideoModel;
 
@@ -37,6 +41,9 @@ export class BuilderElementModel {
     this.embed = data?.embed || new EmbedModel();
     this.divider = data?.divider || new DividerModel();
     this.phone = data?.phone || new PhoneModel();
+    this.link = data?.link || new LinkModel();
+    this.mobilePageElement =
+      data?.mobilePageElement || new MobilePageElementModel();
     this.form = data?.form || new FormModel();
     this.video = data?.video || new VideoModel();
   }
@@ -52,6 +59,10 @@ export class BuilderElementModel {
       embed: EmbedModel.deserialize(apiModel?.Embed),
       divider: DividerModel.deserialize(apiModel?.Divider),
       phone: PhoneModel.deserialize(apiModel?.Phone),
+      link: LinkModel.deserialize(apiModel?.Link),
+      mobilePageElement: MobilePageElementModel.deserialize(
+        apiModel?.MobilePage
+      ),
       form: FormModel.deserialize(apiModel?.Form),
       video: VideoModel.deserialize(apiModel?.Video),
     };

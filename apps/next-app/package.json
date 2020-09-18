@@ -8,7 +8,6 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@mindme/shared": "D:\\Projects\\YarnWorkSpace\\apps\\shared",
     "next": "latest"
   },
   "devDependencies": {

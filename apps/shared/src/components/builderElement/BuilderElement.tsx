@@ -1,7 +1,16 @@
 import React, { ReactNode } from 'react';
 import { BuilderElementModel, CountryModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
-import { Title, Paragraph, Spacer, Embed, Divider, Phone } from '..';
+import {
+  Title,
+  Paragraph,
+  Spacer,
+  Embed,
+  Divider,
+  Phone,
+  Link,
+  MobilePageElement,
+} from '..';
 import { Form } from './Form';
 import { Video } from '.';
 
@@ -18,7 +27,6 @@ interface Props {
 }
 
 class BuilderElement extends React.Component<Props> {
-
   private getBuilderElement(builderElement: BuilderElementModel): ReactNode {
     if (!builderElement) {
       return <></>;
@@ -46,7 +54,18 @@ class BuilderElement extends React.Component<Props> {
       case BUILDER_ELEMENTS.PHONE:
         return <Phone phone={builderElement.phone} />;
       case BUILDER_ELEMENTS.VIDEO:
-        return <Video elementId={builderElement.id} video={builderElement.video} />;
+        return (
+          <Video elementId={builderElement.id} video={builderElement.video} />
+        );
+
+      case BUILDER_ELEMENTS.LINK:
+        return <Link link={builderElement.link} />;
+      case BUILDER_ELEMENTS.MOBILE_PAGE:
+        return (
+          <MobilePageElement
+            mobilePageElement={builderElement.mobilePageElement}
+          />
+        );
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form
@@ -95,15 +114,15 @@ class BuilderElement extends React.Component<Props> {
             {builderElement.isTextRoute ? (
               <span>{builderElement.elementLabel}</span>
             ) : (
-                <>
-                  <i
-                    id="copyBuilderElement"
-                    {...elementKey}
-                    className="fa fa-clone folder-icon clickable"
-                  />
-                  <i className="fa fa-bars bar-icon" />
-                </>
-              )}
+              <>
+                <i
+                  id="copyBuilderElement"
+                  {...elementKey}
+                  className="fa fa-clone folder-icon clickable"
+                />
+                <i className="fa fa-bars bar-icon" />
+              </>
+            )}
           </>
         )}
       </div>
