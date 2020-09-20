@@ -9,5 +9,5 @@ export * from './CustomFieldType.enum';
 export * from './InterestResponseValue.enum';
 export * from './ThankYouActionType.enum';
 export * from './Alignment.enum';
-export * from './VideoSource.enum';
+export * from './MediaSourceType.enum';
 export * from './MediaLinkType.enum';

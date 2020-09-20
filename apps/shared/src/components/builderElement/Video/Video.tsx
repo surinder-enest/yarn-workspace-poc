@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { VIDEO_SOURCE } from '../../../enums';
+import { BUILDER_ELEMENTS, MEDIA_SOURCE_TYPE } from '../../../enums';
 import { VideoModel } from '../../../models';
 import { CustomPlayer } from '../../Common';
 import PlaceHolder from '../PlaceHolder';
@@ -23,7 +23,7 @@ export default class Video extends Component<IProps, IState> {
     };
   }
 
-  private onPlayVideo(isFromLibrary: boolean) {
+  private onPlay(isFromLibrary: boolean) {
     const { isActualRendering, responseCapture } = this.props;
     const { playCount } = this.state;
     if (isActualRendering || (isFromLibrary && playCount === 1)) {
@@ -39,34 +39,34 @@ export default class Video extends Component<IProps, IState> {
     const { elementId, video } = this.props;
     const { url, videoSourceType, iframe } = video;
     switch (videoSourceType) {
-      case VIDEO_SOURCE.YOU_TUBE:
-      case VIDEO_SOURCE.VIMEO:
-      case VIDEO_SOURCE.WISTIA:
+      case MEDIA_SOURCE_TYPE.YOU_TUBE:
+      case MEDIA_SOURCE_TYPE.VIMEO:
+      case MEDIA_SOURCE_TYPE.WISTIA:
         return <div key={elementId}
           style={{
             width: '100%',
             height: '200px',
             paddingBottom: "56.15%"
           }}
-          onClick={() => this.onPlayVideo(false)}
+          onClick={() => this.onPlay(false)}
           dangerouslySetInnerHTML={{ __html: iframe }}
         />
-      case VIDEO_SOURCE.VIDEO_EMBED:
+      case MEDIA_SOURCE_TYPE.VIDEO_EMBED:
         return <div key={elementId}
           dangerouslySetInnerHTML={{ __html: iframe }}
         />
-      case VIDEO_SOURCE.FACEBOOK:
-      case VIDEO_SOURCE.SOUND_CLOUD:
+      case MEDIA_SOURCE_TYPE.FACEBOOK:
+      case MEDIA_SOURCE_TYPE.SOUND_CLOUD:
         return <CustomPlayer key={elementId}
-          onStart={() => this.onPlayVideo(false)}
+          onStart={() => this.onPlay(false)}
           url={url}
           width="auto"
           height="auto" />;
-      case VIDEO_SOURCE.OTHERS:
+      case MEDIA_SOURCE_TYPE.OTHERS:
         return <video
           key={elementId}
           style={{ width: '100%' }}
-          onPlay={() => this.onPlayVideo(true)}
+          onPlay={() => this.onPlay(true)}
           controls>
           <source type="video/ogg" src={url} />
           <source type="video/m4v" src={url} />
@@ -86,7 +86,7 @@ export default class Video extends Component<IProps, IState> {
         <div style={{ position: 'relative', textAlign: 'center', minHeight: 'inherit' }}>
           {
             isDefaultMedia
-              ? <PlaceHolder text="Select Video" />
+              ? <PlaceHolder builderElementType={BUILDER_ELEMENTS.VIDEO} text="Select Video" />
               : isButton && !isActualRendering
                 ? <div style={buttonStyles} className="btn-builder">
                   {buttonText}

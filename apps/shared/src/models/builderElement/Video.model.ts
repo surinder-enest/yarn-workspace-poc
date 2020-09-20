@@ -1,6 +1,6 @@
 import { StyleModel } from './Style.model';
 import { APIVideo } from '../../interfaces';
-import { VIDEO_SOURCE } from '../../enums';
+import { MEDIA_SOURCE_TYPE } from '../../enums';
 import { MEDIA_LINK_TYPE } from '../../enums/MediaLinkType.enum';
 import { Utility } from '../../utilities';
 
@@ -40,11 +40,11 @@ export class VideoModel {
 
   static getUrl(url: string, videoSourceType: string): string {
     switch (videoSourceType) {
-      case VIDEO_SOURCE.YOU_TUBE:
+      case MEDIA_SOURCE_TYPE.YOU_TUBE:
         return Utility.getYoutubeEmbedUrl(url);
-      case VIDEO_SOURCE.VIMEO:
+      case MEDIA_SOURCE_TYPE.VIMEO:
         return Utility.getVimeoUrl(url);
-      case VIDEO_SOURCE.WISTIA:
+      case MEDIA_SOURCE_TYPE.WISTIA:
         return Utility.getWistiaUrl(url);
       default:
         return url;
@@ -53,7 +53,7 @@ export class VideoModel {
 
   static getEmbededUrl(url: string, videoSourceType: string): string {
     switch (videoSourceType) {
-      case VIDEO_SOURCE.WISTIA:
+      case MEDIA_SOURCE_TYPE.WISTIA:
         const embedUrl = Utility.getEmbedWistiaUrl(url);
         return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
      default:

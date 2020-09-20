@@ -112,6 +112,15 @@ export interface APIImage {
   RedirectUrl: string;
 }
 
+export interface APIAudio {
+  Style: APIStyle;
+  LinkType: string; 
+  Url: string; 
+  AudioShowType: string; 
+  ButtonText: string; 
+  ImageURL: string; 
+}
+
 export interface APIBuilderElement {
   Id: string;
   Key: string;
@@ -127,4 +136,5 @@ export interface APIBuilderElement {
   Form: APIForm;
   Video: APIVideo;
   Image: APIImage;
+  Audio: APIAudio;
 }

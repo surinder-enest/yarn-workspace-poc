@@ -13,6 +13,7 @@ import Video from './Video/Video';
 import Link from './Link/Link';
 import MobilePageElement from './MobilePageElement/MobilePageElement';
 import Image from './Image/Image';
+import Audio from './Audio/Audio';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -35,8 +36,7 @@ class BuilderElement extends React.Component<Props> {
       accountId,
       responseCapturedFromModule,
       builderElement
-    } = this.props;
-    debugger
+    } = this.props; 
     return BuilderElementService.saveBuilderElementResponse(
       builderElement,
       moduleId || "",
@@ -103,6 +103,13 @@ class BuilderElement extends React.Component<Props> {
       case BUILDER_ELEMENTS.IMAGE:
         return (
           <Image image={builderElement.image}
+            isActualRendering={isActualRendering}
+            responseCapture={() => this.responseCapture()} />
+        );
+      case BUILDER_ELEMENTS.AUDIO:
+        return (
+          <Audio elementId={builderElement.id}
+            audio={builderElement.audio}
             isActualRendering={isActualRendering}
             responseCapture={() => this.responseCapture()} />
         );

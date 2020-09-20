@@ -15,3 +15,4 @@ export * from './FormField.model';
 export * from './Interest.model';
 export * from './Video.model';
 export * from './Image.model';
+export * from './Audio.model';

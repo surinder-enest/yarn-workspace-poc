@@ -10,6 +10,7 @@ import { VideoModel } from './Video.model';
 import { LinkModel } from './Link.model';
 import { MobilePageElementModel } from './MobilePageElement.model';
 import { ImageModel } from './Image.model';
+import { AudioModel } from './Audio.model';
 
 export class BuilderElementModel {
   id: string;
@@ -29,6 +30,7 @@ export class BuilderElementModel {
   form: FormModel;
   video: VideoModel;
   image: ImageModel;
+  audio: AudioModel;
 
   constructor(data?: BuilderElementModel) {
     this.id = data?.id || '';
@@ -49,6 +51,7 @@ export class BuilderElementModel {
     this.form = data?.form || new FormModel();
     this.video = data?.video || new VideoModel();
     this.image = data?.image || new ImageModel();
+    this.audio = data?.audio || new AudioModel();
   }
 
   static deserialize(apiModel: APIBuilderElement, contactId: string): BuilderElementModel {
@@ -69,6 +72,7 @@ export class BuilderElementModel {
       form: FormModel.deserialize(apiModel?.Form),
       video: VideoModel.deserialize(apiModel?.Video),
       image: ImageModel.deserialize(apiModel?.Image, contactId),
+      audio: AudioModel.deserialize(apiModel?.Audio),
     };
     return new BuilderElementModel(data);
   }

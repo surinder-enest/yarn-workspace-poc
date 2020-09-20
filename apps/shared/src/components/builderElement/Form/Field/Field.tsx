@@ -29,8 +29,7 @@ export default class Field extends Component<IProps, IState> {
     const { accountCountryId } = this.props;
     const hasCountryField = this.props.fieldResponses.some(
       field => field.formFields === FORM_FIELDS.COUNTRY
-    );
-    debugger;
+    ); 
     if (!hasCountryField) {
       this.setState({ countryId: accountCountryId });
     }

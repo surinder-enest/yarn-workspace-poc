@@ -3,6 +3,7 @@ import { Utility } from '../../utilities';
 import { StyleModel } from './Style.model';
 
 export class ImageModel {
+    isDefaultMedia: boolean;
     styles: StyleModel;
     url: string;
     caption: string;
@@ -10,6 +11,7 @@ export class ImageModel {
     clickValue: string;
 
     constructor(data?: ImageModel) {
+        this.isDefaultMedia = data?.isDefaultMedia || false;
         this.styles = data?.styles || new StyleModel();
         this.url = data?.url || '';
         this.caption = data?.caption || '';
@@ -19,6 +21,7 @@ export class ImageModel {
 
     static deserialize(apiModel: APIImage, contactId: string): ImageModel {
         const data: ImageModel = {
+            isDefaultMedia: false,
             styles: StyleModel.deserialize(apiModel?.Style),
             url: apiModel?.ImageUrl,
             caption: apiModel?.Caption,

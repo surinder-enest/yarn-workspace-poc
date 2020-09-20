@@ -1,4 +1,4 @@
-export enum VIDEO_SOURCE {
+export enum MEDIA_SOURCE_TYPE {
     YOU_TUBE = 'YouTube',
     VIMEO = 'Vimeo',
     WISTIA = 'Wistia',
