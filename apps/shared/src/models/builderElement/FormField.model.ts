@@ -1,6 +1,6 @@
-import { APIFormFieldsSettings, APIForm, APIFieldsStyle, APIOptions } from '../interfaces';
+import { APIFormFieldsSettings, APIForm, APIFieldsStyle, APIOptions } from '../../interfaces';
 import { StyleModel } from './Style.model';
-import { Utility } from '../utilities';
+import { Utility } from '../../utilities';
 
 export class OptionModel {
     label: string;

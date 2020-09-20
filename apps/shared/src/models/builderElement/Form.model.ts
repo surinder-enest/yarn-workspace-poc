@@ -1,5 +1,5 @@
 import { StyleModel } from './Style.model';
-import { APIForm, APIFormSubmitSettings, APIThankYou } from '../interfaces';
+import { APIForm, APIFormSubmitSettings, APIThankYou } from '../../interfaces';
 import { FormFieldModel } from './FormField.model';
 import { InterestModel } from './Interest.model';
 

@@ -1,18 +1,18 @@
 import React, { ReactNode } from 'react';
 import { BuilderElementModel, CountryModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
-import {
-  Title,
-  Paragraph,
-  Spacer,
-  Embed,
-  Divider,
-  Phone,
-  Link,
-  MobilePageElement,
-} from '..';
 import { Form } from './Form';
-import { Video } from '.';
+import { BuilderElementService } from '../../services';
+import Title from './Title/Title';
+import Paragraph from './Paragraph/Paragraph';
+import Spacer from './Spacer/Spacer';
+import Embed from './Embed/Embed';
+import Divider from './Divider/Divider';
+import Phone from './Phone/Phone';
+import Video from './Video/Video';
+import Link from './Link/Link';
+import MobilePageElement from './MobilePageElement/MobilePageElement';
+import Image from './Image/Image';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -27,6 +27,25 @@ interface Props {
 }
 
 class BuilderElement extends React.Component<Props> {
+
+  private responseCapture() {
+    const {
+      moduleId,
+      contactId,
+      accountId,
+      responseCapturedFromModule,
+      builderElement
+    } = this.props;
+    debugger
+    return BuilderElementService.saveBuilderElementResponse(
+      builderElement,
+      moduleId || "",
+      contactId || "",
+      accountId || "",
+      responseCapturedFromModule || ""
+    );
+  }
+
   private getBuilderElement(builderElement: BuilderElementModel): ReactNode {
     if (!builderElement) {
       return <></>;
@@ -55,14 +74,11 @@ class BuilderElement extends React.Component<Props> {
         return <Phone phone={builderElement.phone} />;
       case BUILDER_ELEMENTS.VIDEO:
         return (
-          <Video builderElement={builderElement}
-          moduleId={moduleId || ''}
-          contactId={contactId || ''}
-          accountId={accountId || ''}
-          responseCapturedFromModule={responseCapturedFromModule || ''}
-          isActualRendering={isActualRendering} />
+          <Video elementId={builderElement.id}
+            video={builderElement.video}
+            isActualRendering={isActualRendering}
+            responseCapture={() => this.responseCapture()} />
         );
-
       case BUILDER_ELEMENTS.LINK:
         return <Link link={builderElement.link} />;
       case BUILDER_ELEMENTS.MOBILE_PAGE:
@@ -83,6 +99,12 @@ class BuilderElement extends React.Component<Props> {
             countriesAndStates={countriesAndStates || []}
             accountCountryId={accountCountryId || ''}
           />
+        );
+      case BUILDER_ELEMENTS.IMAGE:
+        return (
+          <Image image={builderElement.image}
+            isActualRendering={isActualRendering}
+            responseCapture={() => this.responseCapture()} />
         );
       default:
         return <></>;
@@ -119,15 +141,15 @@ class BuilderElement extends React.Component<Props> {
             {builderElement.isTextRoute ? (
               <span>{builderElement.elementLabel}</span>
             ) : (
-              <>
-                <i
-                  id="copyBuilderElement"
-                  {...elementKey}
-                  className="fa fa-clone folder-icon clickable"
-                />
-                <i className="fa fa-bars bar-icon" />
-              </>
-            )}
+                <>
+                  <i
+                    id="copyBuilderElement"
+                    {...elementKey}
+                    className="fa fa-clone folder-icon clickable"
+                  />
+                  <i className="fa fa-bars bar-icon" />
+                </>
+              )}
           </>
         )}
       </div>

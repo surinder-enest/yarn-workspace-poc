@@ -1,6 +1,6 @@
 import { StyleModel } from './Style.model';
-import { APIForm, APIInterestDetail, APIInterestStyles } from '../interfaces';
-import { INTEREST_RESPONSE_VALUES } from '../enums';
+import { APIForm, APIInterestDetail, APIInterestStyles } from '../../interfaces';
+import { INTEREST_RESPONSE_VALUES } from '../../enums';
 
 export class InterestOptionModel {
     id: string;

@@ -1,5 +1,5 @@
 import { StyleModel } from './Style.model';
-import { APITitle } from '../interfaces';
+import { APITitle } from '../../interfaces';
 
 export class TitleModel {
     text: string;

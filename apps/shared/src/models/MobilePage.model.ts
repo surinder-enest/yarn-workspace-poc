@@ -1,9 +1,9 @@
 import { BaseModel } from './Base.model';
-import { MetaDataModel } from './MetaData.model';
-import { APICountriesAndStates, APIMobileData, APIPageStyles, APIStates } from '../interfaces'; 
-import { BuilderElementModel } from './BuilderElement.model';
-import { OptionModel } from './FormField.model';
-import { StyleModel } from './Style.model';
+import { MetaDataModel } from './builderElement/MetaData.model';
+import { APICountriesAndStates, APIMobileData, APIPageStyles, APIStates } from '../interfaces';
+import { BuilderElementModel } from './builderElement/BuilderElement.model';
+import { OptionModel } from './builderElement/FormField.model';
+import { StyleModel } from './builderElement/Style.model';
 
 export class CountryModel {
     label: string;
@@ -88,7 +88,7 @@ export class MobilePageModel extends BaseModel {
             pageLink: apiModel?.MobilePageData?.PageLink,
             metaData: MetaDataModel.deserialize(apiModel?.MobilePageData),
             pageStyles: MobilePageModel.deserializeStyles(apiModel?.MobilePageData?.PageStyling),
-            builderElements: BuilderElementModel.deserializeList(apiModel?.MobilePageData?.MobilePageBuilderComponents),
+            builderElements: BuilderElementModel.deserializeList(apiModel?.MobilePageData?.MobilePageBuilderComponents, apiModel?.MobilePageData?.ContactInfo?.ContactId),
             countriesAndStates: CountryModel.deserializeList(apiModel?.CountriesAndStates)
         };
         return new MobilePageModel(data)

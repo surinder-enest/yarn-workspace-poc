@@ -10,3 +10,4 @@ export * from './InterestResponseValue.enum';
 export * from './ThankYouActionType.enum';
 export * from './Alignment.enum';
 export * from './VideoSource.enum';
+export * from './MediaLinkType.enum';

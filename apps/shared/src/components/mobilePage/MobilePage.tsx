@@ -1,6 +1,6 @@
 import React from 'react';
-import { MobilePageModel, BuilderElementModel } from '../../models';
-import { BuilderElement } from '..';
+import { MobilePageModel, BuilderElementModel } from '../../models'; 
+import { BuilderElement } from '../BuilderElement';
 
 interface Props {
   pageData: MobilePageModel;

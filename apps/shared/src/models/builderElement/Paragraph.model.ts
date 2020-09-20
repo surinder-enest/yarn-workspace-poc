@@ -1,5 +1,5 @@
 import { StyleModel } from './Style.model';
-import { APIParagraph } from '../interfaces';
+import { APIParagraph } from '../../interfaces';
 
 export class ParagraphModel {
   leftText: string;

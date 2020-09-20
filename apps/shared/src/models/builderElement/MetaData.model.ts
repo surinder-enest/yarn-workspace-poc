@@ -1,4 +1,4 @@
-import { APIMobilePage, APIMapLocation, APIGeoAddress } from '../interfaces';
+import { APIMobilePage, APIMapLocation, APIGeoAddress } from '../../interfaces';
 
 export class MetaDataModel {
     pageTitle: string;

@@ -1,15 +1,15 @@
 import { StyleModel } from './Style.model';
-import { APIVideo } from '../interfaces';
-import { VIDEO_SOURCE } from '../enums';
-import { MEDIA_LINK_TYPE } from '../enums/MediaLinkType.enum';
-import { Utility } from '../utilities';
+import { APIVideo } from '../../interfaces';
+import { VIDEO_SOURCE } from '../../enums';
+import { MEDIA_LINK_TYPE } from '../../enums/MediaLinkType.enum';
+import { Utility } from '../../utilities';
 
 export class VideoModel {
   isDefaultMedia?: boolean;
   styles: StyleModel;
   url: string;
   videoSourceType: string;
-  isVideoButton: boolean;
+  isButton: boolean;
   buttonText: string;
   buttonStyles: StyleModel;
   iframe: string;
@@ -19,7 +19,7 @@ export class VideoModel {
     this.isDefaultMedia = data?.isDefaultMedia || false;
     this.url = data?.url || '';
     this.videoSourceType = data?.videoSourceType || '';
-    this.isVideoButton = data?.isVideoButton || false;
+    this.isButton = data?.isButton || false;
     this.buttonText = data?.buttonText || '';
     this.buttonStyles = data?.buttonStyles || new StyleModel();
     this.iframe = data?.iframe || '';
@@ -30,7 +30,7 @@ export class VideoModel {
       styles: StyleModel.deserialize(apiModel?.Style),
       url: apiModel?.Url?.replace(/\n/g, ''),
       videoSourceType: apiModel?.VideoSourceType,
-      isVideoButton: apiModel?.VideoShowType === "Button",
+      isButton: apiModel?.VideoShowType === "Button",
       buttonText: apiModel?.ButtonText,
       buttonStyles: StyleModel.deserializeButtonStyles(apiModel?.Style?.Button),
       iframe: VideoModel.deserializeIframe(apiModel)

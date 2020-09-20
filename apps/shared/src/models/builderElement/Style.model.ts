@@ -1,6 +1,6 @@
-import { APIStyle, APIBackground, APIButton } from '../interfaces';
-import { Utility } from '../utilities';
-import { BACKGROUND_TYPE } from '../enums';
+import { APIStyle, APIBackground, APIButton } from '../../interfaces';
+import { Utility } from '../../utilities';
+import { BACKGROUND_TYPE } from '../../enums';
 
 export class StyleModel {
   paddingTop?: string;
@@ -77,6 +77,7 @@ export class StyleModel {
       borderColor: apiModel?.ElementBorderStyle?.BorderColor?.HexValue,
       background: StyleModel.deserializeBackgroundCss(apiModel?.Background),
       minHeight: apiModel?.Background?.Url ? '300px' : '',
+      width: `${apiModel?.Position?.Size || 100}%`
     };
     return new StyleModel(data);
   }
@@ -96,19 +97,18 @@ export class StyleModel {
     switch (BackgroundType) {
       case BACKGROUND_TYPE.IMAGE:
         const opacityValue = Opacity ? Opacity / 100 : 1;
-        return `${
-          Url
-            ? `linear-gradient(rgba(255, 255, 255, 
+        return `${Url
+          ? `linear-gradient(rgba(255, 255, 255, 
                     ${1 - opacityValue}), rgba(255,255, 255,
                     ${1 - opacityValue})), url(${Utility.replace(
-                Url,
-                ' ',
-                '%20'
-              )}) 
+            Url,
+            ' ',
+            '%20'
+          )}) 
                     ${Utility.addStringBeforeCapitalLetter(
-                      ImagePosition,
-                      ' '
-                    ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
+            ImagePosition,
+            ' '
+          ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
                     ${Utility.addStringBeforeCapitalLetter(
             BackgroundRepeat,
             '-'

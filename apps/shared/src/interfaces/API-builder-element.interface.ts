@@ -102,6 +102,16 @@ export interface APIVideo {
   ButtonText: string;
 }
 
+export interface APIImage {
+  Style: APIStyle;
+  ImageUrl: string;
+  Caption: string;
+  IsClickable: boolean;
+  Type: string;
+  Value: string;
+  RedirectUrl: string;
+}
+
 export interface APIBuilderElement {
   Id: string;
   Key: string;
@@ -116,4 +126,5 @@ export interface APIBuilderElement {
   MobilePage: APIMobilePageElement;
   Form: APIForm;
   Video: APIVideo;
+  Image: APIImage;
 }

@@ -1,5 +1,5 @@
 import { Regex } from './Regex';
-  
+
 export class Utility {
     public static WhiteColorCode = "#ffffff";
     public static BlackColorCode = "#000000";
@@ -71,5 +71,22 @@ export class Utility {
 
     public static getFrameSourceValue(value: string): string {
         return value?.trim()?.match(Regex.frameSourceValue) ? RegExp.$1 : ''
-    } 
+    }
+
+    public static getValueWithClickType(type: string, value: string, redirectUrl: string, contactId: string): string {
+        switch (type) {
+            case "ClickToCall":
+                return `tel:${value}`;
+            case "Email":
+                return `mailto:${value}`;
+            case "Link":
+                if (!Regex.httpProtocolRegex.test(value)) {
+                    return `http://${value}`;
+                }
+                break;
+            case "MobilePage":
+                return `${redirectUrl}${contactId ? `?contId=${contactId}` : ''}`;
+        }
+        return value;
+    }
 }

@@ -1,4 +1,5 @@
 interface APIPosition {
+  Size: number;
   TopPadding: string;
   BottomPadding: string;
   RightPadding: string;

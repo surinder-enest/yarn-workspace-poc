@@ -1,5 +1,5 @@
 import { StyleModel } from './Style.model';
-import { APISpacer } from '../interfaces';
+import { APISpacer } from '../../interfaces';
 
 export class SpacerModel {
   styles: StyleModel;

@@ -1,6 +1,6 @@
 import { TitleModel } from './Title.model';
 import { ParagraphModel } from './Paragraph.model';
-import { APIBuilderElement } from '../interfaces';
+import { APIBuilderElement } from '../../interfaces';
 import { FormModel } from './Form.model';
 import { SpacerModel } from './Spacer.model';
 import { EmbedModel } from './Embed.model';
@@ -9,6 +9,7 @@ import { PhoneModel } from './Phone.model';
 import { VideoModel } from './Video.model';
 import { LinkModel } from './Link.model';
 import { MobilePageElementModel } from './MobilePageElement.model';
+import { ImageModel } from './Image.model';
 
 export class BuilderElementModel {
   id: string;
@@ -27,6 +28,7 @@ export class BuilderElementModel {
   mobilePageElement: MobilePageElementModel;
   form: FormModel;
   video: VideoModel;
+  image: ImageModel;
 
   constructor(data?: BuilderElementModel) {
     this.id = data?.id || '';
@@ -46,9 +48,10 @@ export class BuilderElementModel {
       data?.mobilePageElement || new MobilePageElementModel();
     this.form = data?.form || new FormModel();
     this.video = data?.video || new VideoModel();
+    this.image = data?.image || new ImageModel();
   }
 
-  static deserialize(apiModel: APIBuilderElement): BuilderElementModel {
+  static deserialize(apiModel: APIBuilderElement, contactId: string): BuilderElementModel {
     const data: BuilderElementModel = {
       id: apiModel?.Id,
       key: apiModel?.Key,
@@ -65,20 +68,21 @@ export class BuilderElementModel {
       ),
       form: FormModel.deserialize(apiModel?.Form),
       video: VideoModel.deserialize(apiModel?.Video),
+      image: ImageModel.deserialize(apiModel?.Image, contactId),
     };
     return new BuilderElementModel(data);
   }
 
   static deserializeList(
-    apiBuilderElementList: APIBuilderElement[]
+    apiBuilderElementList: APIBuilderElement[], contactId: string
   ): BuilderElementModel[] {
     return apiBuilderElementList
       ? apiBuilderElementList.map(
-          (apiBuilderElement: APIBuilderElement) =>
-            new BuilderElementModel(
-              BuilderElementModel.deserialize(apiBuilderElement)
-            )
-        )
+        (apiBuilderElement: APIBuilderElement) =>
+          new BuilderElementModel(
+            BuilderElementModel.deserialize(apiBuilderElement, contactId)
+          )
+      )
       : [];
   }
 }

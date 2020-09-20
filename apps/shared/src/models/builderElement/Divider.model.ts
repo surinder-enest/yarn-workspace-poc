@@ -1,5 +1,5 @@
-import { ALIGNMENT } from '../enums/Alignment.enum';
-import { APIDivider, APIStyle } from '../interfaces';
+import { ALIGNMENT } from '../../enums/Alignment.enum';
+import { APIDivider, APIStyle } from '../../interfaces';
 import { StyleModel } from './Style.model';
 
 export class DividerModel {

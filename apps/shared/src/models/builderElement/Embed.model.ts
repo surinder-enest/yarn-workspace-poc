@@ -1,4 +1,4 @@
-import { APIEmbed } from '../interfaces';
+import { APIEmbed } from '../../interfaces';
 
 export class EmbedModel {
   text: string;

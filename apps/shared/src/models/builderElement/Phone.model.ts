@@ -1,23 +1,22 @@
-import { APILink } from '../interfaces';
+import { APIPhone } from '../../interfaces';
 import { StyleModel } from './Style.model';
 
-export class LinkModel {
+export class PhoneModel {
   text: string;
-  url: string;
+  phoneNumber: number;
   style: StyleModel;
   elementStyle: StyleModel;
-
-  constructor(data?: LinkModel) {
+  constructor(data?: PhoneModel) {
     this.text = data?.text || '';
-    this.url = data?.url || '';
+    this.phoneNumber = data?.phoneNumber || 0;
     this.style = data?.style || new StyleModel();
     this.elementStyle = data?.elementStyle || new StyleModel();
   }
 
-  static deserialize(apiModel: APILink): LinkModel {
-    const data: LinkModel = {
+  static deserialize(apiModel: APIPhone): PhoneModel {
+    const data: PhoneModel = {
       text: apiModel?.Text,
-      url: apiModel?.URL,
+      phoneNumber: apiModel?.PhoneNumber,
       elementStyle: new StyleModel({
         ...StyleModel.deserialize(apiModel?.Style),
         display: 'block',
@@ -25,6 +24,6 @@ export class LinkModel {
       }),
       style: StyleModel.deserializeButtonStyles(apiModel?.Style.Button),
     };
-    return new LinkModel(data);
+    return new PhoneModel(data);
   }
 }

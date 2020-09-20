@@ -1,4 +1,4 @@
-import { APIMobilePageElement } from '../interfaces';
+import { APIMobilePageElement } from '../../interfaces';
 import { StyleModel } from './Style.model';
 
 export class MobilePageElementModel {

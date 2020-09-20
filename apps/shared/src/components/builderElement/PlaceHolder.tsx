@@ -10,13 +10,19 @@ export default class PlaceHolder extends Component<Props> {
         const { text } = this.props;
         return <div style={{
             paddingTop: '20px',
-            paddingBottom: "20px;",
+            paddingBottom: "20px",
             minHeight: "inherit",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+            WebkitBoxAlign: "center",
+            WebkitBoxPack: "center"
         }}>
-            <div style={{ paddingTop: "20px" }}>
+            <div style={{
+                paddingTop: "20px",
+                paddingBottom: "15px",
+                textAlign: "center"
+            }}>
                 <i className="video-icon" />
                 <div style={{
                     color: "#789bb6",

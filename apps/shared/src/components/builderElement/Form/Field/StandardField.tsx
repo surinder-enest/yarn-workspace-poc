@@ -1,5 +1,4 @@
-import React, { Component, ReactNode } from 'react';
-import { SelectDropdown } from '../../..';
+import React, { Component, ReactNode } from 'react'; 
 import {
   MONTH,
   BIRTHDAY_FORMAT_TYPE,
@@ -8,6 +7,7 @@ import {
 } from '../../../../enums';
 import { CountryModel, FieldModel, StyleModel } from '../../../../models';
 import { Utility } from '../../../../utilities';
+import { SelectDropdown } from '../../../Common';
 
 interface Props {
   formField: FieldModel;
