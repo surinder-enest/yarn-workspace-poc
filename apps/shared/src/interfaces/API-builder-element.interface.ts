@@ -55,6 +55,15 @@ export interface APIMobilePageElement {
   PageURL: string;
   Style: APIStyle;
 }
+
+export interface APIButtonElement {
+  Text: string;
+  Type: string;
+  Value: string;
+  RedirectUrl: string;
+  Style: APIStyle;
+}
+
 export interface APIInterestDetail {
   Id: string;
   CategoryId: string;
@@ -133,6 +142,7 @@ export interface APIBuilderElement {
   Phone: APIPhone;
   Link: APILink;
   MobilePage: APIMobilePageElement;
+  Button: APIButtonElement;
   Form: APIForm;
   Video: APIVideo;
   Image: APIImage;

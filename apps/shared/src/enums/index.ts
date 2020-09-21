@@ -11,3 +11,4 @@ export * from './ThankYouActionType.enum';
 export * from './Alignment.enum';
 export * from './MediaSourceType.enum';
 export * from './MediaLinkType.enum';
+export * from './ButtonLinkType.enum';

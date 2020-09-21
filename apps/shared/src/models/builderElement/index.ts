@@ -1,4 +1,3 @@
-
 export * from './MetaData.model';
 export * from './Style.model';
 export * from './Title.model';
@@ -16,3 +15,4 @@ export * from './Interest.model';
 export * from './Video.model';
 export * from './Image.model';
 export * from './Audio.model';
+export * from './Button.model';

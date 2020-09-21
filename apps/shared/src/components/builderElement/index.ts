@@ -7,6 +7,7 @@ export { default as Divider } from './Divider/Divider';
 export { default as Phone } from './Phone/Phone';
 export { default as Link } from './Link/Link';
 export { default as MobilePageElement } from './MobilePageElement/MobilePageElement';
+export { default as Button } from './Button/Button';
 export * from './Form';
 export { default as Video } from './Video/Video';
 export { default as Image } from './Image/Image';

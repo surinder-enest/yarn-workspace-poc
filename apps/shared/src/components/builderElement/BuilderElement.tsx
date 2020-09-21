@@ -14,6 +14,7 @@ import Link from './Link/Link';
 import MobilePageElement from './MobilePageElement/MobilePageElement';
 import Image from './Image/Image';
 import Audio from './Audio/Audio';
+import Button from './Button/Button';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -28,21 +29,20 @@ interface Props {
 }
 
 class BuilderElement extends React.Component<Props> {
-
   private responseCapture() {
     const {
       moduleId,
       contactId,
       accountId,
       responseCapturedFromModule,
-      builderElement
-    } = this.props; 
+      builderElement,
+    } = this.props;
     return BuilderElementService.saveBuilderElementResponse(
       builderElement,
-      moduleId || "",
-      contactId || "",
-      accountId || "",
-      responseCapturedFromModule || ""
+      moduleId || '',
+      contactId || '',
+      accountId || '',
+      responseCapturedFromModule || ''
     );
   }
 
@@ -74,10 +74,12 @@ class BuilderElement extends React.Component<Props> {
         return <Phone phone={builderElement.phone} />;
       case BUILDER_ELEMENTS.VIDEO:
         return (
-          <Video elementId={builderElement.id}
+          <Video
+            elementId={builderElement.id}
             video={builderElement.video}
             isActualRendering={isActualRendering}
-            responseCapture={() => this.responseCapture()} />
+            responseCapture={() => this.responseCapture()}
+          />
         );
       case BUILDER_ELEMENTS.LINK:
         return <Link link={builderElement.link} />;
@@ -87,6 +89,8 @@ class BuilderElement extends React.Component<Props> {
             mobilePageElement={builderElement.mobilePageElement}
           />
         );
+      case BUILDER_ELEMENTS.BUTTON:
+        return <Button button={builderElement.button} />;
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form
@@ -102,16 +106,20 @@ class BuilderElement extends React.Component<Props> {
         );
       case BUILDER_ELEMENTS.IMAGE:
         return (
-          <Image image={builderElement.image}
+          <Image
+            image={builderElement.image}
             isActualRendering={isActualRendering}
-            responseCapture={() => this.responseCapture()} />
+            responseCapture={() => this.responseCapture()}
+          />
         );
       case BUILDER_ELEMENTS.AUDIO:
         return (
-          <Audio elementId={builderElement.id}
+          <Audio
+            elementId={builderElement.id}
             audio={builderElement.audio}
             isActualRendering={isActualRendering}
-            responseCapture={() => this.responseCapture()} />
+            responseCapture={() => this.responseCapture()}
+          />
         );
       default:
         return <></>;
@@ -148,15 +156,15 @@ class BuilderElement extends React.Component<Props> {
             {builderElement.isTextRoute ? (
               <span>{builderElement.elementLabel}</span>
             ) : (
-                <>
-                  <i
-                    id="copyBuilderElement"
-                    {...elementKey}
-                    className="fa fa-clone folder-icon clickable"
-                  />
-                  <i className="fa fa-bars bar-icon" />
-                </>
-              )}
+              <>
+                <i
+                  id="copyBuilderElement"
+                  {...elementKey}
+                  className="fa fa-clone folder-icon clickable"
+                />
+                <i className="fa fa-bars bar-icon" />
+              </>
+            )}
           </>
         )}
       </div>
