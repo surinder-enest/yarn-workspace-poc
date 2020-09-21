@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 import { LinkModel } from '../../../models';
-import { Regex } from '../../../utilities';
 
 interface Props {
   link: LinkModel;
+  responseCapture: Function;
 }
 
 export default class Link extends Component<Props> {
-  private getLinkUrl(url: string): string {
-    if (!Regex.httpProtocolRegex.test(url)) {
-      return `http://${url}`;
-    }
-    return url;
+
+  private onClick() {
+    this.props.responseCapture();
   }
 
   render() {
     const { text, elementStyle, style, url } = this.props.link;
     return (
-      <a href={this.getLinkUrl(url)} style={elementStyle} target="_blank">
+      <a href={url} style={elementStyle} target="_blank" onClick={() => this.onClick()}>
         <div style={{ display: 'table', width: '100%', minHeight: 'inherit' }}>
           <div style={{ display: 'table-row', minHeight: 'inherit' }}>
             <div style={{ display: 'table-cell', verticalAlign: 'middle' }}>

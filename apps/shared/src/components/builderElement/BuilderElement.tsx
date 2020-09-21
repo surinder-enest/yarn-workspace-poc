@@ -29,6 +29,7 @@ interface Props {
 }
 
 class BuilderElement extends React.Component<Props> {
+
   private responseCapture() {
     const {
       moduleId,
@@ -36,7 +37,12 @@ class BuilderElement extends React.Component<Props> {
       accountId,
       responseCapturedFromModule,
       builderElement,
+      isActualRendering
     } = this.props;
+
+    if (!isActualRendering)
+      return;
+
     return BuilderElementService.saveBuilderElementResponse(
       builderElement,
       moduleId || '',
@@ -71,7 +77,8 @@ class BuilderElement extends React.Component<Props> {
       case BUILDER_ELEMENTS.DIVIDER:
         return <Divider divider={builderElement.divider} />;
       case BUILDER_ELEMENTS.PHONE:
-        return <Phone phone={builderElement.phone} />;
+        return <Phone phone={builderElement.phone}
+          responseCapture={() => this.responseCapture()} />;
       case BUILDER_ELEMENTS.VIDEO:
         return (
           <Video
@@ -82,15 +89,18 @@ class BuilderElement extends React.Component<Props> {
           />
         );
       case BUILDER_ELEMENTS.LINK:
-        return <Link link={builderElement.link} />;
+        return <Link link={builderElement.link}
+          responseCapture={() => this.responseCapture()} />;
       case BUILDER_ELEMENTS.MOBILE_PAGE:
         return (
           <MobilePageElement
             mobilePageElement={builderElement.mobilePageElement}
+            responseCapture={() => this.responseCapture()}
           />
         );
       case BUILDER_ELEMENTS.BUTTON:
-        return <Button button={builderElement.button} />;
+        return <Button button={builderElement.button}
+          responseCapture={() => this.responseCapture()} />;
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form
@@ -156,15 +166,15 @@ class BuilderElement extends React.Component<Props> {
             {builderElement.isTextRoute ? (
               <span>{builderElement.elementLabel}</span>
             ) : (
-              <>
-                <i
-                  id="copyBuilderElement"
-                  {...elementKey}
-                  className="fa fa-clone folder-icon clickable"
-                />
-                <i className="fa fa-bars bar-icon" />
-              </>
-            )}
+                <>
+                  <i
+                    id="copyBuilderElement"
+                    {...elementKey}
+                    className="fa fa-clone folder-icon clickable"
+                  />
+                  <i className="fa fa-bars bar-icon" />
+                </>
+              )}
           </>
         )}
       </div>

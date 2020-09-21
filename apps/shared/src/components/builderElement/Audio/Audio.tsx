@@ -23,8 +23,7 @@ export default class Audio extends Component<IProps, IState> {
         }
     }
 
-    private onPlay(event: React.SyntheticEvent<HTMLAudioElement, Event>) {
-        event.preventDefault();
+    private onPlay() {
         this.props.responseCapture();
     }
 
@@ -63,7 +62,7 @@ export default class Audio extends Component<IProps, IState> {
                             width: "100%"
                         }}>
                             <audio id={elementId} style={{ width: "100%", display: "inline-block" }}
-                                onPlay={(event) => this.onPlay(event)} controls>
+                                onPlay={() => this.onPlay()} controls>
                                 <source src={audio.url} type="audio/wav" />
                                 <source src={audio.url} type="audio/mp3" />
                                 <source src={audio.url} type="audio/ogg" />

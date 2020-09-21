@@ -1,36 +1,21 @@
 import React, { Component } from 'react';
-import { BUTTON_LINK_TYPE } from '../../../enums';
 import { ButtonModel } from '../../../models';
-import { Regex } from '../../../utilities';
 
 interface Props {
-  button: ButtonModel;
+  button: ButtonModel; 
+  responseCapture: Function;
 }
 
 export default class Button extends Component<Props> {
-  private geUrl(): string {
-    const { type, value, redirectUrl } = this.props.button;
-    switch (type) {
-      case BUTTON_LINK_TYPE.LINK:
-        if (!Regex.httpProtocolRegex.test(value)) {
-          return `http://${value}`;
-        }
-        return value;
-      case BUTTON_LINK_TYPE.CLICK_TO_CALL:
-        return `tel:${value}`;
-      case BUTTON_LINK_TYPE.EMAIL:
-        return `mailto:${value}`;
-      case BUTTON_LINK_TYPE.MOBILE_PAGE:
-        return redirectUrl;
-      default:
-        return value;
-    }
+
+  private onClick() {
+    this.props.responseCapture();
   }
 
   render() {
-    const { text, elementStyle, style } = this.props.button;
+    const { url, text, elementStyle, style } = this.props.button;
     return (
-      <a href={this.geUrl()} style={elementStyle} target="_blank">
+      <a href={url} style={elementStyle} target="_blank" onClick={() => this.onClick()}>
         <div
           style={{
             display: 'table',

@@ -73,10 +73,8 @@ export class BuilderElementModel {
       divider: DividerModel.deserialize(apiModel?.Divider),
       phone: PhoneModel.deserialize(apiModel?.Phone),
       link: LinkModel.deserialize(apiModel?.Link),
-      mobilePageElement: MobilePageElementModel.deserialize(
-        apiModel?.MobilePage
-      ),
-      button: ButtonModel.deserialize(apiModel?.Button),
+      mobilePageElement: MobilePageElementModel.deserialize(apiModel?.MobilePage),
+      button: ButtonModel.deserialize(apiModel?.Button, contactId),
       form: FormModel.deserialize(apiModel?.Form),
       video: VideoModel.deserialize(apiModel?.Video),
       image: ImageModel.deserialize(apiModel?.Image, contactId),
@@ -91,11 +89,11 @@ export class BuilderElementModel {
   ): BuilderElementModel[] {
     return apiBuilderElementList
       ? apiBuilderElementList.map(
-          (apiBuilderElement: APIBuilderElement) =>
-            new BuilderElementModel(
-              BuilderElementModel.deserialize(apiBuilderElement, contactId)
-            )
-        )
+        (apiBuilderElement: APIBuilderElement) =>
+          new BuilderElementModel(
+            BuilderElementModel.deserialize(apiBuilderElement, contactId)
+          )
+      )
       : [];
   }
 }

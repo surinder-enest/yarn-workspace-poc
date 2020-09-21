@@ -3,9 +3,15 @@ import { MobilePageElementModel } from '../../../models';
 
 interface Props {
   mobilePageElement: MobilePageElementModel;
+  responseCapture: Function;
 }
 
 export default class MobilePageElement extends Component<Props> {
+
+  private onClick() {
+    this.props.responseCapture();
+  }
+
   render() {
     const {
       buttonText,
@@ -15,7 +21,7 @@ export default class MobilePageElement extends Component<Props> {
     } = this.props.mobilePageElement;
 
     return (
-      <a href={pageUrl} style={elementStyle} target="_blank">
+      <a href={pageUrl} style={elementStyle} target="_blank" onClick={() => this.onClick()}>
         <div style={{ display: 'table', width: '100%', minHeight: 'inherit' }}>
           <div style={{ display: 'table-row', minHeight: 'inherit' }}>
             <div style={{ display: 'table-cell', verticalAlign: 'middle' }}>

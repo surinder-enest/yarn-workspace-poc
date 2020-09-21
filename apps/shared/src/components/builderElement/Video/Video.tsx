@@ -24,9 +24,9 @@ export default class Video extends Component<IProps, IState> {
   }
 
   private onPlay(isFromLibrary: boolean) {
-    const { isActualRendering, responseCapture } = this.props;
+    const { responseCapture } = this.props;
     const { playCount } = this.state;
-    if (isActualRendering || (isFromLibrary && playCount === 1)) {
+    if (isFromLibrary && playCount === 1) {
       return;
     }
     if (isFromLibrary) {

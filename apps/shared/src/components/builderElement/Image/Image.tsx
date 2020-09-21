@@ -14,8 +14,13 @@ export default class Image extends Component<IProps> {
 
     private onClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         event.preventDefault();
-        const { isClickable, clickValue } = this.props.image;
-        if (isClickable) { 
+        const { isActualRendering, image } = this.props;
+        const { isClickable, clickValue } = image;
+
+        if (!isActualRendering)
+            return;
+
+        if (isClickable) {
             this.props.responseCapture();
             Utility.redirectToOtherPage(clickValue, true);
         }

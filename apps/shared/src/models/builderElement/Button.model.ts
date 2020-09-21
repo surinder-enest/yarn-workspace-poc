@@ -1,29 +1,24 @@
 import { APIButtonElement } from '../../interfaces';
+import { Utility } from '../../utilities';
 import { StyleModel } from './Style.model';
 
 export class ButtonModel {
   text: string;
-  type: string;
-  value: string;
-  redirectUrl: string;
+  url: string;
   style: StyleModel;
   elementStyle: StyleModel;
 
   constructor(data?: ButtonModel) {
     this.text = data?.text || '';
-    this.type = data?.type || '';
-    this.value = data?.value || '';
-    this.redirectUrl = data?.redirectUrl || '';
+    this.url = data?.url || '';
     this.style = data?.style || new StyleModel();
     this.elementStyle = data?.elementStyle || new StyleModel();
   }
 
-  static deserialize(apiModel: APIButtonElement): ButtonModel {
+  static deserialize(apiModel: APIButtonElement, contactId: string): ButtonModel {
     const data: ButtonModel = {
       text: apiModel?.Text,
-      type: apiModel?.Type,
-      value: apiModel?.Value,
-      redirectUrl: apiModel?.RedirectUrl,
+      url: Utility.getValueWithClickType(apiModel?.Type, apiModel?.Value, apiModel?.RedirectUrl, contactId),
       elementStyle: new StyleModel({
         ...StyleModel.deserialize(apiModel?.Style),
         display: 'block',

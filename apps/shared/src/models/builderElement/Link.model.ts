@@ -1,4 +1,6 @@
+import { BUTTON_LINK_TYPE } from '../../enums';
 import { APILink } from '../../interfaces';
+import { Utility } from '../../utilities';
 import { StyleModel } from './Style.model';
 
 export class LinkModel {
@@ -17,7 +19,7 @@ export class LinkModel {
   static deserialize(apiModel: APILink): LinkModel {
     const data: LinkModel = {
       text: apiModel?.Text,
-      url: apiModel?.URL,
+      url: Utility.getValueWithClickType(BUTTON_LINK_TYPE.LINK, apiModel?.URL, "", ""),
       elementStyle: new StyleModel({
         ...StyleModel.deserialize(apiModel?.Style),
         display: 'block',
