@@ -1,7 +1,6 @@
 import { StyleModel } from './Style.model';
 import { APIVideo } from '../../interfaces';
-import { MEDIA_SOURCE_TYPE } from '../../enums';
-import { MEDIA_LINK_TYPE } from '../../enums/MediaLinkType.enum';
+import { MEDIA_SOURCE_TYPE, MEDIA_LINK_TYPE, BUTTON_SHOW_TYPE } from '../../enums';
 import { Utility } from '../../utilities';
 
 export class VideoModel {
@@ -30,7 +29,7 @@ export class VideoModel {
       styles: StyleModel.deserialize(apiModel?.Style),
       url: apiModel?.Url?.replace(/\n/g, ''),
       videoSourceType: apiModel?.VideoSourceType,
-      isButton: apiModel?.VideoShowType === "Button",
+      isButton: apiModel?.VideoShowType === BUTTON_SHOW_TYPE.BUTTON,
       buttonText: apiModel?.ButtonText,
       buttonStyles: StyleModel.deserializeButtonStyles(apiModel?.Style?.Button),
       iframe: VideoModel.deserializeIframe(apiModel)
@@ -56,7 +55,7 @@ export class VideoModel {
       case MEDIA_SOURCE_TYPE.WISTIA:
         const embedUrl = Utility.getEmbedWistiaUrl(url);
         return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
-     default:
+      default:
         return Utility.getFrameSourceValue(url) ? url : '';
     }
   }

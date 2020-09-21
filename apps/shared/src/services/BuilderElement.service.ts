@@ -29,7 +29,7 @@ class BuilderElementService {
     contactId: string, accountId: string, responseCapturedFromModule: string) {
     const mobilePageData: IMobilePageData = {
       AccountId: accountId,
-      ContactId: contactId,
+      ContactId: contactId || null,
       BuilderElementId: builderElement.id,
       BuilderElement: builderElement.builderElementType,
       FormResponseDetails: this.formData(builderElement.builderElementType, builderElement?.form),

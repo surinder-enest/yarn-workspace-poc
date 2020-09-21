@@ -1,3 +1,4 @@
+import { BUTTON_LINK_TYPE } from '../enums';
 import { Regex } from './Regex';
 
 export class Utility {
@@ -75,16 +76,16 @@ export class Utility {
 
     public static getValueWithClickType(type: string, value: string, redirectUrl: string, contactId: string): string {
         switch (type) {
-            case "ClickToCall":
+            case BUTTON_LINK_TYPE.CLICK_TO_CALL:
                 return `tel:${value}`;
-            case "Email":
+            case BUTTON_LINK_TYPE.EMAIL:
                 return `mailto:${value}`;
-            case "Link":
+            case BUTTON_LINK_TYPE.LINK:
                 if (!Regex.httpProtocolRegex.test(value)) {
                     return `http://${value}`;
                 }
                 break;
-            case "MobilePage":
+            case BUTTON_LINK_TYPE.MOBILE_PAGE:
                 return `${redirectUrl}${contactId ? `?contId=${contactId}` : ''}`;
         }
         return value;

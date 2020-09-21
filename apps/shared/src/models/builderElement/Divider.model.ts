@@ -1,4 +1,4 @@
-import { ALIGNMENT } from '../../enums/Alignment.enum';
+import { ALIGNMENT } from '../../enums/styles/Alignment.enum';
 import { APIDivider, APIStyle } from '../../interfaces';
 import { StyleModel } from './Style.model';
 

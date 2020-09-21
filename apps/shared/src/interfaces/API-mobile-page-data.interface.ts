@@ -27,7 +27,7 @@ export interface IFormData {
 
 export interface IMobilePageData {
   AccountId: string;
-  ContactId: string;
+  ContactId: string | null;
   BuilderElementId: string;
   BuilderElement: string;
   FormResponseDetails: IFormData | null;

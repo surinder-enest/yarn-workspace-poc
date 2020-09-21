@@ -4,3 +4,9 @@ export enum BUTTON_LINK_TYPE {
   CLICK_TO_CALL = 'ClickToCall',
   EMAIL = 'Email',
 }
+
+export enum BUTTON_SHOW_TYPE {
+  DEFAULT = 'Default',
+  BUTTON = 'Button',
+  IMAGE = 'Image',
+}

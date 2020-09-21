@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { BUILDER_ELEMENTS } from '../../../enums';
+import { BUILDER_ELEMENTS, BUTTON_SHOW_TYPE } from '../../../enums';
 import { AudioModel } from '../../../models';
 import PlaceHolder from '../PlaceHolder';
 
@@ -80,9 +80,9 @@ export default class Audio extends Component<IProps, IState> {
         const { width } = styles;
         const { isShowAudio } = this.state;
         switch (showType) {
-            case "Default":
+            case BUTTON_SHOW_TYPE.DEFAULT:
                 return this.getAudioHtml();
-            case "Button":
+            case BUTTON_SHOW_TYPE.BUTTON:
                 return <>
                     {
                         isShowAudio
@@ -90,7 +90,7 @@ export default class Audio extends Component<IProps, IState> {
                             : <div style={buttonStyles} onClick={() => this.showAudio()}>{buttonText}</div>
                     }
                 </>
-            case "Image":
+            case BUTTON_SHOW_TYPE.IMAGE:
                 return <>
                     {
                         isShowAudio
