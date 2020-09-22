@@ -48,6 +48,7 @@
     "react-16-bootstrap-date-picker": "5.1.2",
     "react-bootstrap": "0.32.4",
     "react-dom": "^16.13.1",
+    "react-google-maps": "9.0.2",
     "react-number-format": "^4.4.1",
     "react-player": "1.15.3",
     "react-recaptcha": "2.3.7",
