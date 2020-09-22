@@ -17,3 +17,4 @@ export * from './Image.model';
 export * from './Audio.model';
 export * from './Button.model';
 export * from './Offer.model';
+export * from './Map.model';

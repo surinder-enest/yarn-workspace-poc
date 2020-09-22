@@ -1,3 +1,4 @@
+import { APIMapLocation } from './API-mobile-page.interface';
 import { APIDividerStyle, APIStyle } from './API-style.interface';
 
 export interface APIOptions {
@@ -146,6 +147,24 @@ export interface APIOffer {
   Style: APIStyle;
   OfferData: APIOfferData;
 }
+export interface APIMapAddress {
+  PlaceId: string;
+  Location: APIMapLocation;
+  FormattedAddress: string;
+  IsInfoWindowOpen: boolean;
+}
+
+export interface APIMap {
+  Address: Array<APIMapAddress>;
+  ShowMap: boolean;
+  AllowScrolling: boolean;
+  ShowZoom: boolean;
+  ShowStreetView: boolean;
+  ShowButton: boolean;
+  IsDisplayAddresses: boolean;
+  ButtonText: string;
+  Style: APIStyle;
+}
 
 export interface APIBuilderElement {
   Id: string;
@@ -165,4 +184,5 @@ export interface APIBuilderElement {
   Image: APIImage;
   Audio: APIAudio;
   Offer: APIOffer;
+  Map: APIMap;
 }

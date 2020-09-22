@@ -1,5 +1,5 @@
 import React from 'react';
-import { MetaDataModel, GEOGraphicsModel } from '@mindme/shared';
+import { MetaDataModel, LocationModel } from '@mindme/shared';
 
 interface Props {
   pageLink: string;
@@ -32,7 +32,7 @@ class MetaData extends React.Component<Props> {
         <meta property="twitter:title" content={metaData.pageTitle} />
         <meta property="twitter:description" content={metaData.description} />
         <meta property="twitter:image" content={metaData.previewImageLink} />
-        {metaData.geoLocationDetails.map((groLocaltion: GEOGraphicsModel, idx: number) => {
+        {metaData.geoLocationDetails.map((groLocaltion: LocationModel, idx: number) => {
           return <meta key={idx} name="geo.position" content={`${groLocaltion.latitude};${groLocaltion.longitute}`} />;
         })}
       </>
