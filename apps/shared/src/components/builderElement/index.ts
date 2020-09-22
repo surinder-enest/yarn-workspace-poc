@@ -13,3 +13,4 @@ export { default as Video } from './Video/Video';
 export { default as Image } from './Image/Image';
 export { default as PlaceHolder } from './PlaceHolder';
 export { default as Audio } from './Audio/Audio';
+export { default as Offer } from './Offer/Offer';

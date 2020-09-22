@@ -123,11 +123,28 @@ export interface APIImage {
 
 export interface APIAudio {
   Style: APIStyle;
-  LinkType: string; 
-  Url: string; 
-  AudioShowType: string; 
-  ButtonText: string; 
-  ImageURL: string; 
+  LinkType: string;
+  Url: string;
+  AudioShowType: string;
+  ButtonText: string;
+  ImageURL: string;
+}
+
+export interface APIOfferMedia {
+  Source: string;
+  Url: string;
+}
+
+export interface APIOfferData {
+  OfferTitle: string;
+  OfferDescription: string;
+  OfferLayoutType: string;
+  Media: APIOfferMedia;
+}
+
+export interface APIOffer {
+  Style: APIStyle;
+  OfferData: APIOfferData;
 }
 
 export interface APIBuilderElement {
@@ -147,4 +164,5 @@ export interface APIBuilderElement {
   Video: APIVideo;
   Image: APIImage;
   Audio: APIAudio;
+  Offer: APIOffer;
 }

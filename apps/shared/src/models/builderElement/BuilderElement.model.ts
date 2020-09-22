@@ -12,6 +12,7 @@ import { MobilePageElementModel } from './MobilePageElement.model';
 import { ImageModel } from './Image.model';
 import { AudioModel } from './Audio.model';
 import { ButtonModel } from './Button.model';
+import { OfferModel } from './Offer.model';
 
 export class BuilderElementModel {
   id: string;
@@ -33,6 +34,7 @@ export class BuilderElementModel {
   video: VideoModel;
   image: ImageModel;
   audio: AudioModel;
+  offer: OfferModel;
 
   constructor(data?: BuilderElementModel) {
     this.id = data?.id || '';
@@ -56,6 +58,7 @@ export class BuilderElementModel {
     this.video = data?.video || new VideoModel();
     this.image = data?.image || new ImageModel();
     this.audio = data?.audio || new AudioModel();
+    this.offer = data?.offer || new OfferModel();
   }
 
   static deserialize(
@@ -79,6 +82,7 @@ export class BuilderElementModel {
       video: VideoModel.deserialize(apiModel?.Video),
       image: ImageModel.deserialize(apiModel?.Image, contactId),
       audio: AudioModel.deserialize(apiModel?.Audio),
+      offer: OfferModel.deserialize(apiModel?.Offer, contactId),
     };
     return new BuilderElementModel(data);
   }

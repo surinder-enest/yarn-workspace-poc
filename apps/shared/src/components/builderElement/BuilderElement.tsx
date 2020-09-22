@@ -15,6 +15,7 @@ import MobilePageElement from './MobilePageElement/MobilePageElement';
 import Image from './Image/Image';
 import Audio from './Audio/Audio';
 import Button from './Button/Button';
+import Offer from './Offer/Offer';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -127,6 +128,14 @@ class BuilderElement extends React.Component<Props> {
           <Audio
             elementId={builderElement.id}
             audio={builderElement.audio}
+            isActualRendering={isActualRendering}
+            responseCapture={() => this.responseCapture()}
+          />
+        );
+      case BUILDER_ELEMENTS.OFFER:
+        return (
+          <Offer 
+            offer={builderElement.offer}
             isActualRendering={isActualRendering}
             responseCapture={() => this.responseCapture()}
           />
