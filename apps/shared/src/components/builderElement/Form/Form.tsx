@@ -252,8 +252,7 @@ export default class Form extends Component<IProps, IState> {
     this.setState({ isCaptchaConfigured, captchaErrorMessage });
   }
 
-  private onSubmitButton(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    event.preventDefault();
+  private onSubmitButton() {
     if (!this.props.isActualRendering) return;
 
     if (this.validateForm()) {
@@ -313,14 +312,16 @@ export default class Form extends Component<IProps, IState> {
     const { builderElement } = this.props;
     const { captchaErrorMessage } = this.state;
     return <div style={{ paddingTop: '20px' }}>
-      <CustomRecaptcha
-        elementId={`recaptcha_${builderElement.key}`}
-        style={
-          'transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;'
-        }
-        verifyCallback={() => this.onChangeCaptcha(true)}
-        expiredCallback={() => this.onChangeCaptcha(false)}
-      />
+      <div className="g-recaptcha">
+        <CustomRecaptcha
+          elementId={`recaptcha_${builderElement.key}`}
+          style={
+            'transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;'
+          }
+          verifyCallback={() => this.onChangeCaptcha(true)}
+          expiredCallback={() => this.onChangeCaptcha(false)}
+        />
+      </div>
       {captchaErrorMessage && (
         <div
           style={{
@@ -456,7 +457,7 @@ export default class Form extends Component<IProps, IState> {
                 >
                   <div
                     style={buttonStyles}
-                    onClick={event => this.onSubmitButton(event)}
+                    onClick={() => this.onSubmitButton()}
                   >
                     {submitSettings.buttonText}
                   </div>

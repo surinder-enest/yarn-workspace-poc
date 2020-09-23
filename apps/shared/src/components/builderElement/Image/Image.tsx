@@ -12,8 +12,7 @@ interface IProps {
 
 export default class Image extends Component<IProps> {
 
-    private onClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-        event.preventDefault();
+    private onClick() {
         const { isActualRendering, image } = this.props;
         const { isClickable, clickValue } = image;
 
@@ -30,7 +29,7 @@ export default class Image extends Component<IProps> {
         const { isDefaultMedia, styles, url, caption } = this.props.image;
         const { width } = styles;
         return <div style={styles}>
-            <div style={{ position: 'relative', textAlign: 'center', minHeight: 'inherit' }} onClick={(event) => this.onClick(event)}>
+            <div style={{ position: 'relative', textAlign: 'center', minHeight: 'inherit' }} onClick={() => this.onClick()}>
                 {
                     isDefaultMedia
                         ? <PlaceHolder builderElementType={BUILDER_ELEMENTS.IMAGE} text="Select Image" />

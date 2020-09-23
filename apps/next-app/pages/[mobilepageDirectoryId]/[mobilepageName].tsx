@@ -10,6 +10,7 @@ interface Props {
 }
 
 class MobilePageName extends React.Component<Props> {
+
   static async getInitialProps({ query: { mobilepageDirectoryId = '0000', mobilepageName = 'test' } }) {
     if (!mobilepageDirectoryId || !mobilepageName) return { mobilePageData: {} };
 
@@ -26,25 +27,54 @@ class MobilePageName extends React.Component<Props> {
     const { metaData, pageLink } = mobilePageData;
     return (
       <>
-        <link
-          href="https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Dancing+Script|Abril+Fatface|Dancing+Script|Great+Vibes|Josefin+Sans|Lato|Lobster|Merriweather|Montserrat|Open+Sans|Oswald|Pacifico|Playfair+Display|Poiret+One|Poppins|Quicksand|Raleway|Roboto|Sacramento|Ubuntu|Arial|Sofia"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <script
-          src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-          async
-          defer
-        ></script>
-        <script type="text/javascript">document.addEventListener('DOMContentLoaded', function (event) {});</script>
-        <style>
-          {`
+        <Head>
+          <script type="text/javascript">
+            var giftofspeed1 = document.createElement('link');
+            giftofspeed1.rel = 'stylesheet';
+            giftofspeed1.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+            giftofspeed1.type = 'text/css';
+            var godefer1 = document.getElementsByTagName('link')[0];
+            godefer1.parentNode.insertBefore(giftofspeed1, godefer1);
+            var giftofspeed2 = document.createElement('link');
+            giftofspeed2.rel = 'stylesheet';
+            giftofspeed2.href = 'https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css';
+            giftofspeed2.type = 'text/css';
+            var godefer2 = document.getElementsByTagName('link')[0];
+            godefer2.parentNode.insertBefore(giftofspeed2, godefer2);
+            var giftofspeed3 = document.createElement('link');
+            giftofspeed3.rel = 'stylesheet';
+            giftofspeed3.href = 'https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css';
+            giftofspeed3.type = 'text/css';
+            var godefer3 = document.getElementsByTagName('link')[0];
+            godefer3.parentNode.insertBefore(giftofspeed3, godefer3);
+            var giftofspeed4 = document.createElement('link');
+            giftofspeed4.rel = 'stylesheet';
+            giftofspeed4.href = 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800';
+            giftofspeed4.type = 'text/css';
+            var godefer4 = document.getElementsByTagName('link')[0];
+            godefer4.parentNode.insertBefore(giftofspeed4, godefer4);
+            var giftofspeed5 = document.createElement('link');
+            giftofspeed5.rel = 'stylesheet';
+            giftofspeed5.href = 'https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Dancing+Script|Abril+Fatface|Dancing+Script|Great+Vibes|Josefin+Sans|Lato|Lobster|Merriweather|Montserrat|Open+Sans|Oswald|Pacifico|Playfair+Display|Poiret+One|Poppins|Quicksand|Raleway|Roboto|Sacramento|Ubuntu|Arial|Sofia';
+            giftofspeed5.type = 'text/css';
+            var godefer5 = document.getElementsByTagName('link')[0];
+            godefer5.parentNode.insertBefore(giftofspeed5, godefer5);
+            var head = document.getElementsByTagName('head')[0];
+            var recaptchaElement = document.getElementsByClassName('g-recaptcha')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
+            if (recaptchaElement) head.appendChild(script);
+          </script>
+          <noscript>
+            <link rel="stylesheet" media="print" href="https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Dancing+Script|Abril+Fatface|Dancing+Script|Great+Vibes|Josefin+Sans|Lato|Lobster|Merriweather|Montserrat|Open+Sans|Oswald|Pacifico|Playfair+Display|Poiret+One|Poppins|Quicksand|Raleway|Roboto|Sacramento|Ubuntu|Arial|Sofia&display=swap" />
+            <link rel="stylesheet" media="print" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" />
+            <link rel="stylesheet" media="print" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+            <link rel="stylesheet" media="print" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+            <link rel="stylesheet" media="print" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+          </noscript>
+          <style>
+            {`
             body {
               height: 100%;
               width: 100%;
@@ -155,10 +185,7 @@ class MobilePageName extends React.Component<Props> {
             }
             .checkbox input[type='checkbox'] {
               opacity: 0;
-            }
-            .circle-checkbox .checkbox label::before {
-              border-radius: 100px;
-            }
+            } 
             h1,
             h2,
             h3,
@@ -193,8 +220,7 @@ class MobilePageName extends React.Component<Props> {
               position: relative;
             }
           `}
-        </style>
-        <Head>
+          </style>
           <MetaData pageLink={pageLink} metaData={metaData} />
         </Head>
         <MobilePage pageData={this.props.mobilePageData} />
