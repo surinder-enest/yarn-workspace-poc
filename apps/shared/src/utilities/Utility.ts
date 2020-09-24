@@ -4,6 +4,7 @@ import { Regex } from './Regex';
 export class Utility {
     public static WhiteColorCode = "#ffffff";
     public static BlackColorCode = "#000000";
+    public static recaptchSitekey = '6Le_C0YUAAAAAHQPLFx0qZ89ZFPRATD5Ym7rmqBg';
 
     public static replace(str: string, replaceChar: string, replaceWith: string): string {
         return str.replace(new RegExp(replaceChar, 'g'), replaceWith);

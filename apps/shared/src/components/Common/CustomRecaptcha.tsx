@@ -14,9 +14,8 @@ declare global {
     }
 }
 
-export default class CustomRecaptcha extends Component<IProps, IState> {
-    private sitekey = '6Le_C0YUAAAAAHQPLFx0qZ89ZFPRATD5Ym7rmqBg';
-
+export default class CustomRecaptcha extends Component<IProps, IState> { 
+    
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -27,7 +26,7 @@ export default class CustomRecaptcha extends Component<IProps, IState> {
     componentDidMount() {
         setTimeout(() => {
             this.setState({ isCaptchaRender: true });
-        }, 3000);
+        }, 2000);
     }
 
     render() {
@@ -37,9 +36,7 @@ export default class CustomRecaptcha extends Component<IProps, IState> {
                     typeof window.grecaptcha !== 'undefined' &&
                     typeof window.grecaptcha.render === 'function' && (
                         <Recaptcha
-                            {...this.props}
-                            sitekey={this.sitekey}
-                            render="explicit"
+                            {...this.props} 
                         />
                     )}
             </>
