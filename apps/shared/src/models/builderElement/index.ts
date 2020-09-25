@@ -18,3 +18,5 @@ export * from './Audio.model';
 export * from './Button.model';
 export * from './Offer.model';
 export * from './Map.model';
+export * from './Question.model';
+export * from './MediaType.model';

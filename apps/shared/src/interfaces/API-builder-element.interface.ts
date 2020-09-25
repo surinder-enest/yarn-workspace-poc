@@ -166,6 +166,27 @@ export interface APIMap {
   Style: APIStyle;
 }
 
+export interface APIResponse {
+  ResponseType: string;
+  ThankYouMessage: string;
+  Text: string;
+}
+export interface APIContact {
+  RequireEmailAndMobile: boolean;
+  RequireEmailOnly: boolean;
+  RequireMobileOnly: boolean;
+}
+
+export interface APIQuestion {
+  ResponseDetail: Array<APIResponse>;
+  Title: string;
+  Description: string;
+  ContactInformation: APIContact;
+  RespondButtonText: string;
+  Style: APIStyle;
+  IsOverrideAnyResponseWithAction: string;
+}
+
 export interface APIBuilderElement {
   Id: string;
   Key: string;
@@ -185,4 +206,5 @@ export interface APIBuilderElement {
   Audio: APIAudio;
   Offer: APIOffer;
   Map: APIMap;
+  Question: APIQuestion;
 }

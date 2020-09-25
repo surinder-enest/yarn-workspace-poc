@@ -59,7 +59,16 @@ export interface APIButton {
   BorderColor: APIColor;
   BorderRadius: number;
 }
-
+export interface APIResponseStyles extends APIButton {
+  OptionTextColor: APIColor;
+  OptionBackgroundColor: APIColor;
+}
+export interface APIMedia {
+  Size: string;
+  VideoSourceType: string;
+  Source: string;
+  Url: string;
+}
 export interface APIStyle {
   Position: APIPosition;
   Background: APIBackground;
@@ -67,7 +76,9 @@ export interface APIStyle {
   FieldsStyle: APIFieldsStyle;
   InterestStyles: APIInterestStyles;
   Button: APIButton;
+  ResponseStyles: APIResponseStyles;
   Align: string;
+  Media: APIMedia;
 }
 
 export interface APIDividerStyle {
