@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Recaptcha from 'react-recaptcha';
 
-interface Props {
+interface IProps {
     [otherProps: string]: any;
-    verifyCallback: Function;
-    expiredCallback: Function;
+}
+interface IState {
+    isCaptchaRender: boolean;
 }
 
 declare global {
@@ -13,23 +14,30 @@ declare global {
     }
 }
 
-export default class CustomRecaptcha extends Component<Props> {
-    private sitekey = '6Le_C0YUAAAAAHQPLFx0qZ89ZFPRATD5Ym7rmqBg';
+export default class CustomRecaptcha extends Component<IProps, IState> { 
+    
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            isCaptchaRender: false
+        };
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ isCaptchaRender: true });
+        }, 2000);
+    }
+
     render() {
         return (
             <>
                 {typeof window !== 'undefined' &&
                     typeof window.grecaptcha !== 'undefined' &&
                     typeof window.grecaptcha.render === 'function' && (
-                        <div className="g-recaptcha">
-                            <Recaptcha
-                                {...this.props}
-                                sitekey={this.sitekey}
-                                render="explicit"
-                                verifyCallback={this.props.verifyCallback}
-                                expiredCallback={this.props.expiredCallback}
-                            />
-                        </div>
+                        <Recaptcha
+                            {...this.props} 
+                        />
                     )}
             </>
         );

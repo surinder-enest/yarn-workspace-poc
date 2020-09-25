@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import { FieldModel, StyleModel } from '../../../../models';
 import { CUSTOM_FIELD_TYPE } from '../../../../enums';
-import NumberFormat from 'react-number-format'; 
+import NumberFormat from 'react-number-format';
 import { CustomDatePicker, CustomSelectDropdown } from '../../../Common';
 
 interface Props {
@@ -21,17 +21,49 @@ export default class CustomField extends Component<Props> {
     this.props.updatedFieldDetails(updatedField);
   }
 
-  private onMultiSelectChange(selectedOptions: Array<string>) {
-    const updatedField = this.props.validateField({
-      ...this.props.formField,
-      selectedOptions,
-      value: selectedOptions.join(),
-    });
-    this.props.updatedFieldDetails(updatedField);
+  private onMultiSelectChange(selectedOptions: any, isMulti: boolean) {
+    if (isMulti) {
+      const selectedValues = selectedOptions.map((x: any) => x['value']);
+      const updatedField = this.props.validateField({
+        ...this.props.formField,
+        selectedValues,
+        value: selectedOptions.join(),
+      });
+      this.props.updatedFieldDetails(updatedField);
+    } else {
+      this.onValueChange(selectedOptions?.['value'] || '');
+    }
+  }
+
+  private getCutomStyles() {
+    const {
+      borderColor,
+      borderWidth,
+      borderRadius,
+      borderStyle,
+      backgroundColor,
+      color,
+      height,
+    } = this.props.customFieldSelectStyles;
+    const customStyles = {
+      control: (base: any) => ({
+        ...base,
+        borderColor,
+        borderWidth,
+        borderRadius,
+        borderStyle,
+        backgroundColor,
+        height,
+      }),
+      multiValue: (base: any) => ({ ...base, color }),
+      placeholder: (base: any) => ({ ...base, color }),
+      indicatorContainer: (base: any) => ({ ...base, color }),
+    };
+    return customStyles;
   }
 
   private getCustomField(): ReactNode {
-    const { formField, fieldStyles, customFieldSelectStyles } = this.props;
+    const { formField, fieldStyles } = this.props;
     switch (formField.customFieldType) {
       case CUSTOM_FIELD_TYPE.LONG_TEXT:
         return (
@@ -69,16 +101,13 @@ export default class CustomField extends Component<Props> {
           formField.customFieldType === CUSTOM_FIELD_TYPE.SELECT_MULTIPLE;
         return (
           <CustomSelectDropdown
-            valueKey="value"
-            nameKey="label"
-            options={formField.options}
-            styles={customFieldSelectStyles}
+            styles={this.getCutomStyles()}
+            closeMenuOnSelect={!isMulti}
             isMulti={isMulti}
-            onSingleSelect={(value: string) => this.onValueChange(value)}
-            onMultiSelect={(selectedValues: Array<string>) =>
-              this.onMultiSelectChange(selectedValues)
-            }
-            defaultOption={'Select...'}
+            options={formField.options}
+            defaultValue={'Select...'}
+            isClearable={true}
+            onChange={(values: any) => this.onMultiSelectChange(values, isMulti)}
           />
         );
       default:
