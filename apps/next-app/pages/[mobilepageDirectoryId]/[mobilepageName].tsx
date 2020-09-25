@@ -219,6 +219,29 @@ class MobilePageName extends React.Component<Props> {
               width: 300px;
               position: relative;
             }
+            .form-control {
+              background-color: #fff;
+              border-radius: 4px !important;
+              border: 1px solid #ccc !important;
+              min-height: 44px;
+              width: 100%;
+              font-size: 16px;
+              padding: 0 8px;
+              line-height: 42px;
+            }
+            .labelStyle{
+              color: rgb(0, 0, 0);
+              line-height: 1.25;
+              font-weight: normal;
+              font-style: normal;
+              margin-bottom: 5px;
+              font-size: 16px;
+              text-align:left;
+              width: 100%;
+            }
+            .errorBorder {
+              border: 1px solid red !important;
+            }
           `}
           </style>
           <MetaData pageLink={pageLink} metaData={metaData} />

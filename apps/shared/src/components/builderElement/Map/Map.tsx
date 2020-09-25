@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GoogleMapApiUrl } from '../../../enums/builderElement/Map.enum';
+import { GoogleMapApiUrl } from '../../../enums';
 import { AddressModel, MapModel } from '../../../models';
 import { GoogleMapComponent } from './GoogleMapComponent';
 
