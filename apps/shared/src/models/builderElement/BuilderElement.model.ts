@@ -14,7 +14,6 @@ import { AudioModel } from './Audio.model';
 import { ButtonModel } from './Button.model';
 import { OfferModel } from './Offer.model';
 import { MapModel } from './Map.model';
-import { QuestionModel } from './Question.model';
 
 export class BuilderElementModel {
   id: string;
@@ -38,7 +37,6 @@ export class BuilderElementModel {
   audio: AudioModel;
   offer: OfferModel;
   map: MapModel;
-  question: QuestionModel;
 
   constructor(data?: BuilderElementModel) {
     this.id = data?.id || '';
@@ -64,7 +62,6 @@ export class BuilderElementModel {
     this.audio = data?.audio || new AudioModel();
     this.offer = data?.offer || new OfferModel();
     this.map = data?.map || new MapModel();
-    this.question = data?.question || new QuestionModel();
   }
 
   static deserialize(
@@ -92,7 +89,6 @@ export class BuilderElementModel {
       audio: AudioModel.deserialize(apiModel?.Audio),
       offer: OfferModel.deserialize(apiModel?.Offer, contactId),
       map: MapModel.deserialize(apiModel?.Map),
-      question: QuestionModel.deserialize(apiModel?.Question),
     };
     return new BuilderElementModel(data);
   }

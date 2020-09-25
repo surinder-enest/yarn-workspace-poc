@@ -17,7 +17,6 @@ import Audio from './Audio/Audio';
 import Button from './Button/Button';
 import Offer from './Offer/Offer';
 import Map from './Map/Map';
-import Question from './Question/Question';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -65,7 +64,6 @@ class BuilderElement extends React.Component<Props> {
       isActualRendering,
       countriesAndStates,
       accountCountryId,
-      // isUserClickedOnNotYou,
     } = this.props;
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.TITLE:
@@ -155,14 +153,6 @@ class BuilderElement extends React.Component<Props> {
         );
       case BUILDER_ELEMENTS.MAP:
         return <Map map={builderElement.map} />;
-      case BUILDER_ELEMENTS.QUESTION:
-        return (
-          <Question
-            question={builderElement.question}
-            isActualRendering={isActualRendering}
-            responseCapture={() => this.responseCapture()}
-          />
-        );
       default:
         return <></>;
     }

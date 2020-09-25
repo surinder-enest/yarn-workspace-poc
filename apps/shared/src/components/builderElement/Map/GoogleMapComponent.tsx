@@ -1,6 +1,6 @@
 import React from 'react';
 import { AddressModel, MapModel } from '../../../models';
-import { defaultMapPosition } from '../../../enums';
+import { defaultMapPosition } from '../../../enums/builderElement/Map.enum';
 
 import {
   withScriptjs,
