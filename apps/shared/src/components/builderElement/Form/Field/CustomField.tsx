@@ -1,8 +1,11 @@
 import React, { Component, ReactNode } from 'react';
 import { FieldModel, StyleModel } from '../../../../models';
 import { CUSTOM_FIELD_TYPE } from '../../../../enums';
-import NumberFormat from 'react-number-format';
-import { CustomDatePicker, CustomSelectDropdown } from '../../../Common';
+import {
+  CustomDatePicker,
+  CustomSelectDropdown,
+  CustomNumberFormat,
+} from '../../../Common';
 
 interface Props {
   formField: FieldModel;
@@ -75,13 +78,15 @@ export default class CustomField extends Component<Props> {
         );
       case CUSTOM_FIELD_TYPE.NUMBER:
         return (
-          <NumberFormat
+          <CustomNumberFormat
             type="text"
             displayType="input"
             style={fieldStyles}
             maxLength={14}
             value={formField.value}
-            onChange={event => this.onValueChange(event.currentTarget.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              this.onValueChange(event.currentTarget.value)
+            }
           />
         );
       case CUSTOM_FIELD_TYPE.DATE:
@@ -107,7 +112,9 @@ export default class CustomField extends Component<Props> {
             options={formField.options}
             defaultValue={'Select...'}
             isClearable={true}
-            onChange={(values: any) => this.onMultiSelectChange(values, isMulti)}
+            onChange={(values: any) =>
+              this.onMultiSelectChange(values, isMulti)
+            }
           />
         );
       default:

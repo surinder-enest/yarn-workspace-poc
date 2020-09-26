@@ -29,10 +29,11 @@ interface Props {
   responseCapturedFromModule?: string;
   countriesAndStates?: Array<CountryModel>;
   accountCountryId?: string;
+  setContactId?: Function;
 }
 
 class BuilderElement extends React.Component<Props> {
-  private responseCapture() {
+  private async responseCapture(email?: string, mobileNumber?: string) {
     const {
       moduleId,
       contactId,
@@ -40,11 +41,32 @@ class BuilderElement extends React.Component<Props> {
       responseCapturedFromModule,
       builderElement,
       isActualRendering,
+      setContactId,
     } = this.props;
 
     if (!isActualRendering) return;
 
-    return BuilderElementService.saveBuilderElementResponse(
+    switch (builderElement.builderElementType) {
+      case BUILDER_ELEMENTS.QUESTION:
+        const { builderElementType, id } = builderElement;
+        if (!contactId) {
+          const createdContactId = BuilderElementService.saveContactCapture(
+            builderElementType,
+            accountId || '',
+            id,
+            moduleId || '',
+            responseCapturedFromModule || '',
+            email || '',
+            mobileNumber || ''
+          );
+
+          if (typeof setContactId === 'function')
+            setContactId(createdContactId);
+        }
+        break;
+    }
+
+    return await BuilderElementService.saveBuilderElementResponse(
       builderElement,
       moduleId || '',
       contactId || '',
@@ -161,6 +183,7 @@ class BuilderElement extends React.Component<Props> {
             question={builderElement.question}
             isActualRendering={isActualRendering}
             responseCapture={() => this.responseCapture()}
+            contactId={contactId || ''}
           />
         );
       default:

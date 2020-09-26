@@ -8,17 +8,25 @@ interface Props {
 }
 
 interface State {
+  isMount: boolean;
   refresh: boolean;
   isMapVisible: boolean;
 }
 
-export default class GoogleMap extends Component<Props, State> {
+export default class Map extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      isMount: false,
       refresh: false,
       isMapVisible: false,
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isMount: true });
+    }, 3000);
   }
 
   private onToggleHandler = (
@@ -42,28 +50,32 @@ export default class GoogleMap extends Component<Props, State> {
 
   render() {
     const { style, elementStyle, buttonText, showMap } = this.props.map;
-    const { isMapVisible } = this.state;
+    const { isMount, isMapVisible } = this.state;
     return (
-      <div>
-        {showMap || isMapVisible ? (
-          <GoogleMapComponent
-            googleMapURL={GoogleMapApiUrl.Url}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `250px` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-            mapState={this.props.map}
-            onToggle={this.onToggleHandler}
-          />
-        ) : (
-          <div style={elementStyle} onClick={() => this.handleClick()}>
-            <div
-              className="btn-builder"
-              style={style}
-              dangerouslySetInnerHTML={{
-                __html: buttonText,
-              }}
-            />
-          </div>
+      <div className="googlemap">
+        {isMount && (
+          <>
+            {showMap || isMapVisible ? (
+              <GoogleMapComponent
+                googleMapURL={GoogleMapApiUrl.Url}
+                loadingElement={<div style={{ height: `100%` }} />}
+                containerElement={<div style={{ height: `250px` }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+                mapState={this.props.map}
+                onToggle={this.onToggleHandler}
+              />
+            ) : (
+              <div style={elementStyle} onClick={() => this.handleClick()}>
+                <div
+                  className="btn-builder"
+                  style={style}
+                  dangerouslySetInnerHTML={{
+                    __html: buttonText,
+                  }}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
     );

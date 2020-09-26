@@ -167,24 +167,27 @@ export interface APIMap {
 }
 
 export interface APIResponse {
-  ResponseType: string;
-  ThankYouMessage: string;
+  Id: string;
   Text: string;
+  ThankYouMessage: string;
 }
+
 export interface APIContact {
   RequireEmailAndMobile: boolean;
   RequireEmailOnly: boolean;
   RequireMobileOnly: boolean;
 }
 
-export interface APIQuestion {
+export interface APIResponseElement {
   ResponseDetail: Array<APIResponse>;
-  Title: string;
-  Description: string;
   ContactInformation: APIContact;
   RespondButtonText: string;
   Style: APIStyle;
-  IsOverrideAnyResponseWithAction: string;
+}
+
+export interface APIQuestion extends APIResponseElement {
+  Title: string;
+  Description: string;
 }
 
 export interface APIBuilderElement {

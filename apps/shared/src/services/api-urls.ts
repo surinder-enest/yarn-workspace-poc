@@ -1,4 +1,5 @@
 export const apiUrl = {
-    getMobilePageDetailsForRender: 'api/MobilePage/GetMobilePageDetailsForRender',
-    saveBuilderElementResponse: 'api/BuilderElementResponse/SaveResponse'
+    getMobilePageDetailsForRender: 'api/MobilePage/GetMobilePageDetailsForSSRRender',
+    saveBuilderElementResponse: 'api/BuilderElementResponse/SaveResponse',
+    saveContactCapture: 'api/ContactCapture/SaveContactCapture'
 }

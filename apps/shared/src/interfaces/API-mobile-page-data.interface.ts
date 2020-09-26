@@ -34,3 +34,17 @@ export interface IMobilePageData {
   BuilderElementUsedInModuleId: string;
   ResponseCapturedFromModule: string;
 }
+
+export interface IContactDetail {
+  EmailAddress: string;
+  MobilePhone: string;
+}
+
+export interface IContactCaptureData {
+  AccountId: string;
+  BuilderElementId: string;
+  BuilderElementType: string;
+  ContactDetails: IContactDetail;
+  ModuleId: string;
+  ModuleName: string;
+}

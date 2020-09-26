@@ -1,12 +1,27 @@
 import React from 'react';
-import { MobilePageModel, BuilderElementModel } from '../../models'; 
+import { MobilePageModel, BuilderElementModel } from '../../models';
 import { BuilderElement } from '../BuilderElement';
 
-interface Props {
+interface IProps {
   pageData: MobilePageModel;
 }
 
-class MobilePage extends React.Component<Props> {
+interface IState {
+  contactId: string;
+}
+
+class MobilePage extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      contactId: '',
+    };
+  }
+
+  private setContactId(contactId: string) {
+    this.setState({ contactId });
+  }
+
   render() {
     const {
       pageStyles,
@@ -73,6 +88,9 @@ class MobilePage extends React.Component<Props> {
                             responseCapturedFromModule="MobilePage"
                             countriesAndStates={countriesAndStates}
                             isActualRendering={true}
+                            setContactId={(value: string) =>
+                              this.setContactId(value)
+                            }
                           />
                         )
                       )}

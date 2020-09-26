@@ -1,8 +1,7 @@
 import {
   APIStyle,
   APIBackground,
-  APIButton,
-  APIResponseStyles,
+  APIButton
 } from '../../interfaces';
 import { Utility } from '../../utilities';
 import { BACKGROUND_TYPE } from '../../enums';
@@ -35,6 +34,7 @@ export class StyleModel {
   boxSizing?: any;
   textAlign?: any;
   cursor?: string;
+  position?: any;
 
   constructor(data?: StyleModel) {
     this.paddingTop = data?.paddingTop;
@@ -64,6 +64,7 @@ export class StyleModel {
     this.textAlign = data?.textAlign;
     this.cursor = data?.cursor;
     this.lineHeight = data?.lineHeight;
+    this.position = data?.position;
   }
 
   static deserialize(apiModel: APIStyle): StyleModel {
@@ -102,25 +103,24 @@ export class StyleModel {
     switch (BackgroundType) {
       case BACKGROUND_TYPE.IMAGE:
         const opacityValue = Opacity ? Opacity / 100 : 1;
-        return `${
-          Url
-            ? `linear-gradient(rgba(255, 255, 255, 
+        return `${Url
+          ? `linear-gradient(rgba(255, 255, 255, 
                     ${1 - opacityValue}), rgba(255,255, 255,
                     ${1 - opacityValue})), url(${Utility.replace(
-                Url,
-                ' ',
-                '%20'
-              )}) 
+            Url,
+            ' ',
+            '%20'
+          )}) 
                     ${Utility.addStringBeforeCapitalLetter(
-                      ImagePosition,
-                      ' '
-                    ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
+            ImagePosition,
+            ' '
+          ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
                     ${Utility.addStringBeforeCapitalLetter(
-                      BackgroundRepeat,
-                      '-'
-                    ).toLowerCase()}`
-            : backgroundColor
-        }`;
+            BackgroundRepeat,
+            '-'
+          ).toLowerCase()}`
+          : backgroundColor
+          }`;
       default:
         return backgroundColor;
     }
@@ -145,13 +145,6 @@ export class StyleModel {
       paddingLeft: '10px',
       paddingRight: '10px',
       width: '300px',
-    };
-    return new StyleModel(data);
-  }
-  static deserializeOptionStyles(apiOption?: APIResponseStyles): StyleModel {
-    const data: StyleModel = {
-      color: apiOption?.OptionTextColor?.HexValue,
-      background: apiOption?.OptionBackgroundColor?.HexValue,
     };
     return new StyleModel(data);
   }

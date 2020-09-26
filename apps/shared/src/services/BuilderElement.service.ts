@@ -1,7 +1,7 @@
 import { HttpClient } from './http-client';
 import { apiUrl } from './api-urls';
 import { FormModel, BuilderElementModel } from '../models';
-import { IMobilePageData, IFormData, IFormFields, IDateOfBirth, ICategoryData } from '../interfaces';
+import { IMobilePageData, IFormData, IFormFields, IDateOfBirth, ICategoryData, IContactDetail, IContactCaptureData } from '../interfaces';
 import { BUILDER_ELEMENTS } from '../enums';
 
 class BuilderElementService {
@@ -10,22 +10,35 @@ class BuilderElementService {
   async saveBuilderElementResponse(builderElement: BuilderElementModel,
     moduleId: string, contactId: string, accountId: string,
     responseCapturedFromModule: string) {
-    const requestModel = this.mobilePageData(builderElement, moduleId, contactId, accountId, responseCapturedFromModule);
+    const requestModel = this.getMobilePageData(builderElement, moduleId, contactId, accountId, responseCapturedFromModule);
     const response = await this.httpClient.post(
       apiUrl.saveBuilderElementResponse,
       requestModel
     );
-
     const { data } = response;
     if (!data.HasException && !data.InvalidModelState
       && !data.UpdateTimerExpired && !data.HasError && data.SavedData) {
       return true;
     }
-
     return false;
   }
 
-  private mobilePageData(builderElement: BuilderElementModel, moduleId: string,
+  async saveContactCapture(builderElementType: string, accountId: string, builderElementId: string,
+    moduleId: string, moduleName: string, email: string, mobileNumber: string) {
+    const requestModel = this.getContactCaptureData(builderElementType, accountId, builderElementId, moduleId,
+      moduleName, email, mobileNumber);
+    const response = await this.httpClient.post(
+      apiUrl.saveContactCapture,
+      requestModel
+    );
+    const { data } = response;
+    if (!data.HasException && !data.InvalidModelState && !data.HasError && data.Data) {
+      return data.Data;
+    }
+    return "";
+  }
+
+  private getMobilePageData(builderElement: BuilderElementModel, moduleId: string,
     contactId: string, accountId: string, responseCapturedFromModule: string) {
     const mobilePageData: IMobilePageData = {
       AccountId: accountId,
@@ -72,6 +85,23 @@ class BuilderElementService {
       default:
         return null;
     }
+  }
+
+  private getContactCaptureData(builderElementType: string, accountId: string, builderElementId: string,
+    moduleId: string, moduleName: string, email: string, mobileNumber: string) {
+    const contactDetailData: IContactDetail = {
+      EmailAddress: email,
+      MobilePhone: mobileNumber
+    }
+    const contactCaptureData: IContactCaptureData = {
+      AccountId: accountId,
+      BuilderElementId: builderElementId,
+      BuilderElementType: builderElementType,
+      ContactDetails: contactDetailData,
+      ModuleId: moduleId,
+      ModuleName: moduleName
+    }
+    return contactCaptureData;
   }
 }
 
