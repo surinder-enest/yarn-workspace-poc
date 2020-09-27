@@ -71,7 +71,7 @@ export interface APIMobilePage {
     ContactInfo: APIContactInfo;
     CountryId: string;
 }
- 
+
 export interface APIMobileData {
     MobilePageData: APIMobilePage;
     CountriesAndStates: Array<APICountriesAndStates>;

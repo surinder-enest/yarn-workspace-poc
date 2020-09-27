@@ -5,26 +5,14 @@ import { CustomNumberFormat } from '../../Common';
 
 interface IProps {
   fieldType: string;
+  mobileNumber: string;
+  email: string;
   onChangeContact: Function;
 }
 
-interface IState {
-  mobileNumber: string;
-  email: string;
-}
-
-export default class Contact extends Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      mobileNumber: '',
-      email: '',
-    };
-  }
-
-  private validateFields() {
+export default class Contact extends Component<IProps> {
+  private validateFields(email: string, mobileNumber: string) {
     const { fieldType, onChangeContact } = this.props;
-    const { email, mobileNumber } = this.state;
     let isValidEmail = true;
     let isValidNumber = true;
     switch (fieldType) {
@@ -40,21 +28,18 @@ export default class Contact extends Component<IProps, IState> {
         break;
     }
     const isValidFields = isValidEmail && isValidNumber;
-    onChangeContact(isValidFields);
+    onChangeContact(email, mobileNumber, isValidFields);
   }
 
   private onEmailChange(email: string) {
-    this.setState({ email });
-    this.validateFields();
+    this.validateFields(email, this.props.mobileNumber);
   }
 
   private onNumberChange(mobileNumber: string) {
-    this.setState({ mobileNumber });
-    this.validateFields();
+    this.validateFields(this.props.email, mobileNumber);
   }
 
   private getFieldHtml(fieldType: string): ReactNode {
-    debugger;
     let isShowEmailField = false;
     let isShowMobileNumberField = false;
     switch (fieldType) {
@@ -79,7 +64,6 @@ export default class Contact extends Component<IProps, IState> {
       padding: '0 8px',
       lineHeight: '42px',
     };
-    const { email, mobileNumber } = this.state;
     return (
       <>
         {(isShowMobileNumberField || isShowEmailField) && (
@@ -106,7 +90,6 @@ export default class Contact extends Component<IProps, IState> {
                   displayType={'input'}
                   format="###-###-####"
                   placeholder="Mobile Phone"
-                  value={mobileNumber}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                     this.onNumberChange(event.currentTarget.value)
                   }
@@ -133,7 +116,6 @@ export default class Contact extends Component<IProps, IState> {
                   style={inputStyle}
                   maxLength={30}
                   placeholder="Email"
-                  value={email}
                   onChange={event =>
                     this.onEmailChange(event.currentTarget.value)
                   }

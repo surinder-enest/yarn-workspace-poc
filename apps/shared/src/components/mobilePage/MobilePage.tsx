@@ -18,6 +18,13 @@ class MobilePage extends React.Component<IProps, IState> {
     };
   }
 
+  componentDidMount() {
+    const { contactId } = this.props.pageData;
+    if (contactId) {
+      this.setContactId(contactId);
+    }
+  }
+
   private setContactId(contactId: string) {
     this.setState({ contactId });
   }
@@ -27,7 +34,6 @@ class MobilePage extends React.Component<IProps, IState> {
       pageStyles,
       builderElements,
       accountId,
-      contactId,
       id,
       countriesAndStates,
       accountCountryId,
@@ -82,7 +88,7 @@ class MobilePage extends React.Component<IProps, IState> {
                             key={idx}
                             builderElement={detail}
                             moduleId={id}
-                            contactId={contactId}
+                            contactId={this.state.contactId}
                             accountId={accountId}
                             accountCountryId={accountCountryId}
                             responseCapturedFromModule="MobilePage"

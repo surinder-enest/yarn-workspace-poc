@@ -35,6 +35,7 @@ export class StyleModel {
   textAlign?: any;
   cursor?: string;
   position?: any;
+  pointerEvents?: any;
 
   constructor(data?: StyleModel) {
     this.paddingTop = data?.paddingTop;
@@ -65,6 +66,7 @@ export class StyleModel {
     this.cursor = data?.cursor;
     this.lineHeight = data?.lineHeight;
     this.position = data?.position;
+    this.pointerEvents = data?.pointerEvents;
   }
 
   static deserialize(apiModel: APIStyle): StyleModel {

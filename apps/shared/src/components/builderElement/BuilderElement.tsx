@@ -33,7 +33,11 @@ interface Props {
 }
 
 class BuilderElement extends React.Component<Props> {
-  private async responseCapture(email?: string, mobileNumber?: string) {
+  private async responseCapture(
+    email?: string,
+    mobileNumber?: string,
+    selectedOption?: string
+  ) {
     const {
       moduleId,
       contactId,
@@ -46,32 +50,33 @@ class BuilderElement extends React.Component<Props> {
 
     if (!isActualRendering) return;
 
+    let newCreatedContactId = contactId || '';
+
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.QUESTION:
         const { builderElementType, id } = builderElement;
-        if (!contactId) {
-          const createdContactId = BuilderElementService.saveContactCapture(
-            builderElementType,
-            accountId || '',
-            id,
-            moduleId || '',
-            responseCapturedFromModule || '',
-            email || '',
-            mobileNumber || ''
-          );
+        newCreatedContactId = await BuilderElementService.saveContactCapture(
+          builderElementType,
+          accountId || '',
+          id,
+          moduleId || '',
+          responseCapturedFromModule || '',
+          email || '',
+          mobileNumber || ''
+        );
 
-          if (typeof setContactId === 'function')
-            setContactId(createdContactId);
-        }
+        if (typeof setContactId === 'function')
+          setContactId(newCreatedContactId);
         break;
     }
 
     return await BuilderElementService.saveBuilderElementResponse(
       builderElement,
       moduleId || '',
-      contactId || '',
+      newCreatedContactId,
       accountId || '',
-      responseCapturedFromModule || ''
+      responseCapturedFromModule || '',
+      selectedOption || ''
     );
   }
 
@@ -182,7 +187,11 @@ class BuilderElement extends React.Component<Props> {
           <Question
             question={builderElement.question}
             isActualRendering={isActualRendering}
-            responseCapture={() => this.responseCapture()}
+            responseCapture={(
+              email?: string,
+              mobileNumber?: string,
+              selectedOption?: string
+            ) => this.responseCapture(email, mobileNumber, selectedOption)}
             contactId={contactId || ''}
           />
         );

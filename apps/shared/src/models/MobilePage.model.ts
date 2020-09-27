@@ -1,4 +1,3 @@
-import { BaseModel } from './Base.model';
 import { MetaDataModel } from './builderElement/MetaData.model';
 import { APICountriesAndStates, APIMobileData, APIPageStyles, APIStates } from '../interfaces';
 import { BuilderElementModel } from './builderElement/BuilderElement.model';
@@ -46,7 +45,8 @@ export class CountryModel {
     }
 }
 
-export class MobilePageModel extends BaseModel {
+export class MobilePageModel {
+    id: string;
     name: string;
     userId: string;
     accountId: string;
@@ -59,8 +59,8 @@ export class MobilePageModel extends BaseModel {
     builderElements: Array<BuilderElementModel>;
     countriesAndStates: Array<CountryModel>;
 
-    constructor(data?: Partial<MobilePageModel>) {
-        super(data);
+    constructor(data?: MobilePageModel) {
+        this.id = data?.id || '';
         this.name = data?.name || '';
         this.userId = data?.userId || '';
         this.accountId = data?.accountId || '';
@@ -75,15 +75,13 @@ export class MobilePageModel extends BaseModel {
     }
 
     static deserialize(apiModel: APIMobileData): MobilePageModel {
-        const data: Partial<MobilePageModel> = {
+        const data: MobilePageModel = {
             id: apiModel?.MobilePageData?.Id,
             name: apiModel?.MobilePageData?.Name,
             userId: apiModel?.MobilePageData?.UserId,
             accountId: apiModel?.MobilePageData?.AccountId,
             contactId: apiModel?.MobilePageData?.ContactInfo?.ContactId,
             accountCountryId: apiModel?.MobilePageData?.CountryId,
-            createdBy: apiModel?.MobilePageData?.CreatedBy,
-            updatedBy: apiModel?.MobilePageData?.UpdatedBy,
             status: apiModel?.MobilePageData?.Status,
             pageLink: apiModel?.MobilePageData?.PageLink,
             metaData: MetaDataModel.deserialize(apiModel?.MobilePageData),

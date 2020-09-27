@@ -20,9 +20,13 @@ export interface ICategoryData {
   CategoryType: string;
 }
 
-export interface IFormData {
+export interface IFormResponse {
   FormFields: Array<IFormFields>;
   CategoryDetail: ICategoryData;
+}
+
+export interface IQuestionResponse {
+  SelectedOptionId: string;
 }
 
 export interface IMobilePageData {
@@ -30,7 +34,8 @@ export interface IMobilePageData {
   ContactId: string | null;
   BuilderElementId: string;
   BuilderElement: string;
-  FormResponseDetails: IFormData | null;
+  FormResponseDetails: IFormResponse | null;
+  QuestionResponse: IQuestionResponse | null;
   BuilderElementUsedInModuleId: string;
   ResponseCapturedFromModule: string;
 }
