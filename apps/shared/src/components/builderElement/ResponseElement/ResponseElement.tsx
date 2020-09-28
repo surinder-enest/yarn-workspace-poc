@@ -19,7 +19,7 @@ interface IState {
   mobileNumber: string;
   email: string;
   isValidContactFields: boolean;
-  isResponseCatured: boolean;
+  isResponseCaptured: boolean;
 }
 
 export default class ResponseElement extends Component<IProps, IState> {
@@ -30,8 +30,9 @@ export default class ResponseElement extends Component<IProps, IState> {
       mobileNumber: '',
       email: '',
       isValidContactFields: false,
-      isResponseCatured: false,
+      isResponseCaptured: false,
     };
+    console.log(props.elementDetail);
   }
 
   private async onSubmitClick() {
@@ -42,13 +43,13 @@ export default class ResponseElement extends Component<IProps, IState> {
       isValidContactFields,
     } = this.state;
     if (isValidContactFields) {
-      const isResponseCatured = await this.props.responseCapture(
+      const isResponseCaptured = await this.props.responseCapture(
         email,
         mobileNumber,
         selectedOption
       );
       this.setState({
-        isResponseCatured,
+        isResponseCaptured,
       });
     }
   }
@@ -86,10 +87,15 @@ export default class ResponseElement extends Component<IProps, IState> {
             }}
           >
             <input
-              style={{ marginRight: '8px', opacity: '0', float: 'left' }}
+              style={{
+                marginRight: '8px',
+                float: 'left',
+                marginLeft: '-2px',
+                marginTop: '3px',
+              }}
               id={option.id}
               type="radio"
-              value={option.id}
+              name="option"
               onChange={event => this.onSelectOption(event.currentTarget.id)}
             />
             <label style={optionLabelStyle} htmlFor={option.id}>
@@ -120,7 +126,7 @@ export default class ResponseElement extends Component<IProps, IState> {
   }
 
   private onChangeResponseClick() {
-    this.setState({ isResponseCatured: false });
+    this.setState({ isResponseCaptured: false });
   }
 
   private getSelectedOption(): ResponseOptionModel | undefined {
@@ -130,12 +136,13 @@ export default class ResponseElement extends Component<IProps, IState> {
   }
 
   private getThankyouMessage(): string {
+    const { thankYouMessage } = this.props.elementDetail;
     switch (this.props.builderElementType) {
       case BUILDER_ELEMENTS.QUESTION:
         const selectedOptionDetail = this.getSelectedOption();
         return selectedOptionDetail?.thankYouMessage || '';
       default:
-        return '';
+        return thankYouMessage;
     }
   }
 
@@ -154,6 +161,8 @@ export default class ResponseElement extends Component<IProps, IState> {
           borderColor = '#ff0000';
         }
         break;
+      default:
+        '';
     }
 
     const buttonStyles: StyleModel = {
@@ -215,7 +224,7 @@ export default class ResponseElement extends Component<IProps, IState> {
   render() {
     const { elementDetail, contactId } = this.props;
     const { contactFieldType, options, buttonText } = elementDetail;
-    const { email, mobileNumber, isResponseCatured } = this.state;
+    const { email, mobileNumber, isResponseCaptured } = this.state;
     return (
       <>
         {!contactId && (
@@ -230,7 +239,7 @@ export default class ResponseElement extends Component<IProps, IState> {
             ) => this.onChangeContact(email, mobileNumber, isValidFields)}
           />
         )}
-        {isResponseCatured ? (
+        {isResponseCaptured ? (
           this.getResponseThankyouHtml()
         ) : (
           <>

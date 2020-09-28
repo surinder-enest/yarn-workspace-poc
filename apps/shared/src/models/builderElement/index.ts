@@ -21,3 +21,4 @@ export * from './Map.model';
 export * from './Question.model';
 export * from './MediaModel';
 export * from './ResponseElement.model';
+export * from './Poll.model';

@@ -1,4 +1,8 @@
-import { APIResponse, APIResponseElement, APIResponseStyles } from '../../interfaces';
+import {
+  APIResponse,
+  APIResponseElement,
+  APIResponseStyles,
+} from '../../interfaces';
 import { CONTACT_FIELD_OPTION } from '../../enums';
 import { StyleModel } from './Style.model';
 import { ContactModel } from '../MobilePage.model';
@@ -11,6 +15,7 @@ export class ResponseElementModel {
   buttonText: string;
   buttonStyle: StyleModel;
   contact: ContactModel;
+  thankYouMessage: string;
 
   constructor(data?: ResponseElementModel) {
     this.contactFieldType = data?.contactFieldType || '';
@@ -20,6 +25,7 @@ export class ResponseElementModel {
     this.buttonText = data?.buttonText || '';
     this.buttonStyle = data?.buttonStyle || new StyleModel();
     this.contact = data?.contact || new ContactModel();
+    this.thankYouMessage = data?.thankYouMessage || '';
   }
 
   static deserialize(apiModel: APIResponseElement): ResponseElementModel {
@@ -28,17 +34,22 @@ export class ResponseElementModel {
       buttonStyle: new StyleModel({
         ...StyleModel.deserializeButtonStyles(apiModel?.Style.ResponseStyles),
         marginTop: '15px',
-        position: 'relative'
+        position: 'relative',
       }),
       contactFieldType: apiModel?.ContactInformation?.RequireEmailOnly
         ? CONTACT_FIELD_OPTION.EMAIL_ONLY
         : apiModel?.ContactInformation?.RequireMobileOnly
-          ? CONTACT_FIELD_OPTION.MOBILE_ONLY
-          : CONTACT_FIELD_OPTION.EMAIL_AND_MOBILE,
+        ? CONTACT_FIELD_OPTION.MOBILE_ONLY
+        : CONTACT_FIELD_OPTION.EMAIL_AND_MOBILE,
       options: ResponseOptionModel.deserializeList(apiModel?.ResponseDetail),
-      optionStyle: ResponseElementModel.deserializeOptionStyles(apiModel?.Style?.ResponseStyles),
-      optionLabelStyle: ResponseElementModel.deserializeOptionLabelStyles(apiModel?.Style?.ResponseStyles),
-      contact: new ContactModel()
+      optionStyle: ResponseElementModel.deserializeOptionStyles(
+        apiModel?.Style?.ResponseStyles
+      ),
+      optionLabelStyle: ResponseElementModel.deserializeOptionLabelStyles(
+        apiModel?.Style?.ResponseStyles
+      ),
+      contact: new ContactModel(),
+      thankYouMessage: apiModel?.ThankYouMessage,
     };
     return new ResponseElementModel(data);
   }
@@ -50,13 +61,16 @@ export class ResponseElementModel {
       width: '100%',
       float: 'left',
       borderRadius: '100px',
-      paddingBottom: '10px',
+      paddingBottom: '12px',
       marginTop: '5px',
+      backgroundColor: '#57AC2D',
     };
     return new StyleModel(data);
   }
 
-  static deserializeOptionLabelStyles(apiOption?: APIResponseStyles): StyleModel {
+  static deserializeOptionLabelStyles(
+    apiOption?: APIResponseStyles
+  ): StyleModel {
     const data: StyleModel = {
       color: apiOption?.OptionTextColor?.HexValue,
       marginTop: '0px',
@@ -64,12 +78,11 @@ export class ResponseElementModel {
       marginLeft: '0px',
       marginRight: '0px',
       display: 'block',
-      minHeight: '15px'
+      minHeight: '15px',
     };
     return new StyleModel(data);
   }
 }
-
 
 export class ResponseOptionModel {
   id: string;
@@ -94,9 +107,8 @@ export class ResponseOptionModel {
   static deserializeList(apiList: APIResponse[]): ResponseOptionModel[] {
     return apiList
       ? apiList.map((apiResponse: APIResponse) => {
-        return ResponseOptionModel.deserialize(apiResponse);
-      })
+          return ResponseOptionModel.deserialize(apiResponse);
+        })
       : [];
   }
 }
-

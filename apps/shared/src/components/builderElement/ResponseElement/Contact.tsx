@@ -63,6 +63,7 @@ export default class Contact extends Component<IProps> {
       fontSize: '16px',
       padding: '0 8px',
       lineHeight: '42px',
+      outline: 'none',
     };
     return (
       <>

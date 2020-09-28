@@ -16,3 +16,4 @@ export { default as Audio } from './Audio/Audio';
 export { default as Offer } from './Offer/Offer';
 export { default as Map } from './Map/Map';
 export { default as Question } from './Question/Question';
+export { default as Poll } from './Poll/Poll';

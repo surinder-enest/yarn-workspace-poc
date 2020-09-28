@@ -15,6 +15,7 @@ import { ButtonModel } from './Button.model';
 import { OfferModel } from './Offer.model';
 import { MapModel } from './Map.model';
 import { QuestionModel } from './Question.model';
+import { PollModel } from './Poll.model';
 
 export class BuilderElementModel {
   id: string;
@@ -39,6 +40,7 @@ export class BuilderElementModel {
   offer: OfferModel;
   map: MapModel;
   question: QuestionModel;
+  poll: PollModel;
 
   constructor(data?: BuilderElementModel) {
     this.id = data?.id || '';
@@ -65,6 +67,7 @@ export class BuilderElementModel {
     this.offer = data?.offer || new OfferModel();
     this.map = data?.map || new MapModel();
     this.question = data?.question || new QuestionModel();
+    this.poll = data?.poll || new PollModel();
   }
 
   static deserialize(
@@ -93,6 +96,7 @@ export class BuilderElementModel {
       offer: OfferModel.deserialize(apiModel?.Offer, contactId),
       map: MapModel.deserialize(apiModel?.Map),
       question: QuestionModel.deserialize(apiModel?.Question),
+      poll: PollModel.deserialize(apiModel?.Poll),
     };
     return new BuilderElementModel(data);
   }

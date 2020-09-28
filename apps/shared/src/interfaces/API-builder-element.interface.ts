@@ -182,10 +182,15 @@ export interface APIResponseElement {
   ResponseDetail: Array<APIResponse>;
   ContactInformation: APIContact;
   RespondButtonText: string;
+  ThankYouMessage: string;
   Style: APIStyle;
 }
 
 export interface APIQuestion extends APIResponseElement {
+  Title: string;
+  Description: string;
+}
+export interface APIPoll extends APIResponseElement {
   Title: string;
   Description: string;
 }
@@ -210,4 +215,5 @@ export interface APIBuilderElement {
   Offer: APIOffer;
   Map: APIMap;
   Question: APIQuestion;
+  Poll: APIPoll;
 }

@@ -25,7 +25,7 @@ export interface IFormResponse {
   CategoryDetail: ICategoryData;
 }
 
-export interface IQuestionResponse {
+export interface IElementResponse {
   SelectedOptionId: string;
 }
 
@@ -35,7 +35,8 @@ export interface IMobilePageData {
   BuilderElementId: string;
   BuilderElement: string;
   FormResponseDetails: IFormResponse | null;
-  QuestionResponse: IQuestionResponse | null;
+  QuestionResponse: IElementResponse | null;
+  PollResponse: IElementResponse | null;
   BuilderElementUsedInModuleId: string;
   ResponseCapturedFromModule: string;
 }
