@@ -92,7 +92,6 @@ class BuilderElement extends React.Component<Props> {
       isActualRendering,
       countriesAndStates,
       accountCountryId,
-      // isUserClickedOnNotYou,
     } = this.props;
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.TITLE:

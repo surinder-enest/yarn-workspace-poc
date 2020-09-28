@@ -4,4 +4,4 @@ export { default as SelectDropdown } from './SelectDropdown';
 export { default as CustomPlayer } from './CustomPlayer';
 export { default as CustomRecaptcha } from './CustomRecaptcha';
 export { default as CustomNumberFormat } from './CustomNumberFormat';
-export { default as Toast } from './Toast';
+export * from './Toast';

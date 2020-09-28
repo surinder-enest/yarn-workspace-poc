@@ -7,33 +7,28 @@ interface Props {
 }
 
 export const Toast = (props: Props) => {
-  const toastType = props.toastType;
-  const messageToShow = props.message;
+  const { toastType, message } = props;
   return (
     <>
       {toastType === TOAST_TYPE.ERROR
-        ? toast(
-            <ToastInnerBody messageToShow={messageToShow} type={toastType} />,
-            { toastId: '' }
-          )
+        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
+            toastId: '',
+          })
         : ''}
       {toastType === TOAST_TYPE.SUCCESS
-        ? toast(
-            <ToastInnerBody messageToShow={messageToShow} type={toastType} />,
-            { toastId: '' }
-          )
+        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
+            toastId: '',
+          })
         : ''}
       {toastType === TOAST_TYPE.INFO
-        ? toast(
-            <ToastInnerBody messageToShow={messageToShow} type={toastType} />,
-            { toastId: '' }
-          )
+        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
+            toastId: '',
+          })
         : ''}
       {toastType === TOAST_TYPE.WARNING
-        ? toast(
-            <ToastInnerBody messageToShow={messageToShow} type={toastType} />,
-            { toastId: '' }
-          )
+        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
+            toastId: '',
+          })
         : ''}
     </>
   );

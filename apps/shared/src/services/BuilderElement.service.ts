@@ -18,21 +18,22 @@ class BuilderElementService {
     );
     const { data } = response;
     if (!data.HasException && !data.InvalidModelState
-      && !data.UpdateTimerExpired && !data.HasError && data.SavedData) {
+      && !data.Data.UpdateTimerExpired && !data.Data.HasError && data.Data.SavedData) {
       return true;
     }
-    if (data.UpdateTimerExpired) {
+    debugger
+    if (data.Data.UpdateTimerExpired) {
       Toast({
         toastType: TOAST_TYPE.WARNING,
         message: "Your response cannot be modified at this time.",
       });
-    } else if (data.HasError) {
+    } else if (data.Data.HasError) {
       Toast({
         toastType: TOAST_TYPE.ERROR,
         message: "Unable to submit your response. Please try after some time."
       });
     }
-    else if (data.SavedData == null) {
+    else if (!data.Data.SavedData) {
       Toast({
         toastType: TOAST_TYPE.ERROR,
         message: "Unable to submit your response. Please try after some time."

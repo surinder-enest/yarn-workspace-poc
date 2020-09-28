@@ -36,21 +36,24 @@ export default class ResponseElement extends Component<IProps, IState> {
     };
   }
 
-  private onSubmitClick() {
+  private async onSubmitClick() {
     const {
       email,
       mobileNumber,
       selectedOption,
       isValidContactFields,
     } = this.state;
-    debugger;
     if (isValidContactFields) {
-      const isResponseCatured = this.props.responseCapture(
+      debugger;
+      const isResponseCatured = await this.props.responseCapture(
         email,
         mobileNumber,
         selectedOption
       );
-      this.setState({ isResponseCatured, isShowContactField: false });
+      this.setState({
+        isResponseCatured,
+        isShowContactField: false,
+      });
     }
   }
 
