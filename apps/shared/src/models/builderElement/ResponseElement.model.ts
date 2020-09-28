@@ -79,6 +79,7 @@ export class ResponseElementModel {
       marginRight: '0px',
       display: 'block',
       minHeight: '15px',
+      position: 'relative',
     };
     return new StyleModel(data);
   }

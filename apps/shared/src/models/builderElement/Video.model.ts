@@ -1,6 +1,10 @@
 import { StyleModel } from './Style.model';
 import { APIVideo } from '../../interfaces';
-import { MEDIA_SOURCE_TYPE, MEDIA_LINK_TYPE, BUTTON_SHOW_TYPE } from '../../enums';
+import {
+  MEDIA_SOURCE_TYPE,
+  MEDIA_LINK_TYPE,
+  BUTTON_SHOW_TYPE,
+} from '../../enums';
 import { Utility } from '../../utilities';
 
 export class VideoModel {
@@ -32,7 +36,11 @@ export class VideoModel {
       isButton: apiModel?.VideoShowType === BUTTON_SHOW_TYPE.BUTTON,
       buttonText: apiModel?.ButtonText,
       buttonStyles: StyleModel.deserializeButtonStyles(apiModel?.Style?.Button),
-      iframe: VideoModel.deserializeIframe(apiModel?.LinkType, apiModel?.Url, apiModel?.VideoSourceType)
+      iframe: VideoModel.deserializeIframe(
+        apiModel?.LinkType,
+        apiModel?.Url,
+        apiModel?.VideoSourceType
+      ),
     };
     return new VideoModel(data);
   }
@@ -60,16 +68,20 @@ export class VideoModel {
     }
   }
 
-  static deserializeIframe(linkType: string, url: string, videoSourceType: string): string {
+  static deserializeIframe(
+    linkType: string,
+    url: string,
+    videoSourceType: string
+  ): string {
     switch (linkType) {
       case MEDIA_LINK_TYPE.URL:
       case MEDIA_LINK_TYPE.HTTP_STREAMING_FILE:
         const embedUrl = this.getUrl(url?.trim(), videoSourceType);
-        return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
+        return `<iframe style="min-height:300px;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
       case MEDIA_LINK_TYPE.EMBED_CODE:
       case MEDIA_LINK_TYPE.HOSTED_CODE:
         return this.getEmbededUrl(url?.trim(), videoSourceType);
     }
-    return "";
+    return '';
   }
 }

@@ -47,7 +47,6 @@ class BuilderElementService {
     ) {
       return true;
     }
-    debugger;
     if (data.Data.UpdateTimerExpired) {
       Toast({
         type: TOAST_TYPE.WARNING,

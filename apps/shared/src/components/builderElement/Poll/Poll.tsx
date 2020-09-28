@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BUILDER_ELEMENTS } from '../../../enums';
 import { PollModel } from '../../../models';
-import { ResponseElement } from '../ResponseElement';
+import { Media, ResponseElement } from '../ResponseElement';
 
 interface Props {
   poll: PollModel;
@@ -13,7 +13,7 @@ interface Props {
 export default class Poll extends Component<Props> {
   render() {
     const { responseCapture, poll } = this.props;
-    const { title, description, style, responseDetail } = poll;
+    const { title, description, style, responseDetail, media } = poll;
     return (
       <div style={style}>
         <div
@@ -32,6 +32,7 @@ export default class Poll extends Component<Props> {
             <div style={{ display: 'table-row', minHeight: 'inherit' }}>
               <div style={{ display: 'table-cell', verticalAlign: 'middle' }}>
                 <div style={{ padding: '0 10px' }}>
+                  <Media media={media} />
                   <div
                     className="btn-builder"
                     style={{ paddingBottom: '15px' }}

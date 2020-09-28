@@ -82,7 +82,7 @@ export default class ResponseElement extends Component<IProps, IState> {
               textOverflow: 'ellipsis',
               marginLeft: '12px',
               height: '17px',
-              paddingLeft: '20px',
+              paddingLeft: '12px',
               margin: '0',
             }}
           >
@@ -90,7 +90,8 @@ export default class ResponseElement extends Component<IProps, IState> {
               style={{
                 marginRight: '8px',
                 float: 'left',
-                marginLeft: '-2px',
+                // marginLeft: '-2px',
+                opacity: 0,
                 marginTop: '3px',
               }}
               id={option.id}
@@ -141,8 +142,10 @@ export default class ResponseElement extends Component<IProps, IState> {
       case BUILDER_ELEMENTS.QUESTION:
         const selectedOptionDetail = this.getSelectedOption();
         return selectedOptionDetail?.thankYouMessage || '';
-      default:
+      case BUILDER_ELEMENTS.POLL:
         return thankYouMessage;
+      default:
+        return '';
     }
   }
 

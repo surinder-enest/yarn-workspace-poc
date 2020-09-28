@@ -63,7 +63,7 @@ class MobilePageName extends React.Component<Props> {
               width: 100%;
               background: #ededed;
               margin: 0;
-              font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+              font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
               min-height: 667px;
               overflow-y: hidden;
             }
@@ -209,7 +209,8 @@ class MobilePageName extends React.Component<Props> {
               width: 15px;
               height: 15px;
               left: 0;
-              margin-left: -20px;
+              top:2px;
+              margin-left: 0;
               border: 1px solid #979797;
               border-radius: 50%;
               background-color: #ffffff;
@@ -220,12 +221,12 @@ class MobilePageName extends React.Component<Props> {
           .radio label::after {
             display: inline-block;
             position: absolute;
-            content: " ";
+            content: "";
             width: 9px;
             height: 9px;
             left: 3px;
-            top: 3px;
-            margin-left: -20px;
+            top: 5px;
+            margin-left: 0;
             border-radius: 50%;
             background-color: #57AC2D;
             -webkit-transform: scale(0, 0);
@@ -237,6 +238,10 @@ class MobilePageName extends React.Component<Props> {
             -o-transition: -o-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
             transition: transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
         }
+        .radio input[type="radio"]:checked+label::after {
+              -webkit-transform: scale(1, 1);
+              transform: scale(1, 1);
+          }
           `}
           </style>
           <MetaData pageLink={pageLink} metaData={metaData} />
