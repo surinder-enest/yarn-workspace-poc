@@ -9,6 +9,7 @@ import Contact from './Contact';
 
 interface IProps {
   builderElementType: string;
+  isActualRendering: boolean;
   elementDetail: ResponseElementModel;
   contactId: string;
   responseCapture: Function;
@@ -32,7 +33,6 @@ export default class ResponseElement extends Component<IProps, IState> {
       isValidContactFields: false,
       isResponseCaptured: false,
     };
-    console.log(props.elementDetail);
   }
 
   private async onSubmitClick() {
@@ -222,12 +222,12 @@ export default class ResponseElement extends Component<IProps, IState> {
   }
 
   render() {
-    const { elementDetail, contactId } = this.props;
+    const { elementDetail, contactId, isActualRendering } = this.props;
     const { contactFieldType, options, buttonText } = elementDetail;
     const { email, mobileNumber, isResponseCaptured } = this.state;
     return (
       <>
-        {!contactId && (
+        {isActualRendering && !contactId && (
           <Contact
             fieldType={contactFieldType}
             email={email}
@@ -242,8 +242,8 @@ export default class ResponseElement extends Component<IProps, IState> {
         {isResponseCaptured ? (
           this.getResponseThankyouHtml()
         ) : (
-          <>
-            <div className="col-md-12" style={{ textAlign: 'center' }}>
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
               {options?.map((option: ResponseOptionModel, idx: number) =>
                 this.getOptionHtml(option, idx)
               )}
@@ -270,7 +270,7 @@ export default class ResponseElement extends Component<IProps, IState> {
                 </div>
               </div>
             )}
-          </>
+          </div>
         )}
       </>
     );

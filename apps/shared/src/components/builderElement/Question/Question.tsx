@@ -12,7 +12,7 @@ interface Props {
 
 export default class Question extends Component<Props> {
   render() {
-    const { responseCapture, question } = this.props;
+    const { responseCapture, question, isActualRendering } = this.props;
     const { title, description, style, responseDetail, media } = question;
     return (
       <div style={style}>
@@ -49,6 +49,7 @@ export default class Question extends Component<Props> {
                   )}
                   <ResponseElement
                     builderElementType={BUILDER_ELEMENTS.QUESTION}
+                    isActualRendering={isActualRendering}
                     contactId={this.props.contactId}
                     elementDetail={responseDetail}
                     responseCapture={(
