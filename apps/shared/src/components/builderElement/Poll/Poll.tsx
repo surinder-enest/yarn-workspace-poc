@@ -12,7 +12,7 @@ interface Props {
 
 export default class Poll extends Component<Props> {
   render() {
-    const { responseCapture, poll } = this.props;
+    const { responseCapture, poll, isActualRendering } = this.props;
     const { title, description, style, responseDetail, media } = poll;
     return (
       <div style={style}>
@@ -51,6 +51,7 @@ export default class Poll extends Component<Props> {
                   )}
                   <ResponseElement
                     builderElementType={BUILDER_ELEMENTS.POLL}
+                    isActualRendering={isActualRendering}
                     contactId={this.props.contactId}
                     elementDetail={responseDetail}
                     responseCapture={(
