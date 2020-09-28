@@ -8,7 +8,7 @@ interface IProps {
   video: VideoModel;
   elementId: string;
   isActualRendering: boolean;
-  responseCapture: Function;
+  responseCapture?: Function;
 }
 
 interface IState {
@@ -32,7 +32,8 @@ export default class Video extends Component<IProps, IState> {
     if (isFromLibrary) {
       this.setState({ playCount: playCount + 1 });
     }
-    responseCapture();
+
+    if (typeof responseCapture === 'function') responseCapture();
   }
 
   private getVideoHtml(): ReactNode {
@@ -42,37 +43,47 @@ export default class Video extends Component<IProps, IState> {
       case MEDIA_SOURCE_TYPE.YOU_TUBE:
       case MEDIA_SOURCE_TYPE.VIMEO:
       case MEDIA_SOURCE_TYPE.WISTIA:
-        return <div key={elementId}
-          style={{
-            width: '100%',
-            height: '200px',
-            paddingBottom: "56.15%"
-          }}
-          onClick={() => this.onPlay(false)}
-          dangerouslySetInnerHTML={{ __html: iframe }}
-        />
+        return (
+          <div
+            key={elementId}
+            style={{
+              width: '100%',
+              height: '200px',
+              paddingBottom: '56.15%',
+            }}
+            onClick={() => this.onPlay(false)}
+            dangerouslySetInnerHTML={{ __html: iframe }}
+          />
+        );
       case MEDIA_SOURCE_TYPE.VIDEO_EMBED:
-        return <div key={elementId}
-          dangerouslySetInnerHTML={{ __html: iframe }}
-        />
+        return (
+          <div key={elementId} dangerouslySetInnerHTML={{ __html: iframe }} />
+        );
       case MEDIA_SOURCE_TYPE.FACEBOOK:
       case MEDIA_SOURCE_TYPE.SOUND_CLOUD:
-        return <CustomPlayer key={elementId}
-          onStart={() => this.onPlay(false)}
-          url={url}
-          width="auto"
-          height="auto" />;
+        return (
+          <CustomPlayer
+            key={elementId}
+            onStart={() => this.onPlay(false)}
+            url={url}
+            width="auto"
+            height="auto"
+          />
+        );
       case MEDIA_SOURCE_TYPE.OTHERS:
-        return <video
-          key={elementId}
-          style={{ width: '100%' }}
-          onPlay={() => this.onPlay(true)}
-          controls>
-          <source type="video/ogg" src={url} />
-          <source type="video/m4v" src={url} />
-          <source type="video/mp4" src={url} />
-          <source type="video/youtube" src={url} />
-        </video>;
+        return (
+          <video
+            key={elementId}
+            style={{ width: '100%' }}
+            onPlay={() => this.onPlay(true)}
+            controls
+          >
+            <source type="video/ogg" src={url} />
+            <source type="video/m4v" src={url} />
+            <source type="video/mp4" src={url} />
+            <source type="video/youtube" src={url} />
+          </video>
+        );
       default:
         return <></>;
     }
@@ -80,23 +91,40 @@ export default class Video extends Component<IProps, IState> {
 
   render() {
     const { isActualRendering, video } = this.props;
-    const { styles, isDefaultMedia, isButton, buttonStyles, buttonText } = video;
-    return <div style={{ textAlign: 'center', overflow: "hidden" }}>
-      <div style={styles}>
-        <div style={{ position: 'relative', textAlign: 'center', minHeight: 'inherit' }}>
-          {
-            isDefaultMedia
-              ? <PlaceHolder builderElementType={BUILDER_ELEMENTS.VIDEO} text="Select Video" />
-              : isButton && !isActualRendering
-                ? <div style={buttonStyles} className="btn-builder">
-                  {buttonText}
-                </div>
-                : <div style={{ display: 'block', position: 'relative' }}>
-                  {this.getVideoHtml()}
-                </div>
-          }
+    const {
+      styles,
+      isDefaultMedia,
+      isButton,
+      buttonStyles,
+      buttonText,
+    } = video;
+    return (
+      <div style={{ textAlign: 'center', overflow: 'hidden' }}>
+        <div style={styles}>
+          <div
+            style={{
+              position: 'relative',
+              textAlign: 'center',
+              minHeight: 'inherit',
+            }}
+          >
+            {isDefaultMedia ? (
+              <PlaceHolder
+                builderElementType={BUILDER_ELEMENTS.VIDEO}
+                text="Select Video"
+              />
+            ) : isButton && !isActualRendering ? (
+              <div style={buttonStyles} className="btn-builder">
+                {buttonText}
+              </div>
+            ) : (
+              <div style={{ display: 'block', position: 'relative' }}>
+                {this.getVideoHtml()}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    );
   }
 }

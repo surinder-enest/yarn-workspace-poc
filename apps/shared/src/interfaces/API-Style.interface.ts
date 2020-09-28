@@ -65,6 +65,7 @@ export interface APIResponseStyles extends APIButton {
 }
 export interface APIMedia {
   Size: string;
+  SourceLinkType: string;
   VideoSourceType: string;
   Source: string;
   Url: string;

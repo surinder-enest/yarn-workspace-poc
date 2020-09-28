@@ -24,18 +24,18 @@ class BuilderElementService {
     debugger
     if (data.Data.UpdateTimerExpired) {
       Toast({
-        toastType: TOAST_TYPE.WARNING,
+        type: TOAST_TYPE.WARNING,
         message: "Your response cannot be modified at this time.",
       });
     } else if (data.Data.HasError) {
       Toast({
-        toastType: TOAST_TYPE.ERROR,
+        type: TOAST_TYPE.ERROR,
         message: "Unable to submit your response. Please try after some time."
       });
     }
     else if (!data.Data.SavedData) {
       Toast({
-        toastType: TOAST_TYPE.ERROR,
+        type: TOAST_TYPE.ERROR,
         message: "Unable to submit your response. Please try after some time."
       });
     }

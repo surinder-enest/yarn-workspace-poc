@@ -7,35 +7,23 @@ interface Props {
 }
 
 export const Toast = (props: Props) => {
-  const { toastType, message } = props;
-  return (
-    <>
-      {toastType === TOAST_TYPE.ERROR
-        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
-            toastId: '',
-          })
-        : ''}
-      {toastType === TOAST_TYPE.SUCCESS
-        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
-            toastId: '',
-          })
-        : ''}
-      {toastType === TOAST_TYPE.INFO
-        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
-            toastId: '',
-          })
-        : ''}
-      {toastType === TOAST_TYPE.WARNING
-        ? toast(<ToastInnerBody messageToShow={message} type={toastType} />, {
-            toastId: '',
-          })
-        : ''}
-    </>
-  );
+  const { type } = props;
+  switch (type) {
+    case TOAST_TYPE.ERROR:
+    case TOAST_TYPE.SUCCESS:
+    case TOAST_TYPE.INFO:
+    case TOAST_TYPE.WARNING:
+      return toast(<ToastInnerBody {...props} />, {
+        toastId: '',
+      });
+    default:
+      return <></>;
+  }
 };
 
-export const ToastInnerBody = (props: Props) => {
-  const { type, messageToShow } = props;
+const ToastInnerBody = (props: Props) => {
+  const { type, message } = props;
+  debugger;
   switch (type) {
     case TOAST_TYPE.WARNING:
       return (
@@ -66,7 +54,7 @@ export const ToastInnerBody = (props: Props) => {
               alignItems: 'center',
             }}
           >
-            {messageToShow}
+            {message}
           </div>
         </div>
       );

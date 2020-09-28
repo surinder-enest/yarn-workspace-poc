@@ -15,7 +15,6 @@ interface IProps {
 }
 
 interface IState {
-  isShowContactField: boolean;
   selectedOption: string;
   mobileNumber: string;
   email: string;
@@ -27,7 +26,6 @@ export default class ResponseElement extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      isShowContactField: !props.contactId,
       selectedOption: '',
       mobileNumber: '',
       email: '',
@@ -44,7 +42,6 @@ export default class ResponseElement extends Component<IProps, IState> {
       isValidContactFields,
     } = this.state;
     if (isValidContactFields) {
-      debugger;
       const isResponseCatured = await this.props.responseCapture(
         email,
         mobileNumber,
@@ -52,7 +49,6 @@ export default class ResponseElement extends Component<IProps, IState> {
       );
       this.setState({
         isResponseCatured,
-        isShowContactField: false,
       });
     }
   }
@@ -219,15 +215,10 @@ export default class ResponseElement extends Component<IProps, IState> {
   render() {
     const { elementDetail, contactId } = this.props;
     const { contactFieldType, options, buttonText } = elementDetail;
-    const {
-      isShowContactField,
-      email,
-      mobileNumber,
-      isResponseCatured,
-    } = this.state;
+    const { email, mobileNumber, isResponseCatured } = this.state;
     return (
       <>
-        {isShowContactField && (
+        {!contactId && (
           <Contact
             fieldType={contactFieldType}
             email={email}

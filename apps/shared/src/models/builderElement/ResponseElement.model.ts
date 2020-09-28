@@ -1,6 +1,7 @@
 import { APIResponse, APIResponseElement, APIResponseStyles } from '../../interfaces';
 import { CONTACT_FIELD_OPTION } from '../../enums';
 import { StyleModel } from './Style.model';
+import { ContactModel } from '../MobilePage.model';
 
 export class ResponseElementModel {
   contactFieldType: string;
@@ -9,6 +10,7 @@ export class ResponseElementModel {
   optionLabelStyle: StyleModel;
   buttonText: string;
   buttonStyle: StyleModel;
+  contact: ContactModel;
 
   constructor(data?: ResponseElementModel) {
     this.contactFieldType = data?.contactFieldType || '';
@@ -17,6 +19,7 @@ export class ResponseElementModel {
     this.optionLabelStyle = data?.optionLabelStyle || new StyleModel();
     this.buttonText = data?.buttonText || '';
     this.buttonStyle = data?.buttonStyle || new StyleModel();
+    this.contact = data?.contact || new ContactModel();
   }
 
   static deserialize(apiModel: APIResponseElement): ResponseElementModel {
@@ -34,7 +37,8 @@ export class ResponseElementModel {
           : CONTACT_FIELD_OPTION.EMAIL_AND_MOBILE,
       options: ResponseOptionModel.deserializeList(apiModel?.ResponseDetail),
       optionStyle: ResponseElementModel.deserializeOptionStyles(apiModel?.Style?.ResponseStyles),
-      optionLabelStyle: ResponseElementModel.deserializeOptionLabelStyles(apiModel?.Style?.ResponseStyles)
+      optionLabelStyle: ResponseElementModel.deserializeOptionLabelStyles(apiModel?.Style?.ResponseStyles),
+      contact: new ContactModel()
     };
     return new ResponseElementModel(data);
   }

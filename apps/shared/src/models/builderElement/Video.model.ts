@@ -32,7 +32,7 @@ export class VideoModel {
       isButton: apiModel?.VideoShowType === BUTTON_SHOW_TYPE.BUTTON,
       buttonText: apiModel?.ButtonText,
       buttonStyles: StyleModel.deserializeButtonStyles(apiModel?.Style?.Button),
-      iframe: VideoModel.deserializeIframe(apiModel)
+      iframe: VideoModel.deserializeIframe(apiModel?.LinkType, apiModel?.Url, apiModel?.VideoSourceType)
     };
     return new VideoModel(data);
   }
@@ -60,15 +60,15 @@ export class VideoModel {
     }
   }
 
-  static deserializeIframe(apiModel: APIVideo): string {
-    switch (apiModel?.LinkType) {
+  static deserializeIframe(linkType: string, url: string, videoSourceType: string): string {
+    switch (linkType) {
       case MEDIA_LINK_TYPE.URL:
       case MEDIA_LINK_TYPE.HTTP_STREAMING_FILE:
-        const embedUrl = this.getUrl(apiModel?.Url?.trim(), apiModel?.VideoSourceType);
+        const embedUrl = this.getUrl(url?.trim(), videoSourceType);
         return `<iframe style="height:100%;border:0;width:100%;position:absolute;left:0" src="${embedUrl.trim()}?rel=0"></iframe>`;
       case MEDIA_LINK_TYPE.EMBED_CODE:
       case MEDIA_LINK_TYPE.HOSTED_CODE:
-        return this.getEmbededUrl(apiModel?.Url?.trim(), apiModel?.VideoSourceType);
+        return this.getEmbededUrl(url?.trim(), videoSourceType);
     }
     return "";
   }

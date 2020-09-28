@@ -45,6 +45,16 @@ export class CountryModel {
     }
 }
 
+export class ContactModel {
+    email: string;
+    mobileNumber: string;
+
+    constructor(data?: ContactModel) {
+        this.email = data?.email || '';
+        this.mobileNumber = data?.mobileNumber || '';
+    }
+}
+
 export class MobilePageModel {
     id: string;
     name: string;
