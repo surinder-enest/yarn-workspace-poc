@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'next/router';
 import Head from 'next/head';
-import { MobilePageModel, MobilePage, MobilePageService } from '@mindme/shared';
+import { MobilePageModel, MobilePage, MobilePageService, ToastMainContainer } from '@mindme/shared';
 import { MetaData } from '../../components';
 
 interface Props {
@@ -46,8 +46,11 @@ class MobilePageName extends React.Component<Props> {
             giftofspeed5.rel = 'stylesheet'; giftofspeed5.href
             ='https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Dancing+Script|Abril+Fatface|Dancing+Script|Great+Vibes|Josefin+Sans|Lato|Lobster|Merriweather|Montserrat|Open+Sans|Oswald|Pacifico|Playfair+Display|Poiret+One|Poppins|Quicksand|Raleway|Roboto|Sacramento|Ubuntu|Arial|Sofia';
             giftofspeed5.type = 'text/css'; var godefer5 = document.getElementsByTagName('link')[0];
-            godefer5.parentNode.insertBefore(giftofspeed5, godefer5); var head =
-            document.getElementsByTagName('head')[0]; var recaptchaElement =
+            godefer5.parentNode.insertBefore(giftofspeed5, godefer5); var giftofspeed6 = document.createElement('link');
+            giftofspeed6.rel = 'stylesheet'; giftofspeed6.href
+            ='https://unpkg.com/react-toastify@4.5.2/dist/ReactToastify.css'; giftofspeed6.type = 'text/css'; var
+            godefer6 = document.getElementsByTagName('link')[0]; godefer6.parentNode.insertBefore(giftofspeed6,
+            godefer6); var head = document.getElementsByTagName('head')[0]; var recaptchaElement =
             document.getElementsByClassName('g-recaptcha')[0]; var script1 = document.createElement('script');
             script1.type = 'text/javascript'; script1.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
             if (recaptchaElement) head.appendChild(script1); var googleMapElement =
@@ -246,6 +249,7 @@ class MobilePageName extends React.Component<Props> {
           </style>
           <MetaData pageLink={pageLink} metaData={metaData} />
         </Head>
+        <ToastMainContainer />
         <MobilePage pageData={this.props.mobilePageData} />
       </>
     );
