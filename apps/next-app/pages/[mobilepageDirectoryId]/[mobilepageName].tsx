@@ -212,7 +212,7 @@ class MobilePageName extends React.Component<Props> {
               width: 15px;
               height: 15px;
               left: 0;
-              top:2px;
+              top: 0;
               margin-left: 0;
               border: 1px solid #979797;
               border-radius: 50%;
@@ -220,31 +220,31 @@ class MobilePageName extends React.Component<Props> {
               -webkit-transition: border 0.15s ease-in-out;
               -o-transition: border 0.15s ease-in-out;
               transition: border 0.15s ease-in-out;
-          }
-          .radio label::after {
-            display: inline-block;
-            position: absolute;
-            content: "";
-            width: 9px;
-            height: 9px;
-            left: 3px;
-            top: 5px;
-            margin-left: 0;
-            border-radius: 50%;
-            background-color: #57AC2D;
-            -webkit-transform: scale(0, 0);
-            -ms-transform: scale(0, 0);
-            -o-transform: scale(0, 0);
-            transform: scale(0, 0);
-            -webkit-transition: -webkit-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
-            -moz-transition: -moz-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
-            -o-transition: -o-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
-            transition: transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
-        }
-        .radio input[type="radio"]:checked+label::after {
+            }
+            .radio label::after {
+              display: inline-block;
+              position: absolute;
+              content: "";
+              width: 9px;
+              height: 9px;
+              left: 3px;
+              top: 3px;
+              margin-left: 0;
+              border-radius: 50%;
+              background-color: #57AC2D;
+              -webkit-transform: scale(0, 0);
+              -ms-transform: scale(0, 0);
+              -o-transform: scale(0, 0);
+              transform: scale(0, 0);
+              -webkit-transition: -webkit-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+              -moz-transition: -moz-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+              -o-transition: -o-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+              transition: transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+            }
+            .radio input[type="radio"]:checked+label::after {
               -webkit-transform: scale(1, 1);
               transform: scale(1, 1);
-          }
+            }
           `}
           </style>
           <MetaData pageLink={pageLink} metaData={metaData} />

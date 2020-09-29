@@ -22,3 +22,4 @@ export * from './Question.model';
 export * from './MediaModel';
 export * from './ResponseElement.model';
 export * from './Poll.model';
+export * from './Feedback.model';

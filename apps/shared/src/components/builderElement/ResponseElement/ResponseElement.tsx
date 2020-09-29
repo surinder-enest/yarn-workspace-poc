@@ -80,17 +80,17 @@ export default class ResponseElement extends Component<IProps, IState> {
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              marginLeft: '12px',
               height: '17px',
-              paddingLeft: '12px',
-              margin: '0',
+              marginTop: '0',
+              marginBottom: '0',
+              marginRight: '0',
+              marginLeft: '12px',
             }}
           >
             <input
               style={{
                 marginRight: '8px',
                 float: 'left',
-                // marginLeft: '-2px',
                 opacity: 0,
                 marginTop: '3px',
               }}
@@ -143,6 +143,7 @@ export default class ResponseElement extends Component<IProps, IState> {
         const selectedOptionDetail = this.getSelectedOption();
         return selectedOptionDetail?.thankYouMessage || '';
       case BUILDER_ELEMENTS.POLL:
+      case BUILDER_ELEMENTS.FEEDBACK:
         return thankYouMessage;
       default:
         return '';

@@ -19,6 +19,7 @@ import Offer from './Offer/Offer';
 import Map from './Map/Map';
 import Question from './Question/Question';
 import Poll from './Poll/Poll';
+import Feedback from './Feedback/Feedback';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -56,6 +57,7 @@ class BuilderElement extends React.Component<Props> {
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.QUESTION:
       case BUILDER_ELEMENTS.POLL:
+      case BUILDER_ELEMENTS.FEEDBACK:
         const { builderElementType, id } = builderElement;
         newCreatedContactId = await BuilderElementService.saveContactCapture(
           builderElementType,
@@ -200,6 +202,19 @@ class BuilderElement extends React.Component<Props> {
         return (
           <Poll
             poll={builderElement.poll}
+            isActualRendering={isActualRendering}
+            responseCapture={(
+              email?: string,
+              mobileNumber?: string,
+              selectedOption?: string
+            ) => this.responseCapture(email, mobileNumber, selectedOption)}
+            contactId={contactId || ''}
+          />
+        );
+      case BUILDER_ELEMENTS.FEEDBACK:
+        return (
+          <Feedback
+            feedback={builderElement.feedback}
             isActualRendering={isActualRendering}
             responseCapture={(
               email?: string,
