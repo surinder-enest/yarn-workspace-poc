@@ -85,7 +85,7 @@ export default class CustomField extends Component<Props> {
             maxLength={14}
             value={formField.value}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              this.onValueChange(event.currentTarget.value)
+              this.onValueChange(event.target.value)
             }
           />
         );

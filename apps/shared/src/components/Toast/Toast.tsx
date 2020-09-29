@@ -23,7 +23,6 @@ export const Toast = (props: Props) => {
 
 const ToastInnerBody = (props: Props) => {
   const { type, message } = props;
-  debugger;
   switch (type) {
     case TOAST_TYPE.WARNING:
       return (
@@ -48,7 +47,7 @@ const ToastInnerBody = (props: Props) => {
               fontWeight: 'normal',
               lineHeight: 'normal',
               fontSize: '16px',
-              color: '#57ac2d',
+              color: '#ff5900',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',

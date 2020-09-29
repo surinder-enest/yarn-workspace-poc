@@ -92,7 +92,7 @@ export default class Contact extends Component<IProps> {
                   format="###-###-####"
                   placeholder="Mobile Phone"
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    this.onNumberChange(event.currentTarget.value)
+                    this.onNumberChange(event.target.value)
                   }
                 />
               </div>

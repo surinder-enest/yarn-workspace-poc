@@ -245,6 +245,15 @@ class MobilePageName extends React.Component<Props> {
               -webkit-transform: scale(1, 1);
               transform: scale(1, 1);
             }
+            .Toastify__toast{
+              padding:0px !important;
+            }
+            .Toastify__close-button--default{
+              display:none;
+            }
+            .Toastify__toast-container{
+              width: 388px !important;
+            }
           `}
           </style>
           <MetaData pageLink={pageLink} metaData={metaData} />

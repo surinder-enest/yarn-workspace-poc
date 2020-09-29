@@ -31,7 +31,7 @@ export default class Interest extends Component<Props> {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            marginLeft: '12px',
+            marginLeft: '12px !important',
             height: '17px',
           }}
         >
