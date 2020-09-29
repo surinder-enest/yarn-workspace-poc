@@ -37,6 +37,7 @@ export interface IMobilePageData {
   FormResponseDetails: IFormResponse | null;
   QuestionResponse: IElementResponse | null;
   PollResponse: IElementResponse | null;
+  FeedbackResponse: IElementResponse | null;
   BuilderElementUsedInModuleId: string;
   ResponseCapturedFromModule: string;
 }

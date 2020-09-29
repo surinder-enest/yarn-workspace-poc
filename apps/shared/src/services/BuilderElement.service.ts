@@ -125,6 +125,10 @@ class BuilderElementService {
         builderElement.builderElementType,
         selectedOption
       ),
+      FeedbackResponse: this.getElementResponseData(
+        builderElement.builderElementType,
+        selectedOption
+      ),
       BuilderElementUsedInModuleId: moduleId,
       ResponseCapturedFromModule: responseCapturedFromModule,
     };
@@ -176,6 +180,7 @@ class BuilderElementService {
     switch (builderElementType) {
       case BUILDER_ELEMENTS.QUESTION:
       case BUILDER_ELEMENTS.POLL:
+      case BUILDER_ELEMENTS.FEEDBACK:
         const elementResponse: IElementResponse = {
           SelectedOptionId: selectedOption,
         };

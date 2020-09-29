@@ -61,8 +61,9 @@ export class ResponseElementModel {
       width: '100%',
       float: 'left',
       borderRadius: '100px',
-      paddingBottom: '12px',
+      paddingBottom: '10px',
       marginTop: '5px',
+      lineHeight: '15px',
       backgroundColor: '#57AC2D',
     };
     return new StyleModel(data);

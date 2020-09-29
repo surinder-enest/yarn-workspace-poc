@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { BUILDER_ELEMENTS } from '../../../enums';
-import { PollModel } from '../../../models';
+import { FeedbackModel } from '../../../models';
 import { Media, ResponseElement } from '../ResponseElement';
 
 interface Props {
-  poll: PollModel;
+  feedback: FeedbackModel;
   responseCapture: Function;
   isActualRendering: boolean;
   contactId: string;
 }
 
-export default class Poll extends Component<Props> {
+export default class FeedBack extends Component<Props> {
   render() {
-    const { responseCapture, poll, isActualRendering } = this.props;
-    const { title, description, style, responseDetail, media } = poll;
+    const { responseCapture, feedback, isActualRendering } = this.props;
+    const { title, description, style, responseDetail, media } = feedback;
     return (
       <div style={style}>
         <div
@@ -48,7 +48,7 @@ export default class Poll extends Component<Props> {
                     />
                   )}
                   <ResponseElement
-                    builderElementType={BUILDER_ELEMENTS.POLL}
+                    builderElementType={BUILDER_ELEMENTS.FEEDBACK}
                     isActualRendering={isActualRendering}
                     contactId={this.props.contactId}
                     elementDetail={responseDetail}

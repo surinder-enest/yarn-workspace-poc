@@ -194,6 +194,10 @@ export interface APIPoll extends APIResponseElement {
   Title: string;
   Description: string;
 }
+export interface APIFeedback extends APIResponseElement {
+  Title: string;
+  Description: string;
+}
 
 export interface APIBuilderElement {
   Id: string;
@@ -216,4 +220,5 @@ export interface APIBuilderElement {
   Map: APIMap;
   Question: APIQuestion;
   Poll: APIPoll;
+  Feedback: APIFeedback;
 }
