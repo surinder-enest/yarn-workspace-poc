@@ -1,4 +1,4 @@
-interface APIPosition {
+export interface APIPosition {
   Size: number;
   TopPadding: string;
   BottomPadding: string;
@@ -32,8 +32,10 @@ export interface APIBackground {
 
 export interface APIBorder {
   ElementBorderStyles: string;
+  Size: number;
   BorderSize: number;
   BorderColor: APIColor;
+  BorderRadius: number;
 }
 
 export interface APIFieldsStyle {

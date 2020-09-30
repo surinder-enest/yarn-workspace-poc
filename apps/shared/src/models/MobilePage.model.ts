@@ -1,8 +1,5 @@
-import { MetaDataModel } from './builderElement/MetaData.model';
-import { APICountriesAndStates, APIMobileData, APIPageStyles, APIStates } from '../interfaces';
-import { BuilderElementModel } from './builderElement/BuilderElement.model';
-import { OptionModel } from './builderElement/FormField.model';
-import { StyleModel } from './builderElement/Style.model';
+import { APIContactInfo, APICountriesAndStates, APIMobileData, APIPageStyles, APIStates } from '../interfaces';
+import { MetaDataModel, BuilderElementModel, OptionModel, StyleModel } from './builderElement';
 
 export class CountryModel {
     label: string;
@@ -46,12 +43,26 @@ export class CountryModel {
 }
 
 export class ContactModel {
+    id: string;
+    name: string;
     email: string;
     mobileNumber: string;
 
     constructor(data?: ContactModel) {
+        this.id = data?.id || '';
+        this.name = data?.name || '';
         this.email = data?.email || '';
         this.mobileNumber = data?.mobileNumber || '';
+    }
+
+    static deserialize(apiModel: APIContactInfo): ContactModel {
+        const data: ContactModel = {
+            id: apiModel?.ContactId,
+            name: apiModel?.Name,
+            email: apiModel?.EmailId,
+            mobileNumber: apiModel?.MobilePhone,
+        }
+        return new ContactModel(data);
     }
 }
 

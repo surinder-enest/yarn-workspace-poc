@@ -7,6 +7,7 @@ export class MediaModel {
   url: string;
   iframe: string;
   videoSourceType: string;
+  style: StyleModel;
   imageStyle: StyleModel;
 
   constructor(data?: MediaModel) {
@@ -14,6 +15,7 @@ export class MediaModel {
     this.url = data?.url || '';
     this.iframe = data?.iframe || '';
     this.videoSourceType = data?.videoSourceType || '';
+    this.style = data?.style || new StyleModel();
     this.imageStyle = data?.imageStyle || new StyleModel();
   }
 
@@ -23,6 +25,9 @@ export class MediaModel {
       url: apiModel?.Url,
       iframe: VideoModel.deserializeIframe(apiModel?.SourceLinkType, apiModel?.Url, apiModel?.VideoSourceType),
       videoSourceType: apiModel?.VideoSourceType,
+      style: new StyleModel({
+        textAlign: 'center'
+      }),
       imageStyle: new StyleModel({
         width: apiModel?.Size,
         paddingBottom: '10px'

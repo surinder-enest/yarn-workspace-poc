@@ -226,13 +226,19 @@ export default class ResponseElement extends Component<IProps, IState> {
   }
 
   render() {
-    const { elementDetail, contactId, isActualRendering } = this.props;
+    const {
+      elementDetail,
+      contactId,
+      isActualRendering,
+      builderElementType,
+    } = this.props;
     const { contactFieldType, options, buttonText } = elementDetail;
     const { email, mobileNumber, isResponseCaptured } = this.state;
     return (
       <>
         {isActualRendering && !contactId && (
           <Contact
+            elementType={builderElementType}
             fieldType={contactFieldType}
             email={email}
             mobileNumber={mobileNumber}

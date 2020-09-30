@@ -55,3 +55,18 @@ export interface IContactCaptureData {
   ModuleId: string;
   ModuleName: string;
 }
+
+export interface IOfferRedeemRequestViewModelData {
+  AccountId: string;
+  ContactId: string | null;
+  OfferBuilderElementId: string;
+  OfferElementRenderForModule: string;
+  OfferId: string;
+  SendModuleId: string;
+  SendSummaryId: string | null;
+}
+
+export interface ISaveContactAndRedeemOfferData {
+  ContactDetails: IContactDetail;
+  OfferRedeemRequestViewModel: IOfferRedeemRequestViewModelData;
+}

@@ -1,5 +1,5 @@
 import { APIMapLocation } from './API-mobile-page.interface';
-import { APIDividerStyle, APIStyle } from './API-style.interface';
+import { APIBorder, APIColor, APIDividerStyle, APIMedia, APIStyle, APIPosition } from './API-style.interface';
 
 export interface APIOptions {
   Id: string;
@@ -131,21 +131,40 @@ export interface APIAudio {
   ImageURL: string;
 }
 
-export interface APIOfferMedia {
-  Source: string;
-  Url: string;
+export interface APIOfferStyle {
+  BackgroundColor: APIColor;
+  MediaBackgroundColor: APIColor;
+  Border: APIBorder;
+  OfferTextColor: APIColor;
+  RedeemButtonColor: APIColor;
+  RedeemButton: APIBorder;
+  RedeemButtonTextColor: APIColor;
 }
 
 export interface APIOfferData {
+  Id: string;
   OfferTitle: string;
   OfferDescription: string;
   OfferLayoutType: string;
-  Media: APIOfferMedia;
+  Media: APIMedia;
+  OfferStyle: APIOfferStyle;
+  Position: APIPosition;
+  ContactInformation: APIContact;
+  PosCode: string;
+  PosCodeScanType: string;
+  TermSettingType: string;
+  TermsFromSettings: string;
+  TermsAndConditions: string;
+  IsHideTermsInExpandableArea: boolean;
 }
 
 export interface APIOffer {
   Style: APIStyle;
   OfferData: APIOfferData;
+  OfferRedemptionMessage: string;
+  OfferExpirationMessage: string;
+  OfferExpirationActionType: string;
+  OfferRedemptionActionType: string;
 }
 export interface APIMapAddress {
   PlaceId: string;

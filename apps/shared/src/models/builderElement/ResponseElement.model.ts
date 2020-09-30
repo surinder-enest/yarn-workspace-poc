@@ -1,4 +1,5 @@
 import {
+  APIContact,
   APIResponse,
   APIResponseElement,
   APIResponseStyles,
@@ -36,11 +37,7 @@ export class ResponseElementModel {
         marginTop: '15px',
         position: 'relative',
       }),
-      contactFieldType: apiModel?.ContactInformation?.RequireEmailOnly
-        ? CONTACT_FIELD_OPTION.EMAIL_ONLY
-        : apiModel?.ContactInformation?.RequireMobileOnly
-        ? CONTACT_FIELD_OPTION.MOBILE_ONLY
-        : CONTACT_FIELD_OPTION.EMAIL_AND_MOBILE,
+      contactFieldType: ResponseElementModel.deserializeContactFieldType(apiModel?.ContactInformation),
       options: ResponseOptionModel.deserializeList(apiModel?.ResponseDetail),
       optionStyle: ResponseElementModel.deserializeOptionStyles(
         apiModel?.Style?.ResponseStyles
@@ -67,6 +64,14 @@ export class ResponseElementModel {
       backgroundColor: '#57AC2D',
     };
     return new StyleModel(data);
+  }
+
+  static deserializeContactFieldType(apiContact: APIContact): string {
+    return apiContact?.RequireEmailOnly
+      ? CONTACT_FIELD_OPTION.EMAIL_ONLY
+      : apiContact?.RequireMobileOnly
+        ? CONTACT_FIELD_OPTION.MOBILE_ONLY
+        : CONTACT_FIELD_OPTION.EMAIL_AND_MOBILE;
   }
 
   static deserializeOptionLabelStyles(
@@ -109,8 +114,8 @@ export class ResponseOptionModel {
   static deserializeList(apiList: APIResponse[]): ResponseOptionModel[] {
     return apiList
       ? apiList.map((apiResponse: APIResponse) => {
-          return ResponseOptionModel.deserialize(apiResponse);
-        })
+        return ResponseOptionModel.deserialize(apiResponse);
+      })
       : [];
   }
 }

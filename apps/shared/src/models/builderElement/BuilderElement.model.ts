@@ -96,7 +96,7 @@ export class BuilderElementModel {
       video: VideoModel.deserialize(apiModel?.Video),
       image: ImageModel.deserialize(apiModel?.Image, contactId),
       audio: AudioModel.deserialize(apiModel?.Audio),
-      offer: OfferModel.deserialize(apiModel?.Offer, contactId),
+      offer: OfferModel.deserialize(apiModel?.Offer),
       map: MapModel.deserialize(apiModel?.Map),
       question: QuestionModel.deserialize(apiModel?.Question),
       poll: PollModel.deserialize(apiModel?.Poll),
@@ -111,11 +111,11 @@ export class BuilderElementModel {
   ): BuilderElementModel[] {
     return apiBuilderElementList
       ? apiBuilderElementList.map(
-          (apiBuilderElement: APIBuilderElement) =>
-            new BuilderElementModel(
-              BuilderElementModel.deserialize(apiBuilderElement, contactId)
-            )
-        )
+        (apiBuilderElement: APIBuilderElement) =>
+          new BuilderElementModel(
+            BuilderElementModel.deserialize(apiBuilderElement, contactId)
+          )
+      )
       : [];
   }
 }

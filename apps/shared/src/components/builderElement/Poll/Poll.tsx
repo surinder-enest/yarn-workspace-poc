@@ -32,7 +32,10 @@ export default class Poll extends Component<Props> {
             <div style={{ display: 'table-row', minHeight: 'inherit' }}>
               <div style={{ display: 'table-cell', verticalAlign: 'middle' }}>
                 <div style={{ padding: '0 10px' }}>
-                  <Media media={media} />
+                  <Media
+                    media={media}
+                    builderElementType={BUILDER_ELEMENTS.POLL}
+                  />
                   <div
                     style={{ paddingBottom: '15px' }}
                     dangerouslySetInnerHTML={{

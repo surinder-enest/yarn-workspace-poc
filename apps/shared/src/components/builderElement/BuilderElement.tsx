@@ -180,7 +180,11 @@ class BuilderElement extends React.Component<Props> {
           <Offer
             offer={builderElement.offer}
             isActualRendering={isActualRendering}
-            responseCapture={() => this.responseCapture()}
+            elementId={builderElement.id}
+            moduleId={moduleId || ''}
+            contactId={contactId || ''}
+            accountId={accountId || ''}
+            responseCapturedFromModule={responseCapturedFromModule || ''}
           />
         );
       case BUILDER_ELEMENTS.MAP:

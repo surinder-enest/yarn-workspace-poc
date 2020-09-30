@@ -29,8 +29,11 @@ export interface APIGeoLocationDetails {
     Address: Array<APIGeoAddress>
 }
 
-interface APIContactInfo {
+export interface APIContactInfo {
+    Name: string;
     ContactId: string;
+    EmailId: string;
+    MobilePhone: string;
 }
 
 export interface APIStates {

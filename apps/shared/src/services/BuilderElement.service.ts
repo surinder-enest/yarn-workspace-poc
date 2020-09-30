@@ -10,6 +10,8 @@ import {
   IContactDetail,
   IContactCaptureData,
   IElementResponse,
+  IOfferRedeemRequestViewModelData,
+  ISaveContactAndRedeemOfferData
 } from '../interfaces';
 import { BUILDER_ELEMENTS, TOAST_TYPE } from '../enums';
 import { Toast } from '../components';
@@ -86,6 +88,42 @@ class BuilderElementService {
     );
     const response = await this.httpClient.post(
       apiUrl.saveContactCapture,
+      requestModel
+    );
+    const { data } = response;
+    if (
+      !data.HasException &&
+      !data.InvalidModelState &&
+      !data.HasError &&
+      data.Data
+    ) {
+      return data.Data;
+    }
+    return '';
+  }
+
+  async saveContactAndRedeemOffer(
+    accountId: string,
+    builderElementId: string,
+    moduleId: string,
+    moduleName: string,
+    email: string,
+    mobileNumber: string,
+    contactId: string,
+    offerId: string
+  ) {
+    const requestModel = this.getRedeemOfferData(
+      accountId,
+      builderElementId,
+      moduleId,
+      moduleName,
+      email,
+      mobileNumber,
+      contactId,
+      offerId
+    );
+    const response = await this.httpClient.post(
+      apiUrl.saveContactAndRedeemOffer,
       requestModel
     );
     const { data } = response;
@@ -212,6 +250,34 @@ class BuilderElementService {
       ModuleName: moduleName,
     };
     return contactCaptureData;
+  }
+
+  private getRedeemOfferData(accountId: string,
+    builderElementId: string,
+    moduleId: string,
+    moduleName: string,
+    email: string,
+    mobileNumber: string,
+    contactId: string,
+    offerId: string): ISaveContactAndRedeemOfferData {
+    const offerData: IOfferRedeemRequestViewModelData = {
+      AccountId: accountId,
+      ContactId: contactId || null,
+      OfferBuilderElementId: builderElementId,
+      OfferElementRenderForModule: moduleName,
+      OfferId: offerId,
+      SendModuleId: moduleId,
+      SendSummaryId: null,
+    }
+    const contactData: IContactDetail = {
+      EmailAddress: email,
+      MobilePhone: mobileNumber,
+    }
+    const redeemOfferData: ISaveContactAndRedeemOfferData = {
+      ContactDetails: contactData,
+      OfferRedeemRequestViewModel: offerData,
+    }
+    return redeemOfferData;
   }
 }
 

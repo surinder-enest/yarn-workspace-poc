@@ -1,9 +1,10 @@
 import React, { Component, ReactNode } from 'react';
-import { CONTACT_FIELD_OPTION } from '../../../enums';
+import { BUILDER_ELEMENTS, CONTACT_FIELD_OPTION } from '../../../enums';
 import { Regex } from '../../../utilities';
 import { CustomNumberFormat } from '../../Common';
 
 interface IProps {
+  elementType: string;
   fieldType: string;
   mobileNumber: string;
   email: string;
@@ -42,6 +43,20 @@ export default class Contact extends Component<IProps> {
   private getFieldHtml(fieldType: string): ReactNode {
     let isShowEmailField = false;
     let isShowMobileNumberField = false;
+    let divStyles: any = {};
+    let isShowLabel = true;
+    let marginBottom = '15px';
+    let inputStyle: any = {
+      backgroundColor: '#fff',
+      borderRadius: '4px',
+      border: '1px solid #ccc',
+      minHeight: '44px',
+      width: '100%',
+      fontSize: '16px',
+      padding: '0 8px',
+      lineHeight: '42px',
+      outline: 'none',
+    };
     switch (fieldType) {
       case CONTACT_FIELD_OPTION.EMAIL_ONLY:
         isShowEmailField = true;
@@ -54,38 +69,47 @@ export default class Contact extends Component<IProps> {
         isShowMobileNumberField = true;
         break;
     }
-    const inputStyle = {
-      backgroundColor: '#fff',
-      borderRadius: '4px',
-      border: '1px solid #ccc',
-      minHeight: '44px',
-      width: '100%',
-      fontSize: '16px',
-      padding: '0 8px',
-      lineHeight: '42px',
-      outline: 'none',
-    };
+    switch (this.props.elementType) {
+      case BUILDER_ELEMENTS.OFFER:
+        isShowLabel = false;
+        inputStyle = {
+          height: '30px',
+          padding: '2px 10px',
+        };
+        marginBottom = '20px';
+        break;
+      default:
+        divStyles = {
+          width: '66%',
+          margin: '10px auto',
+        };
+        break;
+    }
+
     return (
       <>
         {(isShowMobileNumberField || isShowEmailField) && (
-          <div style={{ width: '66%', margin: '10px auto' }}>
+          <div style={divStyles}>
             {isShowMobileNumberField && (
-              <div className="col-md-12" style={{ marginBottom: '15px' }}>
-                <label
-                  style={{
-                    color: 'rgb(0, 0, 0)',
-                    lineHeight: '1.25',
-                    fontWeight: 'normal',
-                    fontStyle: 'normal',
-                    marginBottom: '5px',
-                    fontSize: '16px',
-                    textAlign: 'left',
-                    width: '100%',
-                  }}
-                >
-                  Mobile Phone*
-                </label>
+              <div className="col-md-12" style={{ marginBottom }}>
+                {isShowLabel && (
+                  <label
+                    style={{
+                      color: 'rgb(0, 0, 0)',
+                      lineHeight: '1.25',
+                      fontWeight: 'normal',
+                      fontStyle: 'normal',
+                      marginBottom: '5px',
+                      fontSize: '16px',
+                      textAlign: 'left',
+                      width: '100%',
+                    }}
+                  >
+                    Mobile Phone*
+                  </label>
+                )}
                 <CustomNumberFormat
+                  className="form-control"
                   style={inputStyle}
                   type={'text'}
                   displayType={'input'}
@@ -98,25 +122,28 @@ export default class Contact extends Component<IProps> {
               </div>
             )}
             {isShowEmailField && (
-              <div className="col-md-12" style={{ marginBottom: '15px' }}>
-                <label
-                  style={{
-                    color: 'rgb(0, 0, 0)',
-                    lineHeight: '1.25',
-                    fontWeight: 'normal',
-                    fontStyle: 'normal',
-                    marginBottom: '5px',
-                    fontSize: '16px',
-                    textAlign: 'left',
-                    width: '100%',
-                  }}
-                >
-                  Email*
-                </label>
+              <div className="col-md-12" style={{ marginBottom }}>
+                {isShowLabel && (
+                  <label
+                    style={{
+                      color: 'rgb(0, 0, 0)',
+                      lineHeight: '1.25',
+                      fontWeight: 'normal',
+                      fontStyle: 'normal',
+                      marginBottom: '5px',
+                      fontSize: '16px',
+                      textAlign: 'left',
+                      width: '100%',
+                    }}
+                  >
+                    Email*
+                  </label>
+                )}
                 <input
+                  className="form-control"
                   style={inputStyle}
                   maxLength={30}
-                  placeholder="Email"
+                  placeholder="Email Address"
                   onChange={event =>
                     this.onEmailChange(event.currentTarget.value)
                   }

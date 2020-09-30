@@ -11,7 +11,7 @@ export class Utility {
     }
 
     public static addStringBeforeCapitalLetter(str: string, join: string): string {
-        const array = str.match(Regex.getCapitalLetterRegex);
+        const array = str?.match(Regex.getCapitalLetterRegex);
         return array ? array.join(join) : "";
     }
 
