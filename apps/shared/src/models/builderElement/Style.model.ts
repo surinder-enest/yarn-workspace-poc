@@ -1,8 +1,4 @@
-import {
-  APIStyle,
-  APIBackground,
-  APIButton
-} from '../../interfaces';
+import { APIStyle, APIBackground, APIButton } from '../../interfaces';
 import { Utility } from '../../utilities';
 import { BACKGROUND_TYPE } from '../../enums';
 
@@ -25,6 +21,7 @@ export class StyleModel {
   color?: string;
   display?: string;
   width?: string;
+  maxWidth?: string;
   fontSize?: string;
   lineHeight?: string;
   height?: string;
@@ -56,6 +53,7 @@ export class StyleModel {
     this.color = data?.color;
     this.display = data?.display;
     this.width = data?.width;
+    this.maxWidth = data?.maxWidth;
     this.fontSize = data?.fontSize;
     this.height = data?.height;
     this.opacity = data?.opacity;
@@ -105,24 +103,25 @@ export class StyleModel {
     switch (BackgroundType) {
       case BACKGROUND_TYPE.IMAGE:
         const opacityValue = Opacity ? Opacity / 100 : 1;
-        return `${Url
-          ? `linear-gradient(rgba(255, 255, 255, 
+        return `${
+          Url
+            ? `linear-gradient(rgba(255, 255, 255, 
                     ${1 - opacityValue}), rgba(255,255, 255,
                     ${1 - opacityValue})), url(${Utility.replace(
-            Url,
-            ' ',
-            '%20'
-          )}) 
+                Url,
+                ' ',
+                '%20'
+              )}) 
                     ${Utility.addStringBeforeCapitalLetter(
-            ImagePosition,
-            ' '
-          ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
+                      ImagePosition,
+                      ' '
+                    ).toLowerCase()} / ${Size === '100%' ? 'cover' : Size} 
                     ${Utility.addStringBeforeCapitalLetter(
-            BackgroundRepeat,
-            '-'
-          ).toLowerCase()}`
-          : backgroundColor
-          }`;
+                      BackgroundRepeat,
+                      '-'
+                    ).toLowerCase()}`
+            : backgroundColor
+        }`;
       default:
         return backgroundColor;
     }

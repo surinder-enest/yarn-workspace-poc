@@ -65,6 +65,7 @@ export interface APIResponseStyles extends APIButton {
   OptionTextColor: APIColor;
   OptionBackgroundColor: APIColor;
 }
+
 export interface APIMedia {
   Size: string;
   SourceLinkType: string;
@@ -72,6 +73,19 @@ export interface APIMedia {
   Source: string;
   Url: string;
 }
+export interface APICountDownBorder extends APIBorder {
+  BorderRadius: number;
+}
+
+export interface APICountDownStyles {
+  LabelTextColor: APIColor;
+  TextColor: APIColor;
+  BlockBackgroundColor: APIColor;
+  InnerBackgroundColor: APIColor;
+  InnerBorderStyle: APICountDownBorder;
+  BlockBorderStyle: APICountDownBorder;
+}
+
 export interface APIStyle {
   Position: APIPosition;
   Background: APIBackground;
@@ -82,6 +96,7 @@ export interface APIStyle {
   ResponseStyles: APIResponseStyles;
   Align: string;
   Media: APIMedia;
+  CountDownStyles: APICountDownStyles;
 }
 
 export interface APIDividerStyle {

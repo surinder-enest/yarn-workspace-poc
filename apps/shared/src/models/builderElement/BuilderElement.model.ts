@@ -17,6 +17,7 @@ import { MapModel } from './Map.model';
 import { QuestionModel } from './Question.model';
 import { PollModel } from './Poll.model';
 import { FeedbackModel } from './Feedback.model';
+import { CountDownModel } from './CountDown.model';
 
 export class BuilderElementModel {
   id: string;
@@ -43,6 +44,7 @@ export class BuilderElementModel {
   question: QuestionModel;
   poll: PollModel;
   feedback: FeedbackModel;
+  countDown: CountDownModel;
 
   constructor(data?: BuilderElementModel) {
     this.id = data?.id || '';
@@ -71,6 +73,7 @@ export class BuilderElementModel {
     this.question = data?.question || new QuestionModel();
     this.poll = data?.poll || new PollModel();
     this.feedback = data?.feedback || new FeedbackModel();
+    this.countDown = data?.countDown || new CountDownModel();
   }
 
   static deserialize(
@@ -101,6 +104,7 @@ export class BuilderElementModel {
       question: QuestionModel.deserialize(apiModel?.Question),
       poll: PollModel.deserialize(apiModel?.Poll),
       feedback: FeedbackModel.deserialize(apiModel?.Feedback),
+      countDown: CountDownModel.deserialize(apiModel?.CountDown, contactId),
     };
     return new BuilderElementModel(data);
   }
@@ -111,11 +115,11 @@ export class BuilderElementModel {
   ): BuilderElementModel[] {
     return apiBuilderElementList
       ? apiBuilderElementList.map(
-        (apiBuilderElement: APIBuilderElement) =>
-          new BuilderElementModel(
-            BuilderElementModel.deserialize(apiBuilderElement, contactId)
-          )
-      )
+          (apiBuilderElement: APIBuilderElement) =>
+            new BuilderElementModel(
+              BuilderElementModel.deserialize(apiBuilderElement, contactId)
+            )
+        )
       : [];
   }
 }

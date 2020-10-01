@@ -6,3 +6,4 @@ export * from './Button.enum';
 export * from './Offer.enum';
 export * from './Map.enum';
 export * from './ResponseElement.enum';
+export * from './CountDown.enum';

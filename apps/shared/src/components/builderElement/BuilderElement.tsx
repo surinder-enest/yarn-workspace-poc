@@ -20,6 +20,7 @@ import Map from './Map/Map';
 import Question from './Question/Question';
 import Poll from './Poll/Poll';
 import Feedback from './Feedback/Feedback';
+import CountDown from './CountDown/CountDown';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -35,6 +36,23 @@ interface Props {
 }
 
 class BuilderElement extends React.Component<Props> {
+  private async saveResponse(contactId: string, selectedOption: string) {
+    const {
+      moduleId,
+      accountId,
+      responseCapturedFromModule,
+      builderElement,
+    } = this.props;
+
+    return await BuilderElementService.saveBuilderElementResponse(
+      builderElement,
+      moduleId || '',
+      contactId,
+      accountId || '',
+      responseCapturedFromModule || '',
+      selectedOption || ''
+    );
+  }
   private async responseCapture(
     email?: string,
     mobileNumber?: string,
@@ -52,14 +70,12 @@ class BuilderElement extends React.Component<Props> {
 
     if (!isActualRendering) return;
 
-    let newCreatedContactId = contactId || '';
-
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.QUESTION:
       case BUILDER_ELEMENTS.POLL:
       case BUILDER_ELEMENTS.FEEDBACK:
         const { builderElementType, id } = builderElement;
-        newCreatedContactId = await BuilderElementService.saveContactCapture(
+        const newCreatedContactId = await BuilderElementService.saveContactCapture(
           builderElementType,
           accountId || '',
           id,
@@ -68,20 +84,14 @@ class BuilderElement extends React.Component<Props> {
           email || '',
           mobileNumber || ''
         );
-
-        if (typeof setContactId === 'function')
+        if (typeof setContactId === 'function') {
           setContactId(newCreatedContactId);
-        break;
-    }
+        }
+        return this.saveResponse(newCreatedContactId, selectedOption || '');
 
-    return await BuilderElementService.saveBuilderElementResponse(
-      builderElement,
-      moduleId || '',
-      newCreatedContactId,
-      accountId || '',
-      responseCapturedFromModule || '',
-      selectedOption || ''
-    );
+      default:
+        return this.saveResponse(contactId || '', selectedOption || '');
+    }
   }
 
   private getBuilderElement(builderElement: BuilderElementModel): ReactNode {
@@ -226,6 +236,15 @@ class BuilderElement extends React.Component<Props> {
               selectedOption?: string
             ) => this.responseCapture(email, mobileNumber, selectedOption)}
             contactId={contactId || ''}
+          />
+        );
+      case BUILDER_ELEMENTS.COUNT_DOWN:
+        return (
+          <CountDown
+            elementId={builderElement.id}
+            countDown={builderElement.countDown}
+            responseCapture={() => this.responseCapture()}
+            isActualRendering={isActualRendering}
           />
         );
       default:

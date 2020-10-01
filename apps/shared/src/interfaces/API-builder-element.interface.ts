@@ -1,5 +1,12 @@
 import { APIMapLocation } from './API-mobile-page.interface';
-import { APIBorder, APIColor, APIDividerStyle, APIMedia, APIStyle, APIPosition } from './API-style.interface';
+import {
+  APIBorder,
+  APIColor,
+  APIDividerStyle,
+  APIMedia,
+  APIStyle,
+  APIPosition,
+} from './API-style.interface';
 
 export interface APIOptions {
   Id: string;
@@ -218,6 +225,21 @@ export interface APIFeedback extends APIResponseElement {
   Description: string;
 }
 
+export interface APICountDown {
+  CountDownLayout: string;
+  Title: string;
+  Description: string;
+  ExpirationDate: string;
+  ExpirationTime: number;
+  ExpirationTimeFormat: string;
+  TitleOptions: string;
+  ButtonViewModel: APIButtonElement;
+  TimeZoneAbbreviation: string;
+  IsShowExpireTime: boolean;
+  IsButtonVisible: boolean;
+  Style: APIStyle;
+}
+
 export interface APIBuilderElement {
   Id: string;
   Key: string;
@@ -240,4 +262,5 @@ export interface APIBuilderElement {
   Question: APIQuestion;
   Poll: APIPoll;
   Feedback: APIFeedback;
+  CountDown: APICountDown;
 }

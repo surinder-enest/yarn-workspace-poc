@@ -23,3 +23,4 @@ export * from './MediaModel';
 export * from './ResponseElement.model';
 export * from './Poll.model';
 export * from './Feedback.model';
+export * from './CountDown.model';
