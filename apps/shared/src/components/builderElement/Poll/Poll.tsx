@@ -13,7 +13,7 @@ interface Props {
 export default class Poll extends Component<Props> {
   render() {
     const { responseCapture, poll, isActualRendering } = this.props;
-    const { title, description, style, responseDetail, media } = poll;
+    const { style, responseDetail, media } = poll;
     return (
       <div style={style}>
         <div
@@ -36,20 +36,6 @@ export default class Poll extends Component<Props> {
                     media={media}
                     builderElementType={BUILDER_ELEMENTS.POLL}
                   />
-                  <div
-                    style={{ paddingBottom: '15px' }}
-                    dangerouslySetInnerHTML={{
-                      __html: title,
-                    }}
-                  />
-                  {description && (
-                    <div
-                      style={{ paddingBottom: '15px' }}
-                      dangerouslySetInnerHTML={{
-                        __html: description,
-                      }}
-                    />
-                  )}
                   <ResponseElement
                     builderElementType={BUILDER_ELEMENTS.POLL}
                     isActualRendering={isActualRendering}

@@ -19,3 +19,4 @@ export { default as Question } from './Question/Question';
 export { default as Poll } from './Poll/Poll';
 export { default as Feedback } from './Feedback/Feedback';
 export { default as CountDown } from './CountDown/CountDown';
+export { default as Download } from './Download/Download';

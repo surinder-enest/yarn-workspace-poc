@@ -3,3 +3,9 @@ export enum CONTACT_FIELD_OPTION {
   MOBILE_ONLY = 'MobileOnly',
   EMAIL_AND_MOBILE = 'EmailAndMobile',
 }
+
+export enum DOWNLOAD_LAYOUT {
+  BLANK = 'Blank',
+  IMAGE_RIGHT = 'ImageRight',
+  IMAGE_LEFT = 'ImageLeft',
+};

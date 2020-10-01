@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from 'react';
+import config from '../../config';
 import { BUILDER_ELEMENTS } from '../../enums';
 
 interface Props {
@@ -17,7 +18,7 @@ export default class PlaceHolder extends Component<Props> {
         return <i className="audio-blue-image" />;
       case BUILDER_ELEMENTS.OFFER:
         return (
-          <img src="https://staging.mindmemobile.com/images/offer-unavailable.svg" />
+          <img src={`${config.APP_ENDPOINT}images/offer-unavailable.svg`} />
         );
     }
     return <></>;

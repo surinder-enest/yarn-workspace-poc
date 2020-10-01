@@ -13,7 +13,7 @@ interface Props {
 export default class Question extends Component<Props> {
   render() {
     const { responseCapture, question, isActualRendering } = this.props;
-    const { title, description, style, responseDetail, media } = question;
+    const { style, responseDetail, media } = question;
     return (
       <div style={style}>
         <div
@@ -36,20 +36,6 @@ export default class Question extends Component<Props> {
                     media={media}
                     builderElementType={BUILDER_ELEMENTS.QUESTION}
                   />
-                  <div
-                    style={{ paddingBottom: '15px' }}
-                    dangerouslySetInnerHTML={{
-                      __html: title,
-                    }}
-                  />
-                  {description && (
-                    <div
-                      style={{ paddingBottom: '15px' }}
-                      dangerouslySetInnerHTML={{
-                        __html: description,
-                      }}
-                    />
-                  )}
                   <ResponseElement
                     builderElementType={BUILDER_ELEMENTS.QUESTION}
                     isActualRendering={isActualRendering}

@@ -21,6 +21,7 @@ import Question from './Question/Question';
 import Poll from './Poll/Poll';
 import Feedback from './Feedback/Feedback';
 import CountDown from './CountDown/CountDown';
+import Download from './Download/Download';
 
 interface Props {
   builderElement: BuilderElementModel;
@@ -74,6 +75,7 @@ class BuilderElement extends React.Component<Props> {
       case BUILDER_ELEMENTS.QUESTION:
       case BUILDER_ELEMENTS.POLL:
       case BUILDER_ELEMENTS.FEEDBACK:
+      case BUILDER_ELEMENTS.DOWNLOAD:
         const { builderElementType, id } = builderElement;
         const newCreatedContactId = await BuilderElementService.saveContactCapture(
           builderElementType,
@@ -87,10 +89,12 @@ class BuilderElement extends React.Component<Props> {
         if (typeof setContactId === 'function') {
           setContactId(newCreatedContactId);
         }
-        return this.saveResponse(newCreatedContactId, selectedOption || '');
-
+        return await this.saveResponse(
+          newCreatedContactId,
+          selectedOption || ''
+        );
       default:
-        return this.saveResponse(contactId || '', selectedOption || '');
+        return await this.saveResponse(contactId || '', selectedOption || '');
     }
   }
 
@@ -245,6 +249,19 @@ class BuilderElement extends React.Component<Props> {
             countDown={builderElement.countDown}
             responseCapture={() => this.responseCapture()}
             isActualRendering={isActualRendering}
+          />
+        );
+      case BUILDER_ELEMENTS.DOWNLOAD:
+        return (
+          <Download
+            download={builderElement.download}
+            isActualRendering={isActualRendering}
+            responseCapture={(
+              email?: string,
+              mobileNumber?: string,
+              selectedOption?: string
+            ) => this.responseCapture(email, mobileNumber, selectedOption)}
+            contactId={contactId || ''}
           />
         );
       default:

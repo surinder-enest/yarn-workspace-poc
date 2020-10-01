@@ -1,10 +1,13 @@
 import React, { Component, ReactNode } from 'react';
+import { Modal } from 'react-bootstrap';
+import config from '../../../config';
 import { BUILDER_ELEMENTS } from '../../../enums';
 import {
   ResponseElementModel,
   ResponseOptionModel,
   StyleModel,
 } from '../../../models';
+import { Utility } from '../../../utilities';
 import Contact from './Contact';
 
 interface IProps {
@@ -21,6 +24,7 @@ interface IState {
   email: string;
   isValidContactFields: boolean;
   isResponseCaptured: boolean;
+  isShowModal: boolean;
 }
 
 export default class ResponseElement extends Component<IProps, IState> {
@@ -35,22 +39,58 @@ export default class ResponseElement extends Component<IProps, IState> {
     };
   }
 
-  private async onSubmitClick() {
-    const {
+  private downloadFile() {
+    const { fileUrl, fileName } = this.props.elementDetail;
+    if (fileUrl && fileName) {
+      const isSafari =
+        /constructor/i.test(window?.HTMLElement) ||
+        (function(p) {
+          return p.toString() === '[object SafariRemoteNotification]';
+        })(
+          !window?.['safari'] ||
+            (typeof window?.['safari'] !== 'undefined' &&
+              window?.['safari']?.pushNotification)
+        );
+      if (!isSafari) {
+        const redirectUrl = `${config.API_ENDPOINT}api/Account/DownloadFileFromUrl?url=${fileUrl}&fileName=${fileName}`;
+        Utility.redirectToOtherPage(redirectUrl);
+      } else {
+        Utility.redirectToOtherPage(fileUrl, true);
+      }
+    }
+  }
+
+  private async saveResponse() {
+    const { email, mobileNumber, selectedOption } = this.state;
+    const isResponseCaptured: boolean = await this.props.responseCapture(
       email,
       mobileNumber,
-      selectedOption,
-      isValidContactFields,
-    } = this.state;
-    if (isValidContactFields) {
-      const isResponseCaptured = await this.props.responseCapture(
-        email,
-        mobileNumber,
-        selectedOption
-      );
-      this.setState({
-        isResponseCaptured,
-      });
+      selectedOption
+    );
+    this.setState({
+      isResponseCaptured,
+    });
+
+    if (this.props.builderElementType === BUILDER_ELEMENTS.DOWNLOAD) {
+      this.downloadFile();
+    }
+  }
+
+  private async onSubmitClick() {
+    const { elementDetail, builderElementType } = this.props;
+    if (this.state.isValidContactFields) {
+      switch (builderElementType) {
+        case BUILDER_ELEMENTS.DOWNLOAD:
+          if (elementDetail.isPasswordRequired) {
+            this.setState({ isShowModal: true });
+          } else {
+            this.saveResponse();
+          }
+          break;
+        default:
+          this.saveResponse();
+          break;
+      }
     }
   }
 
@@ -109,11 +149,13 @@ export default class ResponseElement extends Component<IProps, IState> {
   }
 
   private getButtonStyles(): StyleModel {
-    const { contactId, elementDetail } = this.props;
+    const { contactId, elementDetail, builderElementType } = this.props;
     const { buttonStyle } = elementDetail;
     const { selectedOption, isValidContactFields } = this.state;
+    const isDownloadElement = builderElementType === BUILDER_ELEMENTS.DOWNLOAD;
     const isClickableButton =
-      selectedOption && (contactId || isValidContactFields);
+      (isDownloadElement || selectedOption) &&
+      (contactId || isValidContactFields);
     if (!isClickableButton) {
       return {
         ...buttonStyle,
@@ -121,9 +163,7 @@ export default class ResponseElement extends Component<IProps, IState> {
         opacity: '0.7',
       };
     }
-    return {
-      ...buttonStyle,
-    };
+    return buttonStyle;
   }
 
   private onChangeResponseClick() {
@@ -144,6 +184,7 @@ export default class ResponseElement extends Component<IProps, IState> {
         return selectedOptionDetail?.thankYouMessage || '';
       case BUILDER_ELEMENTS.POLL:
       case BUILDER_ELEMENTS.FEEDBACK:
+      case BUILDER_ELEMENTS.DOWNLOAD:
         return thankYouMessage;
       default:
         return '';
@@ -151,77 +192,133 @@ export default class ResponseElement extends Component<IProps, IState> {
   }
 
   private getResponseThankyouHtml(): ReactNode {
-    let backGroundClr = '#57ac2d';
-    let borderColor = '#57ac2d';
     const { builderElementType, elementDetail } = this.props;
     const { selectedOption } = this.state;
     switch (builderElementType) {
-      case BUILDER_ELEMENTS.QUESTION:
-        const isNoOption = elementDetail.options.find(
-          option => option.id === selectedOption && option.text === 'No'
-        );
-        if (isNoOption) {
-          backGroundClr = '#ff0000';
-          borderColor = '#ff0000';
-        }
-        break;
-      default:
-        '';
-    }
-
-    const buttonStyles: StyleModel = {
-      display: 'inline-block',
-      marginBottom: '0',
-      textAlign: 'center',
-      lineHeight: '20px',
-      fontSize: '18px',
-      cursor: 'pointer',
-      paddingTop: '10px',
-      paddingBottom: '10px',
-      paddingLeft: '10px',
-      paddingRight: '10px',
-      width: '300px',
-    };
-    const responseElementStyles: StyleModel = {
-      ...buttonStyles,
-      marginTop: '28px',
-      backgroundColor: backGroundClr,
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      borderColor: borderColor,
-      borderRadius: '5px',
-      marginBottom: '10px',
-      color: '#ffffff',
-    };
-
-    const changeResponseButtonStyles: StyleModel = {
-      ...buttonStyles,
-      backgroundColor: '#ffffff',
-      borderColor: '#3abfdd',
-      color: '#3abfdd',
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      borderRadius: '5px',
-      marginBottom: '10px',
-    };
-    const optionDetail = this.getSelectedOption();
-    return (
-      <>
-        <a style={{ textDecoration: 'none', color: '#2196F3' }}>
+      case BUILDER_ELEMENTS.DOWNLOAD:
+        return (
           <div
             dangerouslySetInnerHTML={{ __html: this.getThankyouMessage() }}
           />
-        </a>
-        <div style={{ width: '100%' }}>
-          <button style={responseElementStyles}>{optionDetail?.text}</button>
-          <button
-            style={changeResponseButtonStyles}
-            onClick={() => this.onChangeResponseClick()}
-          >
-            Change Response
-          </button>
-        </div>
-      </>
+        );
+      default:
+        let backGroundClr = '#57ac2d';
+        let borderColor = '#57ac2d';
+        switch (builderElementType) {
+          case BUILDER_ELEMENTS.QUESTION:
+            const isNoOption = elementDetail.options.find(
+              option => option.id === selectedOption && option.text === 'No'
+            );
+            if (isNoOption) {
+              backGroundClr = '#ff0000';
+              borderColor = '#ff0000';
+            }
+            break;
+          default:
+            '';
+        }
+
+        const buttonStyles: StyleModel = {
+          display: 'inline-block',
+          marginBottom: '0',
+          textAlign: 'center',
+          lineHeight: '20px',
+          fontSize: '18px',
+          cursor: 'pointer',
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          paddingLeft: '10px',
+          paddingRight: '10px',
+          width: '300px',
+        };
+        const responseElementStyles: StyleModel = {
+          ...buttonStyles,
+          marginTop: '28px',
+          backgroundColor: backGroundClr,
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: borderColor,
+          borderRadius: '5px',
+          marginBottom: '10px',
+          color: '#ffffff',
+        };
+
+        const changeResponseButtonStyles: StyleModel = {
+          ...buttonStyles,
+          backgroundColor: '#ffffff',
+          borderColor: '#3abfdd',
+          color: '#3abfdd',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderRadius: '5px',
+          marginBottom: '10px',
+        };
+        const optionDetail = this.getSelectedOption();
+        return (
+          <>
+            <a style={{ textDecoration: 'none', color: '#2196F3' }}>
+              <div
+                dangerouslySetInnerHTML={{ __html: this.getThankyouMessage() }}
+              />
+            </a>
+            <div style={{ width: '100%' }}>
+              <button style={responseElementStyles}>
+                {optionDetail?.text}
+              </button>
+              <button
+                style={changeResponseButtonStyles}
+                onClick={() => this.onChangeResponseClick()}
+              >
+                Change Response
+              </button>
+            </div>
+          </>
+        );
+    }
+  }
+
+  private getPasswordModalHtml(): ReactNode {
+    return (
+      <Modal className="message-modal" show={this.state.isShowModal}>
+        <Modal.Header>
+          <h4 className="modal-title"> {`Please Enter Password`}</h4>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row modal-inner">
+            <div className="col-md-12 no-padding">
+              <input
+                className="form-control"
+                type="password"
+                placeholder="enter password"
+              />
+            </div>
+            <div className="row">
+              <div className="col-md-12 margin-top-5">
+                {/* <ErrorText>{this.state.passwordErrorMessage}</ErrorText> */}
+              </div>
+            </div>
+          </div>
+
+          <div className="row no-margin">
+            <div className="col-md-12 modal-footer-section text-center">
+              <button
+                type="button"
+                // onClick={this.doneOnClickHandler}
+                className="btn btn-save margin-right-10 clickable"
+                data-dismiss="modal"
+              >
+                Done
+              </button>
+              <button
+                // onClick={this.cancelOnClickHandler}
+                className="btn btn-cancel clickable"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     );
   }
 
@@ -232,10 +329,32 @@ export default class ResponseElement extends Component<IProps, IState> {
       isActualRendering,
       builderElementType,
     } = this.props;
-    const { contactFieldType, options, buttonText } = elementDetail;
-    const { email, mobileNumber, isResponseCaptured } = this.state;
+    const {
+      title,
+      description,
+      contactFieldType,
+      options,
+      buttonText,
+      isPasswordRequired,
+    } = elementDetail;
+    const { email, mobileNumber, isResponseCaptured, isShowModal } = this.state;
     return (
       <>
+        {isPasswordRequired && isShowModal && this.getPasswordModalHtml()}
+        <div
+          style={{ paddingBottom: '15px' }}
+          dangerouslySetInnerHTML={{
+            __html: title,
+          }}
+        />
+        {description && (
+          <div
+            style={{ paddingBottom: '15px' }}
+            dangerouslySetInnerHTML={{
+              __html: description,
+            }}
+          />
+        )}
         {isActualRendering && !contactId && (
           <Contact
             elementType={builderElementType}

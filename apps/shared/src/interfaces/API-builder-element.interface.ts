@@ -205,24 +205,25 @@ export interface APIContact {
 }
 
 export interface APIResponseElement {
+  Title: string;
+  Description: string;
   ResponseDetail: Array<APIResponse>;
   ContactInformation: APIContact;
   RespondButtonText: string;
   ThankYouMessage: string;
   Style: APIStyle;
+  FileUrl: string;
+  FileName: string;
+  DownloadLimit: APIDownloadLimit;
 }
 
-export interface APIQuestion extends APIResponseElement {
-  Title: string;
-  Description: string;
+export interface APIDownloadLimit {
+  IsPasswordRequired: boolean;
+  Password: string;
 }
-export interface APIPoll extends APIResponseElement {
-  Title: string;
-  Description: string;
-}
-export interface APIFeedback extends APIResponseElement {
-  Title: string;
-  Description: string;
+
+export interface APIDownload extends APIResponseElement {
+  Layout: string;
 }
 
 export interface APICountDown {
@@ -259,8 +260,9 @@ export interface APIBuilderElement {
   Audio: APIAudio;
   Offer: APIOffer;
   Map: APIMap;
-  Question: APIQuestion;
-  Poll: APIPoll;
-  Feedback: APIFeedback;
+  Question: APIResponseElement;
+  Poll: APIResponseElement;
+  Feedback: APIResponseElement;
   CountDown: APICountDown;
+  Download: APIDownload;
 }

@@ -1,3 +1,4 @@
+import config from '../../config';
 import { MEDIA_TYPE, OFFER_LAYOUT_TYPE, TERMS_TYPE } from '../../enums';
 import { APIOffer, APIOfferData, APIOfferStyle } from '../../interfaces';
 import { Utility } from '../../utilities';
@@ -6,7 +7,7 @@ import { ResponseElementModel } from './ResponseElement.model';
 import { StyleModel } from './Style.model';
 
 export class OfferModel {
-  private static offerStarUrl: string = "https://staging.mindmemobile.com/images/Offer-Stars.png";
+  private static offerStarUrl: string = `${config.APP_ENDPOINT}images/Offer-Stars.png`;
 
   isEmpty?: boolean;
   id: string;

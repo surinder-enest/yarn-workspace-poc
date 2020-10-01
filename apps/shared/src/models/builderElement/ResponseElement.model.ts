@@ -9,6 +9,8 @@ import { StyleModel } from './Style.model';
 import { ContactModel } from '../MobilePage.model';
 
 export class ResponseElementModel {
+  title: string;
+  description: string;
   contactFieldType: string;
   options: Array<ResponseOptionModel>;
   optionStyle: StyleModel;
@@ -17,8 +19,14 @@ export class ResponseElementModel {
   buttonStyle: StyleModel;
   contact: ContactModel;
   thankYouMessage: string;
+  fileUrl: string;
+  fileName: string;
+  password: string;
+  isPasswordRequired: boolean;
 
   constructor(data?: ResponseElementModel) {
+    this.title = data?.title || '';
+    this.description = data?.description || '';
     this.contactFieldType = data?.contactFieldType || '';
     this.options = data?.options || [];
     this.optionStyle = data?.optionStyle || new StyleModel();
@@ -27,10 +35,16 @@ export class ResponseElementModel {
     this.buttonStyle = data?.buttonStyle || new StyleModel();
     this.contact = data?.contact || new ContactModel();
     this.thankYouMessage = data?.thankYouMessage || '';
+    this.fileUrl = data?.fileUrl || '';
+    this.fileName = data?.fileName || '';
+    this.password = data?.password || '';
+    this.isPasswordRequired = data?.isPasswordRequired || false;
   }
 
   static deserialize(apiModel: APIResponseElement): ResponseElementModel {
     const data: ResponseElementModel = {
+      title: apiModel?.Title,
+      description: apiModel?.Description,
       buttonText: apiModel?.RespondButtonText,
       buttonStyle: new StyleModel({
         ...StyleModel.deserializeButtonStyles(apiModel?.Style.ResponseStyles),
@@ -47,6 +61,10 @@ export class ResponseElementModel {
       ),
       contact: new ContactModel(),
       thankYouMessage: apiModel?.ThankYouMessage,
+      fileUrl: apiModel?.FileUrl,
+      fileName: apiModel?.FileName,
+      password: apiModel?.DownloadLimit?.Password,
+      isPasswordRequired: apiModel?.DownloadLimit?.IsPasswordRequired,
     };
     return new ResponseElementModel(data);
   }

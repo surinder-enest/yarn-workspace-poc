@@ -13,7 +13,7 @@ interface Props {
 export default class FeedBack extends Component<Props> {
   render() {
     const { responseCapture, feedback, isActualRendering } = this.props;
-    const { title, description, style, responseDetail, media } = feedback;
+    const { style, responseDetail, media } = feedback;
     return (
       <div style={style}>
         <div
@@ -36,20 +36,6 @@ export default class FeedBack extends Component<Props> {
                     media={media}
                     builderElementType={BUILDER_ELEMENTS.FEEDBACK}
                   />
-                  <div
-                    style={{ paddingBottom: '15px' }}
-                    dangerouslySetInnerHTML={{
-                      __html: title,
-                    }}
-                  />
-                  {description && (
-                    <div
-                      style={{ paddingBottom: '15px' }}
-                      dangerouslySetInnerHTML={{
-                        __html: description,
-                      }}
-                    />
-                  )}
                   <ResponseElement
                     builderElementType={BUILDER_ELEMENTS.FEEDBACK}
                     isActualRendering={isActualRendering}

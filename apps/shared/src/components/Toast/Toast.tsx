@@ -1,5 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import config from '../../config';
 import { TOAST_TYPE } from '../../enums';
 
 interface Props {
@@ -38,7 +39,7 @@ const ToastInnerBody = (props: Props) => {
           }}
         >
           <img
-            src="https://staging.mindmemobile.com/images/warning-svg.svg"
+            src={`${config.APP_ENDPOINT}images/warning-svg.svg`}
             style={{ float: 'left', marginRight: '8px' }}
           />
           <div

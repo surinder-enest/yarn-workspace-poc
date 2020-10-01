@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from 'react';
+import config from '../../../config';
 import {
   BUILDER_ELEMENTS,
   CONTACT_FIELD_OPTION,
@@ -78,8 +79,7 @@ export default class Offer extends Component<IProps, IState> {
                 <div style={{ textAlign: 'center' }}>
                   <div
                     style={{
-                      background:
-                        'url(https://staging.mindmemobile.com/images/Image-blue.svg) no-repeat center',
+                      background: `url(${config.APP_ENDPOINT}images/Image-blue.svg) no-repeat center`,
                       padding: '124px',
                       marginBottom: '96px',
                     }}
