@@ -7,6 +7,8 @@ import { StyleModel } from './Style.model';
 
 export class OfferModel {
   private static offerStarUrl: string = "https://staging.mindmemobile.com/images/Offer-Stars.png";
+
+  isEmpty?: boolean;
   id: string;
   styles: StyleModel;
   offerStyles: StyleModel;
@@ -27,6 +29,7 @@ export class OfferModel {
   expirationText?: string;
 
   constructor(data?: OfferModel) {
+    this.isEmpty = data?.isEmpty || false;
     this.id = data?.id || '';
     this.styles = data?.styles || new StyleModel();
     this.offerStyles = data?.offerStyles || new StyleModel();
@@ -54,7 +57,7 @@ export class OfferModel {
       offerStyles: OfferModel.deserializeStyles(apiModel?.OfferData?.OfferStyle),
       buttonStyles: OfferModel.deserializeButtonStyles(apiModel?.OfferData?.OfferStyle),
       type: apiModel?.OfferData?.OfferLayoutType,
-      media: OfferModel.deserializeMedia(apiModel),
+      media: OfferModel.deserializeMedia(apiModel?.OfferData),
       title: apiModel?.OfferData?.OfferTitle,
       description: apiModel?.OfferData?.OfferDescription,
       contactFieldType: ResponseElementModel.deserializeContactFieldType(apiModel?.OfferData?.ContactInformation),
@@ -70,16 +73,16 @@ export class OfferModel {
     return new OfferModel(data);
   }
 
-  static deserializeMedia(apiModel: APIOffer): MediaModel {
-    const media = MediaModel.deserialize(apiModel?.OfferData?.Media);
+  static deserializeMedia(apiOfferData: APIOfferData): MediaModel {
+    const media = MediaModel.deserialize(apiOfferData?.Media);
     const url = media.source === MEDIA_TYPE.IMAGE && !media.url
-      && apiModel?.OfferData?.OfferLayoutType === OFFER_LAYOUT_TYPE.CUSTOM ? this.offerStarUrl : media.url;
-    const backgroundColor = apiModel?.OfferData?.OfferStyle?.MediaBackgroundColor?.HexValue;
+      && apiOfferData?.OfferLayoutType === OFFER_LAYOUT_TYPE.CUSTOM ? this.offerStarUrl : media.url;
+    const backgroundColor = apiOfferData?.OfferStyle?.MediaBackgroundColor?.HexValue;
     const style = new StyleModel({
-      paddingTop: apiModel?.OfferData?.Position?.TopPadding,
-      paddingBottom: apiModel?.OfferData?.Position?.BottomPadding,
-      paddingLeft: apiModel?.OfferData?.Position?.LeftPadding,
-      paddingRight: apiModel?.OfferData?.Position?.RightPadding,
+      paddingTop: apiOfferData?.Position?.TopPadding,
+      paddingBottom: apiOfferData?.Position?.BottomPadding,
+      paddingLeft: apiOfferData?.Position?.LeftPadding,
+      paddingRight: apiOfferData?.Position?.RightPadding,
       backgroundColor: backgroundColor !== "transparent" ? backgroundColor : Utility.WhiteColorCode
     });
     return new MediaModel({

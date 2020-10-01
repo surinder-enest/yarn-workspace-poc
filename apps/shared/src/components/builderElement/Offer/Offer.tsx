@@ -12,6 +12,7 @@ import { OfferModel } from '../../../models';
 import { BuilderElementService } from '../../../services';
 import CustomBarCode from '../../CustomBarCode/CustomBarCode';
 import CustomQRCode from '../../CustomQRCode/CustomQRCode';
+import PlaceHolder from '../PlaceHolder';
 import { Contact, Media } from '../ResponseElement';
 
 interface IProps {
@@ -44,7 +45,7 @@ export default class Offer extends Component<IProps, IState> {
       isValidContactFields: false,
       isRedeemed: false,
       redeemedStatus: '',
-      isShowTerms: !props.offer.isHideTermsInExpandableArea,
+      isShowTerms: false,
     };
   }
 
@@ -217,9 +218,10 @@ export default class Offer extends Component<IProps, IState> {
   }
 
   private getRedeemButtonHtml(): ReactNode {
+    const { isActualRendering } = this.props;
     const { isRedeemButtonClick, isValidContactFields } = this.state;
     const pointerEvents = isValidContactFields ? 'inherit' : 'none';
-    const opacity = isValidContactFields ? 1 : 0.7;
+    const opacity = !isActualRendering || isValidContactFields ? 1 : 0.7;
     return (
       <>
         {!isRedeemButtonClick ? (
@@ -399,6 +401,7 @@ export default class Offer extends Component<IProps, IState> {
       terms,
       isHideTermsInExpandableArea,
       expirationText,
+      isEmpty,
     } = offer;
     const {
       marginBottom,
@@ -408,120 +411,130 @@ export default class Offer extends Component<IProps, IState> {
       paddingRight,
       paddingTop,
     } = styles;
+    const maxWidth = isActualRendering ? '600px' : '100%';
     return (
-      <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
-        <div
-          style={{
-            marginBottom,
-            marginTop,
-            paddingBottom,
-            paddingLeft,
-            paddingRight,
-            paddingTop,
-          }}
-        >
-          <div
-            className="col-md-12"
-            style={{
-              padding: 0,
-              background: '#fff',
-            }}
-          >
-            <div className="col-md-12" style={{ marginBottom: '10px' }}>
-              {this.getMediaHtml()}
-              {this.getHtmlWithLayoutType()}
-            </div>
-            {isRedeemed ? (
-              this.getRedeemedHtml()
-            ) : (
-              <div style={{ maxWidth: '450px', margin: '0 auto' }}>
-                {isActualRendering && (
-                  <>
-                    <Contact
-                      elementType={BUILDER_ELEMENTS.OFFER}
-                      fieldType={contactFieldType}
-                      email={email}
-                      mobileNumber={mobileNumber}
-                      onChangeContact={(
-                        email: string,
-                        mobileNumber: string,
-                        isValidContactFields: boolean
-                      ) =>
-                        this.onChangeContact(
-                          email,
-                          mobileNumber,
-                          isValidContactFields
-                        )
-                      }
-                    />
-                    <div
-                      className="col-md-12"
-                      style={{ padding: 0, marginBottom: '5px' }}
-                    >
-                      {this.getComplianceText()}
-                    </div>
-                  </>
-                )}
-                <div
-                  className="col-md-12 diabled"
-                  style={{
-                    padding: 0,
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    textAlign: 'center',
-                  }}
-                >
-                  {this.getRedeemButtonHtml()}
+      <>
+        {isEmpty ? (
+          <PlaceHolder
+            builderElementType={BUILDER_ELEMENTS.OFFER}
+            text="Select Offer"
+          />
+        ) : (
+          <div style={{ maxWidth, margin: '0 auto', textAlign: 'center' }}>
+            <div
+              style={{
+                marginBottom,
+                marginTop,
+                paddingBottom,
+                paddingLeft,
+                paddingRight,
+                paddingTop,
+              }}
+            >
+              <div
+                className="col-md-12"
+                style={{
+                  padding: 0,
+                  background: '#fff',
+                }}
+              >
+                <div className="col-md-12" style={{ marginBottom: '10px' }}>
+                  {this.getMediaHtml()}
+                  {this.getHtmlWithLayoutType()}
                 </div>
-                <div className="col-md-12 no-padding">
-                  <div
-                    style={{
-                      marginBottom: '10px',
-                      padding: 0,
-                      textAlign: 'center',
-                    }}
-                  >
-                    {isHideTermsInExpandableArea && (
-                      <a
+                {isRedeemed ? (
+                  this.getRedeemedHtml()
+                ) : (
+                  <div style={{ maxWidth: '450px', margin: '0 auto' }}>
+                    {isActualRendering && (
+                      <>
+                        <Contact
+                          elementType={BUILDER_ELEMENTS.OFFER}
+                          fieldType={contactFieldType}
+                          email={email}
+                          mobileNumber={mobileNumber}
+                          onChangeContact={(
+                            email: string,
+                            mobileNumber: string,
+                            isValidContactFields: boolean
+                          ) =>
+                            this.onChangeContact(
+                              email,
+                              mobileNumber,
+                              isValidContactFields
+                            )
+                          }
+                        />
+                        <div
+                          className="col-md-12"
+                          style={{ padding: 0, marginBottom: '5px' }}
+                        >
+                          {this.getComplianceText()}
+                        </div>
+                      </>
+                    )}
+                    <div
+                      className="col-md-12 diabled"
+                      style={{
+                        padding: 0,
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {this.getRedeemButtonHtml()}
+                    </div>
+                    <div className="col-md-12 no-padding">
+                      <div
                         style={{
-                          color: '#3AA6DD',
-                          cursor: 'pointer',
-                          margin: '0em',
-                          padding: '0em',
-                          fontSize: '1em',
-                          lineHeight: 1.25,
-                        }}
-                        onClick={() => {
-                          this.showHideTerms(!isShowTerms);
+                          marginBottom: '10px',
+                          padding: 0,
+                          textAlign: 'center',
                         }}
                       >
-                        <b>{`${isShowTerms ? 'Hide' : 'View'} Terms`}</b>
-                      </a>
-                    )}
-                  </div>
-                  {isShowTerms && (
-                    <div
-                      className="col-md-12"
-                      style={{
-                        marginBottom: '20px',
-                        textAlign: 'left',
-                        wordBreak: 'break-word',
-                        color: '#555555',
-                      }}
-                      dangerouslySetInnerHTML={{ __html: terms }}
-                    />
-                  )}
-                  {expirationText && (
-                    <div style={{ color: '#273E52' }}>
-                      <b>{expirationText}</b>
+                        {isHideTermsInExpandableArea && (
+                          <a
+                            style={{
+                              color: '#3AA6DD',
+                              cursor: 'pointer',
+                              margin: '0em',
+                              padding: '0em',
+                              fontSize: '1em',
+                              lineHeight: 1.25,
+                            }}
+                            onClick={() => {
+                              this.showHideTerms(!isShowTerms);
+                            }}
+                          >
+                            <b>{`${isShowTerms ? 'Hide' : 'View'} Terms`}</b>
+                          </a>
+                        )}
+                      </div>
+                      {(!isHideTermsInExpandableArea || isShowTerms) && (
+                        <div
+                          className="col-md-12"
+                          style={{
+                            marginBottom: '20px',
+                            textAlign: 'left',
+                            wordBreak: 'break-word',
+                            color: '#555555',
+                          }}
+                          dangerouslySetInnerHTML={{ __html: terms }}
+                        />
+                      )}
+                      {expirationText && (
+                        <div style={{ color: '#273E52' }}>
+                          <b>{expirationText}</b>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
+        )}
+      </>
     );
   }
 }
