@@ -25,9 +25,12 @@ interface IState {
   isValidContactFields: boolean;
   isResponseCaptured: boolean;
   isShowModal: boolean;
+  password: string;
+  passwordError: string;
 }
 
 export default class ResponseElement extends Component<IProps, IState> {
+
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -36,20 +39,26 @@ export default class ResponseElement extends Component<IProps, IState> {
       email: '',
       isValidContactFields: false,
       isResponseCaptured: false,
+      isShowModal: false,
+      password: '',
+      passwordError: '',
     };
   }
 
   private downloadFile() {
     const { fileUrl, fileName } = this.props.elementDetail;
+    this.setState({
+      isResponseCaptured: true
+    });
     if (fileUrl && fileName) {
       const isSafari =
         /constructor/i.test(window?.HTMLElement) ||
-        (function(p) {
+        (function (p) {
           return p.toString() === '[object SafariRemoteNotification]';
         })(
           !window?.['safari'] ||
-            (typeof window?.['safari'] !== 'undefined' &&
-              window?.['safari']?.pushNotification)
+          (typeof window?.['safari'] !== 'undefined' &&
+            window?.['safari']?.pushNotification)
         );
       if (!isSafari) {
         const redirectUrl = `${config.API_ENDPOINT}api/Account/DownloadFileFromUrl?url=${fileUrl}&fileName=${fileName}`;
@@ -62,11 +71,11 @@ export default class ResponseElement extends Component<IProps, IState> {
 
   private async saveResponse() {
     const { email, mobileNumber, selectedOption } = this.state;
-    const isResponseCaptured: boolean = await this.props.responseCapture(
+    const isResponseCaptured = await this.props.responseCapture(
       email,
       mobileNumber,
       selectedOption
-    );
+    ) === true;
     this.setState({
       isResponseCaptured,
     });
@@ -277,9 +286,30 @@ export default class ResponseElement extends Component<IProps, IState> {
     }
   }
 
+  private onChangePassword(password: string) {
+    this.setState({ password, passwordError: '' });
+  }
+
+  private onToggleModal(isShowModal: boolean, passwordError: string) {
+    this.setState({ isShowModal, passwordError });
+  }
+
+  private onDonePassword() {
+    const { password, isShowModal } = this.state;
+    if (!password) {
+      this.onToggleModal(isShowModal, 'Please enter password.');
+    } else if (password !== this.props.elementDetail.password) {
+      this.onToggleModal(isShowModal, 'Please enter correct password.');
+    } else {
+      this.saveResponse();
+      this.onToggleModal(false, '');
+    }
+  }
+
   private getPasswordModalHtml(): ReactNode {
+    const { passwordError, isShowModal } = this.state;
     return (
-      <Modal className="message-modal" show={this.state.isShowModal}>
+      <Modal className="message-modal" show={isShowModal}>
         <Modal.Header>
           <h4 className="modal-title"> {`Please Enter Password`}</h4>
         </Modal.Header>
@@ -290,27 +320,37 @@ export default class ResponseElement extends Component<IProps, IState> {
                 className="form-control"
                 type="password"
                 placeholder="enter password"
+                onChange={(event) => { this.onChangePassword(event.currentTarget.value) }}
               />
             </div>
             <div className="row">
               <div className="col-md-12 margin-top-5">
-                {/* <ErrorText>{this.state.passwordErrorMessage}</ErrorText> */}
+                <div style={{
+                  fontStyle: "normal",
+                  fontWeight: "normal",
+                  fontSize: "16px",
+                  lineHeight: "22px",
+                  textAlign: "center",
+                  letterSpacing: "-0.680436px",
+                  color: "rgb(255, 0, 0)"
+                }}>
+                  {passwordError}
+                </div>
               </div>
             </div>
           </div>
-
           <div className="row no-margin">
             <div className="col-md-12 modal-footer-section text-center">
               <button
                 type="button"
-                // onClick={this.doneOnClickHandler}
+                onClick={() => this.onDonePassword()}
                 className="btn btn-save margin-right-10 clickable"
                 data-dismiss="modal"
               >
                 Done
               </button>
               <button
-                // onClick={this.cancelOnClickHandler}
+                onClick={() => this.onToggleModal(false, '')}
                 className="btn btn-cancel clickable"
               >
                 Cancel
@@ -355,7 +395,7 @@ export default class ResponseElement extends Component<IProps, IState> {
             }}
           />
         )}
-        {isActualRendering && !contactId && (
+        {isActualRendering && !contactId && !isResponseCaptured && (
           <Contact
             elementType={builderElementType}
             fieldType={contactFieldType}
@@ -371,36 +411,36 @@ export default class ResponseElement extends Component<IProps, IState> {
         {isResponseCaptured ? (
           this.getResponseThankyouHtml()
         ) : (
-          <div style={{ width: '100%', textAlign: 'center' }}>
-            <div style={{ textAlign: 'center' }}>
-              {options?.map((option: ResponseOptionModel, idx: number) =>
-                this.getOptionHtml(option, idx)
-              )}
-            </div>
-            <div
-              style={this.getButtonStyles()}
-              onClick={() => this.onSubmitClick()}
-            >
-              {buttonText}
-            </div>
-            {contactId && (
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <div style={{ textAlign: 'center' }}>
+                {options?.map((option: ResponseOptionModel, idx: number) =>
+                  this.getOptionHtml(option, idx)
+                )}
+              </div>
               <div
-                style={{
-                  width: '100%',
-                }}
+                style={this.getButtonStyles()}
+                onClick={() => this.onSubmitClick()}
               >
+                {buttonText}
+              </div>
+              {contactId && (
                 <div
                   style={{
-                    textAlign: 'center',
-                    paddingTop: '10px',
+                    width: '100%',
                   }}
                 >
-                  {`Responding as ${email ? email : mobileNumber}`}
+                  <div
+                    style={{
+                      textAlign: 'center',
+                      paddingTop: '10px',
+                    }}
+                  >
+                    {`Responding as ${email ? email : mobileNumber}`}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
       </>
     );
   }
