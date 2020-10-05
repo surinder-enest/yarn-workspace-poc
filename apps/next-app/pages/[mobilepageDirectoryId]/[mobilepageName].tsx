@@ -133,28 +133,20 @@ class MobilePageName extends React.Component<Props> {
               transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
               top: 1px;
             }
-            .checkbox-primary input[type='checkbox']:checked + label::after {
-              color: #ffffff;
-            }
-            .checkbox input[type='checkbox']:checked + label::after {
-              font-family: 'FontAwesome';
-              content: '\f00c';
-            }
-            .checkbox-primary input[type='checkbox']:checked + label::after {
-              color: #ffffff;
-            }
             .checkbox label::after {
               display: inline-block;
               position: absolute;
-              width: 14px;
-              height: 14px;
+              width: 12px;
+              height: 12px;
               left: 1px;
-              top: -2px;
+              top: 3px;
               margin-left: 0px;
               padding-left: 2px;
               padding-top: 1px;
               font-size: 11px;
               color: #555555;
+              font-family: 'FontAwesome';
+              content:''
             }
             .checkbox label {
               display: inline-block;
@@ -172,6 +164,18 @@ class MobilePageName extends React.Component<Props> {
             .checkbox input[type='checkbox'] {
               opacity: 0;
             } 
+             .checkbox-primary input[type='checkbox']:checked + label::after {
+              color: #ffffff;
+            }
+           .checkbox input[type='checkbox']:checked + label::after {
+              background: url(https://i.ibb.co/WzbWf7S/right.png) no-repeat ;
+              background-size: 100%;
+              background-position: center;
+            }
+            
+            .checkbox-primary input[type='checkbox']:checked + label::after {
+              color: #ffffff;
+            }
             h1,
             h2,
             h3,

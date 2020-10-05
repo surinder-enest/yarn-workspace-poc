@@ -26,12 +26,12 @@ export default class Interest extends Component<Props> {
     return (
       <div key={idx} style={optionStyles} className="circle-checkbox">
         <div
-          className={`no-margin checkbox checkbox-primary`}
+          className={`checkbox checkbox-primary`}
           style={{
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            marginLeft: '12px !important',
+            margin: '0 0 0 12px',
             height: '17px',
           }}
         >
@@ -80,7 +80,9 @@ export default class Interest extends Component<Props> {
                 <span
                   style={{
                     color: '#FF0000',
-                    marginLeft: '100px',
+                    display: 'inline-block',
+                    width: '266px',
+                    textAlign: 'right',
                     fontSize: '16px',
                   }}
                 >

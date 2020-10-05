@@ -106,6 +106,8 @@ export default class Video extends Component<IProps, IState> {
               position: 'relative',
               textAlign: 'center',
               minHeight: 'inherit',
+              paddingTop: '10px',
+              paddingBottom: '10px',
             }}
           >
             {isDefaultMedia ? (
