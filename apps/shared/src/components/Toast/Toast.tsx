@@ -58,6 +58,105 @@ const ToastInnerBody = (props: Props) => {
           </div>
         </div>
       );
+    case TOAST_TYPE.SUCCESS:
+      return (
+        <div
+          style={{
+            background: '#ddefd3',
+            border: '2px solid #57ac2d',
+            boxSizing: 'border-box',
+            boxShadow: '0px 1px 10px rgba(136, 136, 136, 0.5)',
+            minHeight: '64px',
+            padding: '10px',
+            display: 'flex',
+          }}
+        >
+          <img
+            src={`${config.APP_ENDPOINT}images/Check.svg`}
+            style={{ float: 'left', marginRight: '8px' }}
+          />
+          <div
+            style={{
+              fontStyle: 'normal',
+              fontWeight: 'normal',
+              lineHeight: 'normal',
+              fontSize: '16px',
+              color: '#57ac2d',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {message}
+          </div>
+        </div>
+      );
+    case TOAST_TYPE.ERROR:
+      return (
+        <div
+          style={{
+            background: '#f7dddd',
+            border: '2px solid #ff0000',
+            boxSizing: 'border-box',
+            boxShadow: '0px 1px 10px rgba(136, 136, 136, 0.5)',
+            minHeight: '64px',
+            padding: '10px',
+            display: 'flex',
+          }}
+        >
+          <img
+            src={`${config.APP_ENDPOINT}images/Errorcross.svg`}
+            style={{ float: 'left', marginRight: '8px' }}
+          />
+          <div
+            style={{
+              fontStyle: 'normal',
+              fontWeight: 'normal',
+              lineHeight: 'normal',
+              fontSize: '16px',
+              color: '#ff0000',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {message}
+          </div>
+        </div>
+      );
+    case TOAST_TYPE.INFO:
+      return (
+        <div
+          style={{
+            background: '#e1f2ff',
+            border: '2px solid #789bb6',
+            boxSizing: 'border-box',
+            boxShadow: '0px 1px 10px rgba(136, 136, 136, 0.5)',
+            minHeight: '64px',
+            padding: '10px',
+            display: 'flex',
+          }}
+        >
+          <img
+            src={`${config.APP_ENDPOINT}images/info-svg.svg`}
+            style={{ float: 'left', marginRight: '8px' }}
+          />
+          <div
+            style={{
+              fontStyle: 'normal',
+              fontWeight: 'normal',
+              lineHeight: 'normal',
+              fontSize: '16px',
+              color: '#6386a3',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {message}
+          </div>
+        </div>
+      );
     default:
       return <></>;
   }
