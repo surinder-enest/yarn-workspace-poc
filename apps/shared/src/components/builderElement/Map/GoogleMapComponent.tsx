@@ -6,7 +6,7 @@ import {
   GoogleMap,
   Marker,
   InfoWindow,
-} from 'react-google-maps';
+} from '../../GoogleMap/GoogleMap';
 
 interface Props {
   [otherProps: string]: any;

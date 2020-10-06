@@ -29,28 +29,28 @@ class MobilePageName extends React.Component<Props> {
       <>
         <Head>
           <script type="text/javascript">
-            var giftofspeed1 = document.createElement('link'); giftofspeed1.rel = 'stylesheet'; giftofspeed1.href
-            ='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'; giftofspeed1.type =
+            var stylesheet1 = document.createElement('link'); stylesheet1.rel = 'stylesheet'; stylesheet1.href
+            ='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'; stylesheet1.type =
             'text/css'; var godefer1 = document.getElementsByTagName('link')[0];
-            godefer1.parentNode.insertBefore(giftofspeed1, godefer1); var giftofspeed2 = document.createElement('link');
-            giftofspeed2.rel = 'stylesheet'; giftofspeed2.href
-            ='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css'; giftofspeed2.type =
+            godefer1.parentNode.insertBefore(stylesheet1, godefer1); var stylesheet2 = document.createElement('link');
+            stylesheet2.rel = 'stylesheet'; stylesheet2.href
+            ='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css'; stylesheet2.type =
             'text/css'; var godefer2 = document.getElementsByTagName('link')[0];
-            godefer2.parentNode.insertBefore(giftofspeed2, godefer2); var giftofspeed3 = document.createElement('link');
-            giftofspeed3.rel = 'stylesheet'; giftofspeed3.href
-            ='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'; giftofspeed3.type = 'text/css';
-            var godefer3 = document.getElementsByTagName('link')[0]; godefer3.parentNode.insertBefore(giftofspeed3,
-            godefer3); var giftofspeed4 = document.createElement('link'); giftofspeed4.rel = 'stylesheet';
-            giftofspeed4.href ='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800';
-            giftofspeed4.type = 'text/css'; var godefer4 = document.getElementsByTagName('link')[0];
-            godefer4.parentNode.insertBefore(giftofspeed4, godefer4); var giftofspeed5 = document.createElement('link');
-            giftofspeed5.rel = 'stylesheet'; giftofspeed5.href
+            godefer2.parentNode.insertBefore(stylesheet2, godefer2); var stylesheet3 = document.createElement('link');
+            stylesheet3.rel = 'stylesheet'; stylesheet3.href
+            ='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'; stylesheet3.type = 'text/css'; var
+            godefer3 = document.getElementsByTagName('link')[0]; godefer3.parentNode.insertBefore(stylesheet3,
+            godefer3); var stylesheet4 = document.createElement('link'); stylesheet4.rel = 'stylesheet';
+            stylesheet4.href ='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'; stylesheet4.type
+            = 'text/css'; var godefer4 = document.getElementsByTagName('link')[0];
+            godefer4.parentNode.insertBefore(stylesheet4, godefer4); var stylesheet5 = document.createElement('link');
+            stylesheet5.rel = 'stylesheet'; stylesheet5.href
             ='https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Dancing+Script|Abril+Fatface|Dancing+Script|Great+Vibes|Josefin+Sans|Lato|Lobster|Merriweather|Montserrat|Open+Sans|Oswald|Pacifico|Playfair+Display|Poiret+One|Poppins|Quicksand|Raleway|Roboto|Sacramento|Ubuntu|Arial|Sofia';
-            giftofspeed5.type = 'text/css'; var godefer5 = document.getElementsByTagName('link')[0];
-            godefer5.parentNode.insertBefore(giftofspeed5, godefer5); var giftofspeed6 = document.createElement('link');
-            giftofspeed6.rel = 'stylesheet'; giftofspeed6.href
-            ='https://unpkg.com/react-toastify@4.5.2/dist/ReactToastify.css'; giftofspeed6.type = 'text/css'; var
-            godefer6 = document.getElementsByTagName('link')[0]; godefer6.parentNode.insertBefore(giftofspeed6,
+            stylesheet5.type = 'text/css'; var godefer5 = document.getElementsByTagName('link')[0];
+            godefer5.parentNode.insertBefore(stylesheet5, godefer5); var stylesheet6 = document.createElement('link');
+            stylesheet6.rel = 'stylesheet'; stylesheet6.href
+            ='https://unpkg.com/react-toastify@4.5.2/dist/ReactToastify.css'; stylesheet6.type = 'text/css'; var
+            godefer6 = document.getElementsByTagName('link')[0]; godefer6.parentNode.insertBefore(stylesheet6,
             godefer6); var head = document.getElementsByTagName('head')[0]; var recaptchaElement =
             document.getElementsByClassName('g-recaptcha')[0]; var script1 = document.createElement('script');
             script1.type = 'text/javascript'; script1.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
