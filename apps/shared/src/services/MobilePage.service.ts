@@ -5,13 +5,16 @@ import { MobilePageModel } from '../models';
 class MobilePageService {
     private httpClient = new HttpClient({});
 
-    async getMobilePageDetailsForRender(domain: string, directoryId: string, pageName: string) {
+    async getMobilePageDetailsForRender(domain: string, directoryId: string, pageName: string, contactId?: string) {
 
         try {
             let param = new URLSearchParams();
             param.append('domain', domain);
             param.append('directoryId', directoryId);
             param.append('pageName', pageName);
+            if (contactId) {
+                param.append('contactId', contactId);
+            }
             const response = await this.httpClient.get(
                 apiUrl.getMobilePageDetailsForRender,
                 param

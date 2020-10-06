@@ -6,18 +6,19 @@ import {
 } from '../../interfaces';
 import { CONTACT_FIELD_OPTION } from '../../enums';
 import { StyleModel } from './Style.model';
-import { ContactModel } from '../MobilePage.model';
+import { MediaModel } from './MediaModel';
 
 export class ResponseElementModel {
   title: string;
   description: string;
+  style: StyleModel;
+  media: MediaModel;
   contactFieldType: string;
   options: Array<ResponseOptionModel>;
   optionStyle: StyleModel;
   optionLabelStyle: StyleModel;
   buttonText: string;
   buttonStyle: StyleModel;
-  contact: ContactModel;
   thankYouMessage: string;
   fileUrl: string;
   fileName: string;
@@ -27,13 +28,14 @@ export class ResponseElementModel {
   constructor(data?: ResponseElementModel) {
     this.title = data?.title || '';
     this.description = data?.description || '';
+    this.style = data?.style || new StyleModel();
+    this.media = data?.media || new MediaModel();
     this.contactFieldType = data?.contactFieldType || '';
     this.options = data?.options || [];
     this.optionStyle = data?.optionStyle || new StyleModel();
     this.optionLabelStyle = data?.optionLabelStyle || new StyleModel();
     this.buttonText = data?.buttonText || '';
     this.buttonStyle = data?.buttonStyle || new StyleModel();
-    this.contact = data?.contact || new ContactModel();
     this.thankYouMessage = data?.thankYouMessage || '';
     this.fileUrl = data?.fileUrl || '';
     this.fileName = data?.fileName || '';
@@ -45,6 +47,12 @@ export class ResponseElementModel {
     const data: ResponseElementModel = {
       title: apiModel?.Title,
       description: apiModel?.Description,
+      style: new StyleModel({
+        ...StyleModel.deserialize(apiModel?.Style),
+        display: 'block',
+        textAlign: 'center',
+      }),
+      media: MediaModel.deserialize(apiModel?.Style.Media),
       buttonText: apiModel?.RespondButtonText,
       buttonStyle: new StyleModel({
         ...StyleModel.deserializeButtonStyles(apiModel?.Style.ResponseStyles),
@@ -59,7 +67,6 @@ export class ResponseElementModel {
       optionLabelStyle: ResponseElementModel.deserializeOptionLabelStyles(
         apiModel?.Style?.ResponseStyles
       ),
-      contact: new ContactModel(),
       thankYouMessage: apiModel?.ThankYouMessage,
       fileUrl: apiModel?.FileUrl,
       fileName: apiModel?.FileName,

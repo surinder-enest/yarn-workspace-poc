@@ -1,14 +1,14 @@
 import React, { Component, ReactNode } from 'react';
 import config from '../../../config';
 import { BUILDER_ELEMENTS, DOWNLOAD_LAYOUT } from '../../../enums';
-import { DownloadModel } from '../../../models';
-import { ResponseElement } from '../ResponseElement';
+import { ContactModel, DownloadModel } from '../../../models';
+import { ResponseCapture } from '../ResponseElement';
 
 interface Props {
   download: DownloadModel;
   responseCapture: Function;
   isActualRendering: boolean;
-  contactId: string;
+  contact: ContactModel;
 }
 
 declare global {
@@ -21,6 +21,15 @@ declare global {
 export default class Download extends Component<Props> {
   private imageEmptyPlaceholderUrl: string = `${config.APP_ENDPOINT}images/download-placeholder.svg`;
 
+  private getMinHeightWithLayoutType(): string {
+    switch (this.props.download.layout) {
+      case DOWNLOAD_LAYOUT.BLANK:
+        return 'unset';
+      default:
+        return '300px';
+    }
+  }
+
   private getWidthWithLayoutType(): string {
     switch (this.props.download.layout) {
       case DOWNLOAD_LAYOUT.BLANK:
@@ -31,7 +40,7 @@ export default class Download extends Component<Props> {
   }
 
   private getResponseMiddleHtml(): ReactNode {
-    const { download, isActualRendering, contactId } = this.props;
+    const { download, isActualRendering, contact } = this.props;
     return (
       <div
         style={{
@@ -46,11 +55,11 @@ export default class Download extends Component<Props> {
           marginBottom: '0px',
         }}
       >
-        <ResponseElement
+        <ResponseCapture
           builderElementType={BUILDER_ELEMENTS.DOWNLOAD}
           isActualRendering={isActualRendering}
           elementDetail={download.elementDetail}
-          contactId={contactId}
+          contact={contact}
           responseCapture={(email: string, mobileNumber: string) => {
             this.props.responseCapture(email, mobileNumber);
           }}
@@ -100,6 +109,7 @@ export default class Download extends Component<Props> {
 
   render() {
     const { elementStyle } = this.props.download;
+    const minHeight = this.getMinHeightWithLayoutType();
     return (
       <div style={elementStyle}>
         <div
@@ -110,6 +120,7 @@ export default class Download extends Component<Props> {
             justifyContent: 'center',
             height: 'inherit',
             minHeight: 'inherit',
+            width: '100%',
           }}
         >
           <div
@@ -118,10 +129,10 @@ export default class Download extends Component<Props> {
               margin: '0px auto',
               overflow: 'auto',
               width: '100%',
-              minHeight: '300px',
+              minHeight,
             }}
           >
-            <div style={{ display: 'table-row', minHeight: '300px' }}>
+            <div style={{ display: 'table-row', minHeight }}>
               {this.getHtmlWithLayout()}
             </div>
           </div>

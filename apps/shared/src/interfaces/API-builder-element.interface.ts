@@ -47,29 +47,16 @@ export interface APIDivider {
   Style: APIStyle;
 }
 
-export interface APIPhone {
-  Text: string;
-  PhoneNumber: number;
-  Style: APIStyle;
-}
-
-export interface APILink {
-  Text: string;
-  URL: string;
-  Style: APIStyle;
-}
-export interface APIMobilePageElement {
-  ButtonText: string;
-  PageURL: string;
-  Style: APIStyle;
-}
-
 export interface APIButtonElement {
   Text: string;
   Type: string;
   Value: string;
   RedirectUrl: string;
+  PhoneNumber: number;
   Style: APIStyle;
+  URL: string;
+  PageURL: string;
+  ButtonText: string;
 }
 
 export interface APIInterestDetail {
@@ -250,9 +237,9 @@ export interface APIBuilderElement {
   Spacer: APISpacer;
   Embed: APIEmbed;
   Divider: APIDivider;
-  Phone: APIPhone;
-  Link: APILink;
-  MobilePage: APIMobilePageElement;
+  Phone: APIButtonElement;
+  Link: APIButtonElement;
+  MobilePage: APIButtonElement;
   Button: APIButtonElement;
   Form: APIForm;
   Video: APIVideo;

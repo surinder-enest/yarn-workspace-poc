@@ -5,20 +5,15 @@ import { FormModel } from './Form.model';
 import { SpacerModel } from './Spacer.model';
 import { EmbedModel } from './Embed.model';
 import { DividerModel } from './Divider.model';
-import { PhoneModel } from './Phone.model';
 import { VideoModel } from './Video.model';
-import { LinkModel } from './Link.model';
-import { MobilePageElementModel } from './MobilePageElement.model';
 import { ImageModel } from './Image.model';
 import { AudioModel } from './Audio.model';
 import { ButtonModel } from './Button.model';
 import { OfferModel } from './Offer.model';
 import { MapModel } from './Map.model';
-import { QuestionModel } from './Question.model';
-import { PollModel } from './Poll.model';
-import { FeedbackModel } from './Feedback.model';
 import { CountDownModel } from './CountDown.model';
 import { DownloadModel } from './Download.model';
+import { ResponseElementModel } from './ResponseElement.model';
 
 export class BuilderElementModel {
   id: string;
@@ -32,9 +27,9 @@ export class BuilderElementModel {
   spacer: SpacerModel;
   divider: DividerModel;
   embed: EmbedModel;
-  phone: PhoneModel;
-  link: LinkModel;
-  mobilePageElement: MobilePageElementModel;
+  phone: ButtonModel;
+  link: ButtonModel;
+  mobilePageElement: ButtonModel;
   button: ButtonModel;
   form: FormModel;
   video: VideoModel;
@@ -42,9 +37,9 @@ export class BuilderElementModel {
   audio: AudioModel;
   offer: OfferModel;
   map: MapModel;
-  question: QuestionModel;
-  poll: PollModel;
-  feedback: FeedbackModel;
+  question: ResponseElementModel;
+  poll: ResponseElementModel;
+  feedback: ResponseElementModel;
   countDown: CountDownModel;
   download: DownloadModel;
 
@@ -60,10 +55,10 @@ export class BuilderElementModel {
     this.spacer = data?.spacer || new SpacerModel();
     this.embed = data?.embed || new EmbedModel();
     this.divider = data?.divider || new DividerModel();
-    this.phone = data?.phone || new PhoneModel();
-    this.link = data?.link || new LinkModel();
+    this.phone = data?.phone || new ButtonModel();
+    this.link = data?.link || new ButtonModel();
     this.mobilePageElement =
-      data?.mobilePageElement || new MobilePageElementModel();
+      data?.mobilePageElement || new ButtonModel();
     this.button = data?.button || new ButtonModel();
 
     this.form = data?.form || new FormModel();
@@ -72,9 +67,9 @@ export class BuilderElementModel {
     this.audio = data?.audio || new AudioModel();
     this.offer = data?.offer || new OfferModel();
     this.map = data?.map || new MapModel();
-    this.question = data?.question || new QuestionModel();
-    this.poll = data?.poll || new PollModel();
-    this.feedback = data?.feedback || new FeedbackModel();
+    this.question = data?.question || new ResponseElementModel();
+    this.poll = data?.poll || new ResponseElementModel();
+    this.feedback = data?.feedback || new ResponseElementModel();
     this.countDown = data?.countDown || new CountDownModel();
     this.download = data?.download || new DownloadModel();
   }
@@ -92,21 +87,19 @@ export class BuilderElementModel {
       spacer: SpacerModel.deserialize(apiModel?.Spacer),
       embed: EmbedModel.deserialize(apiModel?.Embed),
       divider: DividerModel.deserialize(apiModel?.Divider),
-      phone: PhoneModel.deserialize(apiModel?.Phone),
-      link: LinkModel.deserialize(apiModel?.Link),
-      mobilePageElement: MobilePageElementModel.deserialize(
-        apiModel?.MobilePage
-      ),
-      button: ButtonModel.deserialize(apiModel?.Button, contactId),
+      phone: ButtonModel.deserialize(apiModel?.Phone, contactId, apiModel?.BuilderElementType),
+      link: ButtonModel.deserialize(apiModel?.Phone, contactId, apiModel?.BuilderElementType),
+      mobilePageElement: ButtonModel.deserialize(apiModel?.Phone, contactId, apiModel?.BuilderElementType),
+      button: ButtonModel.deserialize(apiModel?.Phone, contactId, apiModel?.BuilderElementType),
       form: FormModel.deserialize(apiModel?.Form),
       video: VideoModel.deserialize(apiModel?.Video),
       image: ImageModel.deserialize(apiModel?.Image, contactId),
       audio: AudioModel.deserialize(apiModel?.Audio),
       offer: OfferModel.deserialize(apiModel?.Offer),
       map: MapModel.deserialize(apiModel?.Map),
-      question: QuestionModel.deserialize(apiModel?.Question),
-      poll: PollModel.deserialize(apiModel?.Poll),
-      feedback: FeedbackModel.deserialize(apiModel?.Feedback),
+      question: ResponseElementModel.deserialize(apiModel?.Question),
+      poll: ResponseElementModel.deserialize(apiModel?.Poll),
+      feedback: ResponseElementModel.deserialize(apiModel?.Feedback),
       countDown: CountDownModel.deserialize(apiModel?.CountDown, contactId),
       download: DownloadModel.deserialize(apiModel?.Download),
     };

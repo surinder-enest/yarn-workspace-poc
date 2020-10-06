@@ -1,5 +1,9 @@
 import React from 'react';
-import { MobilePageModel, BuilderElementModel } from '../../models';
+import {
+  MobilePageModel,
+  BuilderElementModel,
+  ContactModel,
+} from '../../models';
 import { BuilderElement } from '../BuilderElement';
 
 interface IProps {
@@ -7,26 +11,32 @@ interface IProps {
 }
 
 interface IState {
-  contactId: string;
+  contact: ContactModel;
 }
 
 class MobilePage extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      contactId: '',
+      contact: {
+        id: '',
+        name: '',
+        email: '',
+        mobileNumber: '',
+        isNotYouAllowed: false,
+      },
     };
   }
 
   componentDidMount() {
-    const { contactId } = this.props.pageData;
-    if (contactId) {
-      this.setContactId(contactId);
+    const { contact } = this.props.pageData;
+    if (contact) {
+      this.setContactDetail(contact);
     }
   }
 
-  private setContactId(contactId: string) {
-    this.setState({ contactId });
+  private setContactDetail(contact: ContactModel) {
+    this.setState({ contact });
   }
 
   render() {
@@ -88,14 +98,14 @@ class MobilePage extends React.Component<IProps, IState> {
                             key={idx}
                             builderElement={detail}
                             moduleId={id}
-                            contactId={this.state.contactId}
+                            contact={this.state.contact}
                             accountId={accountId}
                             accountCountryId={accountCountryId}
                             responseCapturedFromModule="MobilePage"
                             countriesAndStates={countriesAndStates}
                             isActualRendering={true}
-                            setContactId={(value: string) =>
-                              this.setContactId(value)
+                            setContactDetail={(contact: ContactModel) =>
+                              this.setContactDetail(contact)
                             }
                           />
                         )

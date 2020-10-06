@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { ButtonModel } from '../../../models';
 
 interface Props {
-  button: ButtonModel; 
+  button: ButtonModel;
   responseCapture: Function;
 }
 
 export default class Button extends Component<Props> {
-
   private onClick() {
     this.props.responseCapture();
   }
@@ -15,37 +14,23 @@ export default class Button extends Component<Props> {
   render() {
     const { url, text, elementStyle, style } = this.props.button;
     return (
-      <a href={url} style={elementStyle} target="_blank" onClick={() => this.onClick()}>
-        <div
-          style={{
-            display: 'table',
-            width: '100%',
-            minHeight: 'inherit',
-          }}
-        >
-          <div
-            style={{
-              display: 'table-row',
-              minHeight: 'inherit',
-            }}
-          >
-            <div
-              style={{
-                display: 'table-cell',
-                verticalAlign: 'middle',
-              }}
-            >
-              <div
-                className="btn-builder"
-                style={style}
-                dangerouslySetInnerHTML={{
-                  __html: text,
-                }}
-              ></div>
+      <div style={elementStyle}>
+        <div style={{ display: 'table', width: '100%', minHeight: 'inherit' }}>
+          <div style={{ display: 'table-row', minHeight: 'inherit' }}>
+            <div style={{ display: 'table-cell', verticalAlign: 'middle' }}>
+              <a href={url} target="_blank" onClick={() => this.onClick()}>
+                <div
+                  className="btn-builder"
+                  style={style}
+                  dangerouslySetInnerHTML={{
+                    __html: text,
+                  }}
+                ></div>
+              </a>
             </div>
           </div>
         </div>
-      </a>
+      </div>
     );
   }
 }

@@ -3,7 +3,6 @@ import { ResponseElementModel } from './ResponseElement.model';
 import { StyleModel } from './Style.model';
 
 export class DownloadModel {
-
   layout: string;
   elementDetail: ResponseElementModel;
   imageUrl: string;

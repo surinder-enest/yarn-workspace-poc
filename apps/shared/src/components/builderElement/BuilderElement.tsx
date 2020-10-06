@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { BuilderElementModel, CountryModel } from '../../models';
+import { BuilderElementModel, ContactModel, CountryModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
 import { Form } from './Form';
 import { BuilderElementService } from '../../services';
@@ -8,32 +8,27 @@ import Paragraph from './Paragraph/Paragraph';
 import Spacer from './Spacer/Spacer';
 import Embed from './Embed/Embed';
 import Divider from './Divider/Divider';
-import Phone from './Phone/Phone';
 import Video from './Video/Video';
-import Link from './Link/Link';
-import MobilePageElement from './MobilePageElement/MobilePageElement';
 import Image from './Image/Image';
 import Audio from './Audio/Audio';
 import Button from './Button/Button';
 import Offer from './Offer/Offer';
 import Map from './Map/Map';
-import Question from './Question/Question';
-import Poll from './Poll/Poll';
-import Feedback from './Feedback/Feedback';
 import CountDown from './CountDown/CountDown';
 import Download from './Download/Download';
+import { ResponseElement } from './ResponseElement';
 
 interface Props {
   builderElement: BuilderElementModel;
   moduleId?: string;
-  contactId?: string;
   accountId?: string;
   className?: string;
   isActualRendering: boolean;
   responseCapturedFromModule?: string;
   countriesAndStates?: Array<CountryModel>;
   accountCountryId?: string;
-  setContactId?: Function;
+  contact?: ContactModel;
+  setContactDetail?: Function;
 }
 
 class BuilderElement extends React.Component<Props> {
@@ -54,6 +49,7 @@ class BuilderElement extends React.Component<Props> {
       selectedOption || ''
     );
   }
+
   private async responseCapture(
     email?: string,
     mobileNumber?: string,
@@ -61,12 +57,12 @@ class BuilderElement extends React.Component<Props> {
   ) {
     const {
       moduleId,
-      contactId,
+      contact,
       accountId,
       responseCapturedFromModule,
       builderElement,
       isActualRendering,
-      setContactId,
+      setContactDetail,
     } = this.props;
 
     if (!isActualRendering) return;
@@ -86,15 +82,25 @@ class BuilderElement extends React.Component<Props> {
           email || '',
           mobileNumber || ''
         );
-        if (typeof setContactId === 'function') {
-          setContactId(newCreatedContactId);
+        if (typeof setContactDetail === 'function') {
+          const isNotYouAllowed =
+            (contact?.isNotYouAllowed &&
+              newCreatedContactId === contact?.id) === true;
+          const updatedContact: ContactModel = {
+            id: newCreatedContactId,
+            email: email || '',
+            mobileNumber: mobileNumber || '',
+            name: contact?.name || '',
+            isNotYouAllowed: isNotYouAllowed,
+          };
+          setContactDetail(updatedContact);
         }
         return await this.saveResponse(
           newCreatedContactId,
           selectedOption || ''
         );
       default:
-        return await this.saveResponse(contactId || '', selectedOption || '');
+        return await this.saveResponse(contact?.id || '', selectedOption || '');
     }
   }
 
@@ -104,7 +110,7 @@ class BuilderElement extends React.Component<Props> {
     }
     const {
       moduleId,
-      contactId,
+      contact,
       accountId,
       responseCapturedFromModule,
       isActualRendering,
@@ -124,8 +130,8 @@ class BuilderElement extends React.Component<Props> {
         return <Divider divider={builderElement.divider} />;
       case BUILDER_ELEMENTS.PHONE:
         return (
-          <Phone
-            phone={builderElement.phone}
+          <Button
+            button={builderElement.phone}
             responseCapture={() => this.responseCapture()}
           />
         );
@@ -140,15 +146,15 @@ class BuilderElement extends React.Component<Props> {
         );
       case BUILDER_ELEMENTS.LINK:
         return (
-          <Link
-            link={builderElement.link}
+          <Button
+            button={builderElement.link}
             responseCapture={() => this.responseCapture()}
           />
         );
       case BUILDER_ELEMENTS.MOBILE_PAGE:
         return (
-          <MobilePageElement
-            mobilePageElement={builderElement.mobilePageElement}
+          <Button
+            button={builderElement.mobilePageElement}
             responseCapture={() => this.responseCapture()}
           />
         );
@@ -164,7 +170,7 @@ class BuilderElement extends React.Component<Props> {
           <Form
             builderElement={builderElement}
             moduleId={moduleId || ''}
-            contactId={contactId || ''}
+            contactId={contact?.id || ''}
             accountId={accountId || ''}
             responseCapturedFromModule={responseCapturedFromModule || ''}
             isActualRendering={isActualRendering}
@@ -196,7 +202,7 @@ class BuilderElement extends React.Component<Props> {
             isActualRendering={isActualRendering}
             elementId={builderElement.id}
             moduleId={moduleId || ''}
-            contactId={contactId || ''}
+            contact={contact || new ContactModel()}
             accountId={accountId || ''}
             responseCapturedFromModule={responseCapturedFromModule || ''}
           />
@@ -205,41 +211,44 @@ class BuilderElement extends React.Component<Props> {
         return <Map map={builderElement.map} />;
       case BUILDER_ELEMENTS.QUESTION:
         return (
-          <Question
-            question={builderElement.question}
+          <ResponseElement
+            elementDetail={builderElement.question}
+            elementType={builderElement.builderElementType}
             isActualRendering={isActualRendering}
             responseCapture={(
               email?: string,
               mobileNumber?: string,
               selectedOption?: string
             ) => this.responseCapture(email, mobileNumber, selectedOption)}
-            contactId={contactId || ''}
+            contact={contact || new ContactModel()}
           />
         );
       case BUILDER_ELEMENTS.POLL:
         return (
-          <Poll
-            poll={builderElement.poll}
+          <ResponseElement
+            elementDetail={builderElement.poll}
+            elementType={builderElement.builderElementType}
             isActualRendering={isActualRendering}
             responseCapture={(
               email?: string,
               mobileNumber?: string,
               selectedOption?: string
             ) => this.responseCapture(email, mobileNumber, selectedOption)}
-            contactId={contactId || ''}
+            contact={contact || new ContactModel()}
           />
         );
       case BUILDER_ELEMENTS.FEEDBACK:
         return (
-          <Feedback
-            feedback={builderElement.feedback}
+          <ResponseElement
+            elementDetail={builderElement.feedback}
+            elementType={builderElement.builderElementType}
             isActualRendering={isActualRendering}
             responseCapture={(
               email?: string,
               mobileNumber?: string,
               selectedOption?: string
             ) => this.responseCapture(email, mobileNumber, selectedOption)}
-            contactId={contactId || ''}
+            contact={contact || new ContactModel()}
           />
         );
       case BUILDER_ELEMENTS.COUNT_DOWN:
@@ -261,7 +270,7 @@ class BuilderElement extends React.Component<Props> {
               mobileNumber?: string,
               selectedOption?: string
             ) => this.responseCapture(email, mobileNumber, selectedOption)}
-            contactId={contactId || ''}
+            contact={contact || new ContactModel()}
           />
         );
       default:

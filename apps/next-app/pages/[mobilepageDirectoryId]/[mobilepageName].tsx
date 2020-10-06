@@ -10,13 +10,14 @@ interface Props {
 }
 
 class MobilePageName extends React.Component<Props> {
-  static async getInitialProps({ query: { mobilepageDirectoryId = '0000', mobilepageName = 'test' } }) {
+  static async getInitialProps({ query: { mobilepageDirectoryId = '0000', mobilepageName = 'test', contId = '' } }) {
     if (!mobilepageDirectoryId || !mobilepageName) return { mobilePageData: {} };
 
     const apiResponse = await MobilePageService.getMobilePageDetailsForRender(
       's.mobilepages.co',
       mobilepageDirectoryId,
-      mobilepageName
+      mobilepageName,
+      contId
     );
     return { mobilePageData: apiResponse };
   }

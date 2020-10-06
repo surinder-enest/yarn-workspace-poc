@@ -9,7 +9,7 @@ import {
   OFFER_REDEEMED_STATUS,
   REDEMPTION_ACTION_TYPE,
 } from '../../../enums';
-import { OfferModel } from '../../../models';
+import { ContactModel, OfferModel } from '../../../models';
 import { BuilderElementService } from '../../../services';
 import CustomBarCode from '../../CustomBarCode/CustomBarCode';
 import CustomQRCode from '../../CustomQRCode/CustomQRCode';
@@ -21,7 +21,7 @@ interface IProps {
   isActualRendering: boolean;
   elementId: string;
   moduleId: string;
-  contactId: string;
+  contact: ContactModel;
   accountId: string;
   responseCapturedFromModule: string;
 }
@@ -186,7 +186,7 @@ export default class Offer extends Component<IProps, IState> {
     const {
       accountId,
       moduleId,
-      contactId,
+      contact,
       responseCapturedFromModule,
       elementId,
       offer,
@@ -199,7 +199,7 @@ export default class Offer extends Component<IProps, IState> {
       responseCapturedFromModule,
       email,
       mobileNumber,
-      contactId,
+      contact?.id,
       offer.id
     );
     this.setState({ redeemedStatus, isRedeemed: true });

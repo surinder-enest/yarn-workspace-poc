@@ -71,11 +71,11 @@ export interface APIMobilePage {
     PageStyling: APIPageStyles;
     MobilePageBuilderComponents: Array<APIBuilderElement>;
     GeoLocationDetails: APIGeoLocationDetails;
-    ContactInfo: APIContactInfo;
     CountryId: string;
 }
 
 export interface APIMobileData {
     MobilePageData: APIMobilePage;
     CountriesAndStates: Array<APICountriesAndStates>;
+    ContactInfo: APIContactInfo;
 }

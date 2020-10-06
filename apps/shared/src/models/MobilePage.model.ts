@@ -47,12 +47,14 @@ export class ContactModel {
     name: string;
     email: string;
     mobileNumber: string;
+    isNotYouAllowed: boolean;
 
     constructor(data?: ContactModel) {
         this.id = data?.id || '';
         this.name = data?.name || '';
         this.email = data?.email || '';
         this.mobileNumber = data?.mobileNumber || '';
+        this.isNotYouAllowed = data?.isNotYouAllowed || false;
     }
 
     static deserialize(apiModel: APIContactInfo): ContactModel {
@@ -61,6 +63,7 @@ export class ContactModel {
             name: apiModel?.Name,
             email: apiModel?.EmailId,
             mobileNumber: apiModel?.MobilePhone,
+            isNotYouAllowed: apiModel?.ContactId ? true : false
         }
         return new ContactModel(data);
     }
@@ -71,7 +74,6 @@ export class MobilePageModel {
     name: string;
     userId: string;
     accountId: string;
-    contactId: string;
     accountCountryId: string;
     status: string;
     pageLink: string;
@@ -79,13 +81,13 @@ export class MobilePageModel {
     pageStyles: StyleModel;
     builderElements: Array<BuilderElementModel>;
     countriesAndStates: Array<CountryModel>;
+    contact: ContactModel;
 
     constructor(data?: MobilePageModel) {
         this.id = data?.id || '';
         this.name = data?.name || '';
         this.userId = data?.userId || '';
         this.accountId = data?.accountId || '';
-        this.contactId = data?.contactId || '';
         this.accountCountryId = data?.accountCountryId || '';
         this.status = data?.status || '';
         this.pageLink = data?.pageLink || '';
@@ -93,6 +95,7 @@ export class MobilePageModel {
         this.metaData = data?.metaData || new MetaDataModel();
         this.builderElements = data?.builderElements || [];
         this.countriesAndStates = data?.countriesAndStates || [];
+        this.contact = data?.contact || new ContactModel();
     }
 
     static deserialize(apiModel: APIMobileData): MobilePageModel {
@@ -101,14 +104,14 @@ export class MobilePageModel {
             name: apiModel?.MobilePageData?.Name,
             userId: apiModel?.MobilePageData?.UserId,
             accountId: apiModel?.MobilePageData?.AccountId,
-            contactId: apiModel?.MobilePageData?.ContactInfo?.ContactId,
             accountCountryId: apiModel?.MobilePageData?.CountryId,
             status: apiModel?.MobilePageData?.Status,
             pageLink: apiModel?.MobilePageData?.PageLink,
             metaData: MetaDataModel.deserialize(apiModel?.MobilePageData),
             pageStyles: MobilePageModel.deserializeStyles(apiModel?.MobilePageData?.PageStyling),
-            builderElements: BuilderElementModel.deserializeList(apiModel?.MobilePageData?.MobilePageBuilderComponents, apiModel?.MobilePageData?.ContactInfo?.ContactId),
-            countriesAndStates: CountryModel.deserializeList(apiModel?.CountriesAndStates)
+            builderElements: BuilderElementModel.deserializeList(apiModel?.MobilePageData?.MobilePageBuilderComponents, apiModel?.ContactInfo?.ContactId),
+            countriesAndStates: CountryModel.deserializeList(apiModel?.CountriesAndStates),
+            contact: ContactModel.deserialize(apiModel?.ContactInfo)
         };
         return new MobilePageModel(data)
     }
