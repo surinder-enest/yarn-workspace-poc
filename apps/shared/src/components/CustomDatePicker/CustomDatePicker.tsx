@@ -6,8 +6,7 @@ interface Props {
 }
 
 export default class CustomDatePicker extends Component<Props> {
-  render() { 
-    return <DatePicker
-      {...this.props} />;
+  render() {
+    return <DatePicker {...this.props} />;
   }
 }

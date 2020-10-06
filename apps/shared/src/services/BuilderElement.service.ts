@@ -11,10 +11,10 @@ import {
   IContactCaptureData,
   IElementResponse,
   IOfferRedeemRequestViewModelData,
-  ISaveContactAndRedeemOfferData
+  ISaveContactAndRedeemOfferData,
 } from '../interfaces';
 import { BUILDER_ELEMENTS, TOAST_TYPE } from '../enums';
-import { Toast } from '../components';
+import { Toast } from '../components/Toast/Toast';
 
 class BuilderElementService {
   private httpClient = new HttpClient({});
@@ -252,14 +252,16 @@ class BuilderElementService {
     return contactCaptureData;
   }
 
-  private getRedeemOfferData(accountId: string,
+  private getRedeemOfferData(
+    accountId: string,
     builderElementId: string,
     moduleId: string,
     moduleName: string,
     email: string,
     mobileNumber: string,
     contactId: string,
-    offerId: string): ISaveContactAndRedeemOfferData {
+    offerId: string
+  ): ISaveContactAndRedeemOfferData {
     const offerData: IOfferRedeemRequestViewModelData = {
       AccountId: accountId,
       ContactId: contactId || null,
@@ -268,15 +270,15 @@ class BuilderElementService {
       OfferId: offerId,
       SendModuleId: moduleId,
       SendSummaryId: null,
-    }
+    };
     const contactData: IContactDetail = {
       EmailAddress: email,
       MobilePhone: mobileNumber,
-    }
+    };
     const redeemOfferData: ISaveContactAndRedeemOfferData = {
       ContactDetails: contactData,
       OfferRedeemRequestViewModel: offerData,
-    }
+    };
     return redeemOfferData;
   }
 }

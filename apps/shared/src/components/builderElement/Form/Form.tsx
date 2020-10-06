@@ -8,10 +8,11 @@ import {
 } from '../../../enums';
 import { Regex, Utility } from '../../../utilities';
 import { BuilderElementService } from '../../../services';
-import { CustomRecaptcha } from '../../Common';
+
 import { Field } from './Field';
 import Interest from './Interest/Interest';
 import Terms from './Terms/Terms';
+import CustomRecaptcha from '../../CustomRecaptcha/CustomRecaptcha';
 
 interface IProps {
   builderElement: BuilderElementModel;

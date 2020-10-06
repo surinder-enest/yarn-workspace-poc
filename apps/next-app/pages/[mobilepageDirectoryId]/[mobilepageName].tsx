@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'next/router';
 import Head from 'next/head';
-import { MobilePageModel, MobilePage, MobilePageService, ToastMainContainer } from '@mindme/shared';
+import { MobilePageModel, MobilePage, MobilePageService, ToastContainer } from '@mindme/shared';
 import { MetaData } from '../../components';
 
 interface Props {
@@ -263,7 +263,16 @@ class MobilePageName extends React.Component<Props> {
           </style>
           <MetaData pageLink={pageLink} metaData={metaData} />
         </Head>
-        <ToastMainContainer />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          draggable
+          pauseOnHover
+        />
         <MobilePage pageData={this.props.mobilePageData} />
       </>
     );

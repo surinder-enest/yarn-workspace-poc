@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
+import CustomNumberFormat from '../../CustomNumberFormat/CustomNumberFormat';
 import { BUILDER_ELEMENTS, CONTACT_FIELD_OPTION } from '../../../enums';
 import { Regex } from '../../../utilities';
-import { CustomNumberFormat } from '../../Common';
 
 interface IProps {
   elementType: string;

@@ -10,9 +10,6 @@ export default class CustomSelectDropdown extends Component<Props> {
   animatedComponents = makeAnimated();
 
   render() {
-    return (
-      <Select {...this.props}
-        components={this.animatedComponents} />
-    );
+    return <Select {...this.props} components={this.animatedComponents} />;
   }
 }

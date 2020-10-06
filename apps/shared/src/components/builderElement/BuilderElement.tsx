@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { BuilderElementModel, ContactModel, CountryModel } from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
-import { Form } from './Form';
+import Form from './Form/Form';
 import { BuilderElementService } from '../../services';
 import Title from './Title/Title';
 import Paragraph from './Paragraph/Paragraph';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import { StyleModel } from '../../models';
 interface Props {
   value: string;

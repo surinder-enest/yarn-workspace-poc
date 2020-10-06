@@ -1,7 +1,8 @@
 import React, { Component, ReactNode } from 'react';
+import CustomPlayer from '../../CustomPlayer/CustomPlayer';
 import { BUILDER_ELEMENTS, MEDIA_SOURCE_TYPE } from '../../../enums';
 import { VideoModel } from '../../../models';
-import { CustomPlayer } from '../../Common';
+
 import PlaceHolder from '../PlaceHolder';
 
 interface IProps {

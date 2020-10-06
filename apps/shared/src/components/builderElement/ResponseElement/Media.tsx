@@ -5,7 +5,7 @@ import {
   MEDIA_SOURCE_TYPE,
   MEDIA_TYPE,
 } from '../../../enums';
-import { CustomPlayer } from '../../Common';
+import CustomPlayer from '../../CustomPlayer/CustomPlayer';
 
 interface Props {
   builderElementType: string;
