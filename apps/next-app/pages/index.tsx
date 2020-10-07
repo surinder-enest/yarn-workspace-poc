@@ -2,9 +2,8 @@ import { Component } from 'react';
 
 class App extends Component {
   render() {
-    return (
-      <></>
-    );
+    console.log('inside index');
+    return <></>;
   }
 }
 export default App;

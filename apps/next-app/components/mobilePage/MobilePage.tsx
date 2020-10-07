@@ -1,27 +1,13 @@
 import React from 'react';
-import { withRouter } from 'next/router';
+import { MobilePageModel, ToastContainer, MobilePage as MobilePageComponent } from '@mindme/shared';
 import Head from 'next/head';
-import { MobilePageModel, MobilePage, MobilePageService, ToastContainer } from '@mindme/shared';
-import { MetaData } from '../../components';
+import MetaData from '../metaData/MetaData';
 
 interface Props {
   mobilePageData: MobilePageModel;
-  router: any;
 }
 
-class MobilePageName extends React.Component<Props> {
-  static async getInitialProps({ query: { mobilepageDirectoryId = '0000', mobilepageName = 'test', contId = '' } }) {
-    if (!mobilepageDirectoryId || !mobilepageName) return { mobilePageData: {} };
-
-    const apiResponse = await MobilePageService.getMobilePageDetailsForRender(
-      's.mobilepages.co',
-      mobilepageDirectoryId,
-      mobilepageName,
-      contId
-    );
-    return { mobilePageData: apiResponse };
-  }
-
+class MobilePage extends React.Component<Props> {
   render() {
     const { mobilePageData } = this.props;
     const { metaData, pageLink } = mobilePageData;
@@ -264,9 +250,9 @@ class MobilePageName extends React.Component<Props> {
           <MetaData pageLink={pageLink} metaData={metaData} />
         </Head>
         <ToastContainer />
-        <MobilePage pageData={this.props.mobilePageData} />
+        <MobilePageComponent pageData={this.props.mobilePageData} />
       </>
     );
   }
 }
-export default withRouter(MobilePageName);
+export default MobilePage;

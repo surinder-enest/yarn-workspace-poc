@@ -1,13 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
+import config from '../config';
 
 export class HttpClient {
-    private readonly baseUrl: String = 'https://stageapi.mindmemobile.com'
     private client: AxiosInstance;
 
     constructor(params: any) {
         this.client = axios.create({
             ...params,
-            baseURL: this.baseUrl,
+            baseURL: config.API_ENDPOINT,
         });
     }
 

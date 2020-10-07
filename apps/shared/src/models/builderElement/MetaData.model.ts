@@ -4,6 +4,7 @@ import { LocationModel } from './Map.model';
 export class MetaDataModel {
   pageTitle: string;
   description: string;
+  pageLink: string;
   previewImageLink: string;
   metaKeywords: string;
   metaCategories: string;
@@ -15,6 +16,7 @@ export class MetaDataModel {
   constructor(data?: MetaDataModel) {
     this.pageTitle = data?.pageTitle || '';
     this.description = data?.description || '';
+    this.pageLink = data?.pageLink || '';
     this.previewImageLink = data?.previewImageLink || '';
     this.metaKeywords = data?.metaKeywords || '';
     this.metaCategories = data?.metaCategories || '';
@@ -28,6 +30,7 @@ export class MetaDataModel {
     const data: MetaDataModel = {
       pageTitle: apiModel?.PageDetails?.PageTitle,
       description: apiModel?.PageDetails?.PageDescription,
+      pageLink: apiModel?.PageLink,
       previewImageLink: apiModel?.MobilePageSEOPreviewDetails?.ImageLink,
       metaKeywords: apiModel?.SeoSearchDetails?.MetaKeywords,
       metaCategories: apiModel?.SeoSearchDetails?.MetaCategories,
@@ -48,8 +51,8 @@ export class MetaDataModel {
   ): LocationModel[] {
     return apiList
       ? apiList.map((apiAddress: APIGeoAddress) => {
-          return LocationModel.deserialize(apiAddress?.Location);
-        })
+        return LocationModel.deserialize(apiAddress?.Location);
+      })
       : [];
   }
 }
