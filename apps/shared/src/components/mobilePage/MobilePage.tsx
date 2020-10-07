@@ -39,6 +39,62 @@ class MobilePage extends React.Component<IProps, IState> {
     this.setState({ contact });
   }
 
+  private pageNotFound = () => {
+    const { isAccountActive, isPageNotFound } = this.props.pageData;
+
+    return (
+      <div
+        style={{ textAlign: 'center', marginTop: '20%', background: '#ededed' }}
+      >
+        <div>
+          <img
+            src="https://www.mobilepages.co/images/pagenotavaliable.svg"
+            alt="Page Not Found"
+            width="195px"
+          />
+        </div>
+        <div>
+          <div
+            style={{
+              fontStyle: 'normal',
+              fontWeight: 600,
+              lineHeight: 'normal',
+              fontSize: '30px',
+              textAlign: 'center',
+              color: 'rgb(104, 104, 104)',
+              marginTop: '30px !important',
+            }}
+          >
+            {isPageNotFound
+              ? 'Page Unavailable'
+              : !isAccountActive
+              ? 'Account Inactive'
+              : 'Page Unavailable'}
+          </div>
+          <div
+            style={{
+              fontStyle: 'normal',
+              fontWeight: 400,
+              lineHeight: 'normal',
+              fontSize: '18px',
+              textAlign: 'center',
+              color: 'rgb(85, 85, 85)',
+              margin: ' 0 auto',
+              marginTop: '20px',
+              width: '47%',
+            }}
+          >
+            {isPageNotFound
+              ? ' This page is no longer available.'
+              : !isAccountActive
+              ? ' This page is no longer available because the account is inactive or cancelled.'
+              : ' This page is no longer available. It may be inactive or deleted.'}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   render() {
     const {
       pageStyles,
@@ -47,6 +103,10 @@ class MobilePage extends React.Component<IProps, IState> {
       id,
       countriesAndStates,
       accountCountryId,
+      isAccountActive,
+      isPageNotFound,
+      isPageDeleted,
+      isPageInActive,
     } = this.props.pageData;
     const {
       borderStyle,
@@ -92,24 +152,29 @@ class MobilePage extends React.Component<IProps, IState> {
                         borderColor,
                       }}
                     >
-                      {builderElements.map(
-                        (detail: BuilderElementModel, idx: number) => (
-                          <BuilderElement
-                            key={idx}
-                            builderElement={detail}
-                            moduleId={id}
-                            contact={this.state.contact}
-                            accountId={accountId}
-                            accountCountryId={accountCountryId}
-                            responseCapturedFromModule="MobilePage"
-                            countriesAndStates={countriesAndStates}
-                            isActualRendering={true}
-                            setContactDetail={(contact: ContactModel) =>
-                              this.setContactDetail(contact)
-                            }
-                          />
-                        )
-                      )}
+                      {isAccountActive ||
+                      isPageNotFound ||
+                      isPageDeleted ||
+                      isPageInActive
+                        ? this.pageNotFound()
+                        : builderElements.map(
+                            (detail: BuilderElementModel, idx: number) => (
+                              <BuilderElement
+                                key={idx}
+                                builderElement={detail}
+                                moduleId={id}
+                                contact={this.state.contact}
+                                accountId={accountId}
+                                accountCountryId={accountCountryId}
+                                responseCapturedFromModule="MobilePage"
+                                countriesAndStates={countriesAndStates}
+                                isActualRendering={true}
+                                setContactDetail={(contact: ContactModel) =>
+                                  this.setContactDetail(contact)
+                                }
+                              />
+                            )
+                          )}
                     </div>
                   </div>
                 </div>

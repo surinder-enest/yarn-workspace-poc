@@ -2,80 +2,83 @@ import { APIBuilderElement } from './API-builder-element.interface';
 import { APIBackground, APIBorder, APIColor } from './API-style.interface';
 
 interface APIPageDetail {
-    PageTitle: string;
-    PageDescription: string;
+  PageTitle: string;
+  PageDescription: string;
 }
 
 interface APIMobilePageSEOPreviewDetails {
-    ImageLink: string;
+  ImageLink: string;
 }
 
 interface APISeoSearchDetails {
-    MetaKeywords: string;
-    MetaCategories: string;
-    IsEnableMobileDiscoveryOnSeo: boolean;
+  MetaKeywords: string;
+  MetaCategories: string;
+  IsEnableMobileDiscoveryOnSeo: boolean;
 }
 
 export interface APIMapLocation {
-    Latitude: string;
-    Longitutd: string;
+  Latitude: string;
+  Longitutd: string;
 }
 
 export interface APIGeoAddress {
-    Location: APIMapLocation
+  Location: APIMapLocation;
 }
 
 export interface APIGeoLocationDetails {
-    Address: Array<APIGeoAddress>
+  Address: Array<APIGeoAddress>;
 }
 
 export interface APIContactInfo {
-    Name: string;
-    ContactId: string;
-    EmailId: string;
-    MobilePhone: string;
+  Name: string;
+  ContactId: string;
+  EmailId: string;
+  MobilePhone: string;
 }
 
 export interface APIStates {
-    StateId: string;
-    Name: string;
+  StateId: string;
+  Name: string;
 }
 
 export interface APICountriesAndStates {
-    CountryId: string;
-    Name: string;
-    States: Array<APIStates>;
+  CountryId: string;
+  Name: string;
+  States: Array<APIStates>;
 }
 
-
 export interface APIPageStyles {
-    Background: APIBackground;
-    Border: APIBorder;
-    PageColor: APIColor;
+  Background: APIBackground;
+  Border: APIBorder;
+  PageColor: APIColor;
 }
 
 export interface APIMobilePage {
-    Id: string;
-    Name: string;
-    UserId: string;
-    AccountId: string;
-    CreatedBy: string;
-    UpdatedBy: string;
-    Status: string;
-    PageLink: string;
-    AccountShortUniqueId: string;
-    HtmlPageName: string;
-    PageDetails: APIPageDetail;
-    MobilePageSEOPreviewDetails: APIMobilePageSEOPreviewDetails;
-    SeoSearchDetails: APISeoSearchDetails;
-    PageStyling: APIPageStyles;
-    MobilePageBuilderComponents: Array<APIBuilderElement>;
-    GeoLocationDetails: APIGeoLocationDetails;
-    CountryId: string;
+  Id: string;
+  Name: string;
+  UserId: string;
+  AccountId: string;
+  CreatedBy: string;
+  UpdatedBy: string;
+  Status: string;
+  PageLink: string;
+  AccountShortUniqueId: string;
+  HtmlPageName: string;
+  PageDetails: APIPageDetail;
+  MobilePageSEOPreviewDetails: APIMobilePageSEOPreviewDetails;
+  SeoSearchDetails: APISeoSearchDetails;
+  PageStyling: APIPageStyles;
+  MobilePageBuilderComponents: Array<APIBuilderElement>;
+  GeoLocationDetails: APIGeoLocationDetails;
+  CountryId: string;
 }
 
 export interface APIMobileData {
-    MobilePageData: APIMobilePage;
-    CountriesAndStates: Array<APICountriesAndStates>;
-    ContactInfo: APIContactInfo;
+  MobilePageData: APIMobilePage;
+  CountriesAndStates: Array<APICountriesAndStates>;
+  ContactInfo: APIContactInfo;
+  IsPageNotFound: boolean;
+  IsPageDeleted: boolean;
+  IsPageInActive: boolean;
+  IsAccountActive: boolean;
 }

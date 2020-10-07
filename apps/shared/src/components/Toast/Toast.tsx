@@ -8,8 +8,8 @@ interface Props {
 }
 
 export const Toast = (props: Props) => {
-  const { type } = props;
-  switch (type) {
+  const { toastType } = props;
+  switch (toastType) {
     case TOAST_TYPE.ERROR:
     case TOAST_TYPE.SUCCESS:
     case TOAST_TYPE.INFO:
@@ -23,8 +23,8 @@ export const Toast = (props: Props) => {
 };
 
 const ToastInnerBody = (props: Props) => {
-  const { type, message } = props;
-  switch (type) {
+  const { toastType, message } = props;
+  switch (toastType) {
     case TOAST_TYPE.WARNING:
       return (
         <div

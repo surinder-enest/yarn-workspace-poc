@@ -51,17 +51,17 @@ class BuilderElementService {
     }
     if (data.Data.UpdateTimerExpired) {
       Toast({
-        type: TOAST_TYPE.WARNING,
+        toastType: TOAST_TYPE.WARNING,
         message: 'Your response cannot be modified at this time.',
       });
     } else if (data.Data.HasError) {
       Toast({
-        type: TOAST_TYPE.ERROR,
+        toastType: TOAST_TYPE.ERROR,
         message: 'Unable to submit your response. Please try after some time.',
       });
     } else if (!data.Data.SavedData) {
       Toast({
-        type: TOAST_TYPE.ERROR,
+        toastType: TOAST_TYPE.ERROR,
         message: 'Unable to submit your response. Please try after some time.',
       });
     }

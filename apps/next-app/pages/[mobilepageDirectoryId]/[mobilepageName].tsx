@@ -65,7 +65,7 @@ class MobilePageName extends React.Component<Props> {
             body {
               height: 100%;
               width: 100%;
-              background: #ededed;
+              background: #ededed !important;
               margin: 0;
               font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
               min-height: 667px;
@@ -263,16 +263,7 @@ class MobilePageName extends React.Component<Props> {
           </style>
           <MetaData pageLink={pageLink} metaData={metaData} />
         </Head>
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          draggable
-          pauseOnHover
-        />
+        <ToastContainer />
         <MobilePage pageData={this.props.mobilePageData} />
       </>
     );
