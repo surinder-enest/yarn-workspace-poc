@@ -1,5 +1,5 @@
 import React from 'react';
-import { MobilePageModel, ToastContainer, MobilePage as MobilePageComponent } from '@mindme/shared';
+import { MobilePageModel, ToastContainer, MobilePage as MobilePageComponent, MobilePageService } from '@mindme/shared';
 import Head from 'next/head';
 import MetaData from '../metaData/MetaData';
 
@@ -8,6 +8,31 @@ interface Props {
 }
 
 class MobilePage extends React.Component<Props> {
+  componentDidMount() {
+    const { accountId, id, contact } = this.props.mobilePageData;
+    let isSaveMobilePageOpenDetails = true;
+    const mobilePageId = id;
+    const mobilePageOpenTime = localStorage.getItem('mobilePageOpenDate');
+    const openedMobilePageId = localStorage.getItem(mobilePageId);
+
+    if (mobilePageOpenTime && openedMobilePageId) {
+      const nowTime = new Date();
+      const lastOpenedTime = new Date(mobilePageOpenTime);
+      console.log({ nowTime, lastOpenedTime });
+      let minuteDifference = Math.floor((nowTime.getTime() - lastOpenedTime.getTime()) / 1000 / 60);
+      isSaveMobilePageOpenDetails = id === openedMobilePageId && minuteDifference >= 5;
+      console.log(isSaveMobilePageOpenDetails);
+    }
+
+    //SAVE MOBILE PAGE OPEN DETAILS
+    if (isSaveMobilePageOpenDetails) {
+      //UPDATE MOBILE PAGE OPEN COUNTS
+      const apiResponse = MobilePageService.saveMobilePageOpenDetails(accountId, id, contact.id);
+      console.log(apiResponse);
+      localStorage.setItem('mobilePageOpenDate', `${new Date()}`);
+      localStorage.setItem(mobilePageId, id);
+    }
+  }
   render() {
     const { mobilePageData } = this.props;
     const { metaData, pageLink } = mobilePageData;
