@@ -103,10 +103,6 @@ class MobilePage extends React.Component<IProps, IState> {
       id,
       countriesAndStates,
       accountCountryId,
-      isAccountActive,
-      isPageNotFound,
-      isPageDeleted,
-      isPageInActive,
     } = this.props.pageData;
     const {
       borderStyle,
@@ -152,10 +148,7 @@ class MobilePage extends React.Component<IProps, IState> {
                         borderColor,
                       }}
                     >
-                      {isAccountActive ||
-                      isPageNotFound ||
-                      isPageDeleted ||
-                      isPageInActive
+                      {builderElements.length === 0
                         ? this.pageNotFound()
                         : builderElements.map(
                             (detail: BuilderElementModel, idx: number) => (

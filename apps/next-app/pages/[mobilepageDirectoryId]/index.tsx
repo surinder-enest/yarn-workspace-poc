@@ -21,7 +21,6 @@ class MobilePageName extends React.Component<Props> {
   }
 
   render() {
-    console.log('inside mobilpage');
     return <MobilePage mobilePageData={this.props.mobilePageData} />;
   }
 }
