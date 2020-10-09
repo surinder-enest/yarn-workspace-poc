@@ -6,27 +6,30 @@ import { MobilePage } from '../../components';
 interface Props {
   mobilePageData: MobilePageModel;
   router: any;
+  isActualRendering: boolean;
 }
 
 class PageName extends React.Component<Props> {
   static async getInitialProps({
-    query: { mobilepageDirectoryId = '0000', pageName = 'test', contId = '' },
+    query: { mobilepageDirectoryId = '0000', pageName = 'test', contId = '', snapShotPageId = '' },
     req: {
       headers: { host = '' },
     },
   }) {
+    console.log({ mobilepageDirectoryId, pageName });
     if (!mobilepageDirectoryId && !pageName) return { mobilePageData: {} };
     const apiResponse = await MobilePageService.getMobilePageDetailsForRender(
       host,
       mobilepageDirectoryId,
       pageName,
-      contId
+      contId,
+      snapShotPageId
     );
     return { mobilePageData: apiResponse };
   }
 
   render() {
-    return <MobilePage mobilePageData={this.props.mobilePageData} />;
+    return <MobilePage isActualRendering={true} mobilePageData={this.props.mobilePageData} />;
   }
 }
 export default withRouter(PageName);

@@ -9,7 +9,8 @@ class MobilePageService {
     domain: string,
     directoryId: string,
     pageName: string,
-    contactId?: string
+    contactId: string,
+    pageId: string
   ) {
     try {
       let param = new URLSearchParams();
@@ -18,6 +19,9 @@ class MobilePageService {
       param.append('pageName', pageName);
       if (contactId) {
         param.append('contactId', contactId);
+      }
+      if (pageId) {
+        param.append('pageId', pageId);
       }
       const response = await this.httpClient.get(
         apiUrl.getMobilePageDetailsForRender,

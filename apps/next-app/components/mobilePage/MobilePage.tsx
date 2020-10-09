@@ -5,6 +5,7 @@ import MetaData from '../metaData/MetaData';
 
 interface Props {
   mobilePageData: MobilePageModel;
+  isActualRendering: boolean;
 }
 
 class MobilePage extends React.Component<Props> {
@@ -27,14 +28,13 @@ class MobilePage extends React.Component<Props> {
     //SAVE MOBILE PAGE OPEN DETAILS
     if (isSaveMobilePageOpenDetails) {
       //UPDATE MOBILE PAGE OPEN COUNTS
-      const apiResponse = MobilePageService.saveMobilePageOpenDetails(accountId, id, contact.id);
-      console.log(apiResponse);
+      MobilePageService.saveMobilePageOpenDetails(accountId, id, contact.id);
       localStorage.setItem('mobilePageOpenDate', `${new Date()}`);
       localStorage.setItem(mobilePageId, id);
     }
   }
   render() {
-    const { mobilePageData } = this.props;
+    const { mobilePageData, isActualRendering } = this.props;
     const { metaData, pageLink } = mobilePageData;
     return (
       <>
@@ -275,7 +275,7 @@ class MobilePage extends React.Component<Props> {
           <MetaData pageLink={pageLink} metaData={metaData} />
         </Head>
         <ToastContainer />
-        <MobilePageComponent pageData={this.props.mobilePageData} />
+        <MobilePageComponent isActualRendering={isActualRendering} pageData={this.props.mobilePageData} />
       </>
     );
   }

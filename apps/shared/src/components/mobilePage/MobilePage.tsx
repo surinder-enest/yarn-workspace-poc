@@ -8,6 +8,7 @@ import { BuilderElement } from '../BuilderElement';
 
 interface IProps {
   pageData: MobilePageModel;
+  isActualRendering: boolean;
 }
 
 interface IState {
@@ -161,7 +162,7 @@ class MobilePage extends React.Component<IProps, IState> {
                                 accountCountryId={accountCountryId}
                                 responseCapturedFromModule="MobilePage"
                                 countriesAndStates={countriesAndStates}
-                                isActualRendering={true}
+                                isActualRendering={this.props.isActualRendering}
                                 setContactDetail={(contact: ContactModel) =>
                                   this.setContactDetail(contact)
                                 }
