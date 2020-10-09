@@ -1,4 +1,4 @@
-import { CountDownUrl } from '../../enums';
+import config from '../../config';
 import { APICountDown, APICountDownStyles } from '../../interfaces';
 import { Utility } from '../../utilities';
 import { StyleModel } from './Style.model';
@@ -57,7 +57,7 @@ export class CountDownModel {
       expirationTime: apiModel?.ExpirationTime,
       expirationTimeFormat: apiModel?.ExpirationTimeFormat,
       titleOptions: apiModel?.TitleOptions,
-      url: CountDownUrl.Url,
+      url: `${config.API_ENDPOINT}api/countdowntimer?builderElementId=`,
       redirectUrl: Utility.getValueWithClickType(
         apiModel?.ButtonViewModel?.Type,
         apiModel?.ButtonViewModel?.Value,

@@ -1,6 +1,3 @@
-export enum CountDownUrl {
-  Url = 'https://stageapi.mindmemobile.com/api/countdowntimer?builderElementId=',
-}
 export enum TitleOptions {
   None = 'None',
   Above = 'Above',

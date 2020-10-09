@@ -9,3 +9,8 @@ export enum DOWNLOAD_LAYOUT {
   IMAGE_RIGHT = 'ImageRight',
   IMAGE_LEFT = 'ImageLeft',
 };
+
+export enum ELEMENT_CALLED_FROM {
+  MOBILE_PAGE = 'MobilePage',
+  WEB_FORM = 'WebForm',
+}

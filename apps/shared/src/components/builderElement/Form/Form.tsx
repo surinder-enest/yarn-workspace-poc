@@ -1,25 +1,25 @@
 import React, { Component, ReactNode } from 'react';
-import { BuilderElementModel, CountryModel, FieldModel } from '../../../models';
+import { CountryModel, FieldModel, FormModel } from '../../../models';
 import {
   FORM_FIELD_TYPE,
   FORM_FIELDS,
   CUSTOM_FIELD_TYPE,
   THANK_YOU_ACTION_TYPE,
+  ELEMENT_CALLED_FROM,
 } from '../../../enums';
 import { Regex, Utility } from '../../../utilities';
-import { BuilderElementService } from '../../../services';
-
 import { Field } from './Field';
 import Interest from './Interest/Interest';
 import Terms from './Terms/Terms';
 import CustomRecaptcha from '../../CustomRecaptcha/CustomRecaptcha';
+import config from '../../../config';
 
 interface IProps {
-  builderElement: BuilderElementModel;
-  moduleId: string;
-  contactId: string;
-  accountId: string;
+  elementId: string;
   responseCapturedFromModule: string;
+  form: FormModel;
+  responseCapture: Function;
+  contactId: string;
   isActualRendering: boolean;
   countriesAndStates: Array<CountryModel>;
   accountCountryId: string;
@@ -58,7 +58,7 @@ export default class Form extends Component<IProps, IState> {
 
   componentDidMount() {
     this.setState({
-      fieldResponses: [...this.props.builderElement.form.fieldDetails.fields],
+      fieldResponses: [...this.props.form.fieldDetails.fields],
     });
   }
 
@@ -159,7 +159,7 @@ export default class Form extends Component<IProps, IState> {
       isRequireResponse,
       responseValue,
       options,
-    } = this.props.builderElement.form.interest;
+    } = this.props.form.interest;
     let isValidInterest = true;
     const totalInterests = options.length;
     const totalSelectedInterest = selectedInterest.length;
@@ -196,7 +196,7 @@ export default class Form extends Component<IProps, IState> {
     const {
       requireReCaptcha,
       requireAcceptance,
-    } = this.props.builderElement.form.submitSettings;
+    } = this.props.form.submitSettings;
     let isValidFields = true;
     const fieldResponses = this.state.fieldResponses.map(field => {
       field = this.validateField(field);
@@ -253,37 +253,21 @@ export default class Form extends Component<IProps, IState> {
     this.setState({ isCaptchaConfigured, captchaErrorMessage });
   }
 
-  private onSubmitButton() {
+  private async onSubmitButton() {
     if (!this.props.isActualRendering) return;
 
     if (this.validateForm()) {
       const { fieldResponses, interestResponse } = this.state;
-      const {
-        moduleId,
-        contactId,
-        accountId,
-        responseCapturedFromModule,
-        builderElement,
-      } = this.props;
-      const {
-        action,
-        redirectUrl,
-      } = builderElement.form.submitSettings.thankYou;
+      const { form, contactId, responseCapture } = this.props;
+      const { action, redirectUrl } = form.submitSettings.thankYou;
 
-      let updatedBuilderElement = { ...builderElement };
-      updatedBuilderElement.form.fieldDetails.fields = [...fieldResponses];
-      updatedBuilderElement.form.interest.selectedOptions = [
+      let updatedForm = { ...form };
+      updatedForm.fieldDetails.fields = [...fieldResponses];
+      updatedForm.interest.selectedOptions = [
         ...interestResponse.selectedInterest,
       ];
-      const isFormSubmitted = BuilderElementService.saveBuilderElementResponse(
-        updatedBuilderElement,
-        moduleId,
-        contactId,
-        accountId,
-        responseCapturedFromModule,
-        ''
-      );
 
+      const isFormSubmitted = await responseCapture(updatedForm);
       if (isFormSubmitted) {
         switch (action) {
           case THANK_YOU_ACTION_TYPE.MESSAGE:
@@ -297,10 +281,9 @@ export default class Form extends Component<IProps, IState> {
             }
             if (
               url &&
-              contactId &&
               action === THANK_YOU_ACTION_TYPE.REDIRECT_TO_MOBILE_PAGE
             ) {
-              url = `${url}?contId=${contactId}`;
+              url = `${url}${contactId ? `?contId=${contactId}` : ''}`;
             }
             Utility.redirectToOtherPage(url);
             break;
@@ -311,13 +294,13 @@ export default class Form extends Component<IProps, IState> {
   }
 
   private getRecaptchHtml(): ReactNode {
-    const { builderElement } = this.props;
+    const { elementId } = this.props;
     const { captchaErrorMessage } = this.state;
     return (
       <div style={{ paddingTop: '20px' }}>
         <div className="g-recaptcha">
           <CustomRecaptcha
-            elementId={`recaptcha_${builderElement.key}`}
+            elementId={`recaptcha_${elementId}`}
             style={
               'transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;'
             }
@@ -344,12 +327,23 @@ export default class Form extends Component<IProps, IState> {
     );
   }
 
+  private getStyleWithCalledFrom() {
+    switch (this.props.responseCapturedFromModule) {
+      case ELEMENT_CALLED_FROM.MOBILE_PAGE:
+        return { width: '66%', margin: '0 auto' };
+      default:
+        return {};
+    }
+  }
+
   render() {
     const {
       isActualRendering,
-      builderElement,
+      form,
+      elementId,
       countriesAndStates,
       accountCountryId,
+      responseCapturedFromModule,
     } = this.props;
     const {
       styles,
@@ -358,7 +352,7 @@ export default class Form extends Component<IProps, IState> {
       interest,
       buttonStyles,
       submitSettings,
-    } = builderElement.form;
+    } = form;
     const {
       fieldResponses,
       interestResponse,
@@ -368,11 +362,11 @@ export default class Form extends Component<IProps, IState> {
       isAcceptedTerms,
     } = this.state;
     return (
-      <div>
+      <>
         {isShowThankYouMessage ? (
           <div style={{ padding: '10px !importants' }}>
             <img
-              src="https://s.mobilepages.co/images/check-medium.gif"
+              src={`${config.APP_ENDPOINT}images/check-medium.gif`}
               height="100"
               style={{
                 display: 'block',
@@ -387,7 +381,7 @@ export default class Form extends Component<IProps, IState> {
           </div>
         ) : (
           <div style={styles}>
-            <div style={{ width: '66%', margin: '0 auto' }}>
+            <div style={this.getStyleWithCalledFrom()}>
               <div style={{ textAlign: 'left' }}>
                 <div style={{ marginBottom: '20px', position: 'relative' }}>
                   <div dangerouslySetInnerHTML={{ __html: title }} />
@@ -426,7 +420,7 @@ export default class Form extends Component<IProps, IState> {
                     this.toggleTermsAcceptance(value)
                   }
                   errorMessage={termsErrorMessage}
-                  acceptanceId={builderElement.key}
+                  acceptanceId={elementId}
                 />
               </div>
             </div>
@@ -438,22 +432,26 @@ export default class Form extends Component<IProps, IState> {
                 position: 'relative',
               }}
             >
-              <div
-                className="agreement-text"
-                style={{
-                  width: '66%',
-                  margin: '0 auto',
-                  color: fieldDetails.labelStyles.color,
-                  fontWeight: 'normal',
-                  fontStyle: 'normal',
-                  fontSize: '13px',
-                  textAlign: 'left',
-                }}
-              >
-                You agree to opt-in to receive Text and/or email notifications,
-                offers, alerts and news. Msg & data rates may apply. Text STOP
-                to end. Up to {submitSettings.maxMessageLimit} msg/mo.
-              </div>
+              {responseCapturedFromModule ===
+                ELEMENT_CALLED_FROM.MOBILE_PAGE && (
+                <div
+                  className="agreement-text"
+                  style={{
+                    width: '66%',
+                    margin: '0 auto',
+                    color: fieldDetails.labelStyles.color,
+                    fontWeight: 'normal',
+                    fontStyle: 'normal',
+                    fontSize: '13px',
+                    textAlign: 'left',
+                  }}
+                >
+                  You agree to opt-in to receive Text and/or email
+                  notifications, offers, alerts and news. Msg & data rates may
+                  apply. Text STOP to end. Up to{' '}
+                  {submitSettings.maxMessageLimit} msg/mo.
+                </div>
+              )}{' '}
               <div
                 style={{
                   paddingTop: '20px',
@@ -468,7 +466,7 @@ export default class Form extends Component<IProps, IState> {
             </div>
           </div>
         )}
-      </div>
+      </>
     );
   }
 }

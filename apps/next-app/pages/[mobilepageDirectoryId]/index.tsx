@@ -11,7 +11,7 @@ interface Props {
 
 class MobilePageName extends React.Component<Props> {
   static async getInitialProps({
-    query: { mobilepageDirectoryId = '0000', contId = '', snapShotPageId = '' },
+    query: { mobilepageDirectoryId = '', contId = '', snapShotPageId = '' },
     req: {
       headers: { host = '' },
     },

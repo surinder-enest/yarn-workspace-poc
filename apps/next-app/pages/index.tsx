@@ -2,8 +2,7 @@ import { Component } from 'react';
 
 class App extends Component {
   render() {
-    console.log('inside index');
-    return <></>;
+    return <div></div>;
   }
 }
 export default App;

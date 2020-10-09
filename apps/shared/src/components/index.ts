@@ -12,3 +12,4 @@ export { default as CustomRecaptcha } from './CustomRecaptcha/CustomRecaptcha';
 export { default as CustomNumberFormat } from './CustomNumberFormat/CustomNumberFormat';
 export { default as SelectDropdown } from './SelectDropdown/SelectDropdown';
 export * from './GoogleMap/GoogleMap';
+export { default as WebForm } from './WebForm/WebForm';

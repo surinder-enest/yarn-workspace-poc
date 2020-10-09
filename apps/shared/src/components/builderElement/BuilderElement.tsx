@@ -1,5 +1,10 @@
 import React, { ReactNode } from 'react';
-import { BuilderElementModel, ContactModel, CountryModel } from '../../models';
+import {
+  BuilderElementModel,
+  ContactModel,
+  CountryModel,
+  FormModel,
+} from '../../models';
 import { BUILDER_ELEMENTS } from '../../enums';
 import Form from './Form/Form';
 import { BuilderElementService } from '../../services';
@@ -104,6 +109,27 @@ class BuilderElement extends React.Component<Props> {
     }
   }
 
+  private async formResponseCapture(form: FormModel) {
+    const {
+      moduleId,
+      accountId,
+      builderElement,
+      contact,
+      responseCapturedFromModule,
+    } = this.props;
+
+    let updatedBuilderElement = { ...builderElement };
+    updatedBuilderElement.form = { ...form };
+    return await BuilderElementService.saveBuilderElementResponse(
+      updatedBuilderElement,
+      moduleId || '',
+      contact?.id || '',
+      accountId || '',
+      responseCapturedFromModule || '',
+      ''
+    );
+  }
+
   private getBuilderElement(builderElement: BuilderElementModel): ReactNode {
     if (!builderElement) {
       return <></>;
@@ -168,11 +194,13 @@ class BuilderElement extends React.Component<Props> {
       case BUILDER_ELEMENTS.FORM:
         return (
           <Form
-            builderElement={builderElement}
-            moduleId={moduleId || ''}
-            contactId={contact?.id || ''}
-            accountId={accountId || ''}
+            elementId={builderElement.id}
             responseCapturedFromModule={responseCapturedFromModule || ''}
+            form={builderElement.form}
+            responseCapture={(form: FormModel) =>
+              this.formResponseCapture(form)
+            }
+            contactId={contact?.id || ''}
             isActualRendering={isActualRendering}
             countriesAndStates={countriesAndStates || []}
             accountCountryId={accountCountryId || ''}

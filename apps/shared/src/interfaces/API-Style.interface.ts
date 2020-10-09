@@ -28,6 +28,7 @@ export interface APIBackground {
   BackgroundRepeat: string;
   ImagePosition: string;
   Opacity: number;
+  CloseIconColor: APIColor;
 }
 
 export interface APIBorder {

@@ -1,4 +1,6 @@
 import React from 'react';
+import config from '../../config';
+import { ELEMENT_CALLED_FROM } from '../../enums';
 import {
   MobilePageModel,
   BuilderElementModel,
@@ -49,7 +51,7 @@ class MobilePage extends React.Component<IProps, IState> {
       >
         <div>
           <img
-            src="https://www.mobilepages.co/images/pagenotavaliable.svg"
+            src={`${config.APP_ENDPOINT}/images/pagenotavaliable.svg`}
             alt="Page Not Found"
             width="195px"
           />
@@ -160,7 +162,9 @@ class MobilePage extends React.Component<IProps, IState> {
                                 contact={this.state.contact}
                                 accountId={accountId}
                                 accountCountryId={accountCountryId}
-                                responseCapturedFromModule="MobilePage"
+                                responseCapturedFromModule={
+                                  ELEMENT_CALLED_FROM.MOBILE_PAGE
+                                }
                                 countriesAndStates={countriesAndStates}
                                 isActualRendering={this.props.isActualRendering}
                                 setContactDetail={(contact: ContactModel) =>

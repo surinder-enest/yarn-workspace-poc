@@ -1,4 +1,4 @@
-import { BuilderElement, BuilderElementModel, BuilderElementService, ContactModel } from '@mindme/shared';
+import { BuilderElement, BuilderElementModel, BuilderElementService } from '@mindme/shared';
 import { withRouter } from 'next/router';
 import React, { Component } from 'react';
 import Head from 'next/head';

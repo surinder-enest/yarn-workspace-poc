@@ -31,7 +31,7 @@ export enum INTEREST_RESPONSE_VALUES {
     UPTO_THREE_INTEREST = "UptoThreeInterest",
     UPTO_FOUR_INTEREST = "UptoFourInterest",
     UPTO_FIVE_INTEREST = "UptoFiveInterest",
-}; 
+};
 
 export enum CUSTOM_FIELD_TYPE {
     TEXT = 'Text',
@@ -45,3 +45,16 @@ export enum CUSTOM_FIELD_TYPE {
     SELECT_ONE = 'SelectOne',
     SELECT_MULTIPLE = 'SelectMultiple',
 }
+
+export enum FORM_TYPE {
+    POPUP = 'PopUp',
+    EMBEDDED = 'Embedded',
+};
+
+export enum FORM_LAYOUT {
+    BLANK = 'Blank',
+    IMAGE_RIGHT = 'ImageRight',
+    IMAGE_LEFT = 'ImageLeft',
+    IMAGE_BEHIND = 'ImageBehind',
+    MEDIA_ABOVE = 'MediaAbove',
+};

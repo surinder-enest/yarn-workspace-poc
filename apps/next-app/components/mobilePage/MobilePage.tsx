@@ -19,10 +19,8 @@ class MobilePage extends React.Component<Props> {
     if (mobilePageOpenTime && openedMobilePageId) {
       const nowTime = new Date();
       const lastOpenedTime = new Date(mobilePageOpenTime);
-      console.log({ nowTime, lastOpenedTime });
       let minuteDifference = Math.floor((nowTime.getTime() - lastOpenedTime.getTime()) / 1000 / 60);
       isSaveMobilePageOpenDetails = id === openedMobilePageId && minuteDifference >= 5;
-      console.log(isSaveMobilePageOpenDetails);
     }
 
     //SAVE MOBILE PAGE OPEN DETAILS

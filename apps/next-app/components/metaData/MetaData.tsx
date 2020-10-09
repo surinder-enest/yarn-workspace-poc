@@ -9,7 +9,6 @@ interface Props {
 class MetaData extends React.Component<Props> {
   render() {
     const { metaData } = this.props;
-    // const pageLink = `http://d.mobilepages.co/${metaData.accountShortUniqueId}/${metaData.htmlPageName}`;
     return (
       <>
         {/* Primary Meta Tags */}
