@@ -2,7 +2,6 @@ import React from 'react';
 import { MetaDataModel, LocationModel } from '@mindme/shared';
 
 interface Props {
-  pageLink: string;
   metaData: MetaDataModel;
 }
 
