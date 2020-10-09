@@ -16,7 +16,6 @@ class PageName extends React.Component<Props> {
       headers: { host = '' },
     },
   }) {
-    console.log({ mobilepageDirectoryId, pageName });
     if (!mobilepageDirectoryId && !pageName) return { mobilePageData: {} };
     const apiResponse = await MobilePageService.getMobilePageDetailsForRender(
       host,

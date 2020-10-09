@@ -54,10 +54,6 @@ class MobilePageService {
         `${apiUrl.saveMobilePageOpenDetails}?${param}`,
         param
       );
-      //   if (response.data.Success) {
-      //     return MobilePageModel.deserialize(response.data.Data);
-      //   }
-      console.log(response);
       return response;
     } catch (error) {
       console.log('error', error);

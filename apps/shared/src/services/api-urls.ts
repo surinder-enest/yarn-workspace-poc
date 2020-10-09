@@ -5,4 +5,6 @@ export const apiUrl = {
   saveContactCapture: 'api/ContactCapture/SaveContactCapture',
   saveContactAndRedeemOffer: 'api/Offer/SaveContactAndRedeemOffer',
   saveMobilePageOpenDetails: 'api/MobilePage/SaveMobilePageOpenDetails',
+  getBuilderElementDetailForSnapShot:
+    'api/BuilderElement/GetBuilderElementDetailsForSnapshot',
 };

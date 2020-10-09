@@ -281,6 +281,33 @@ class BuilderElementService {
     };
     return redeemOfferData;
   }
+
+  async getBuilderElementDetailForSnapShot(
+    accountId: string,
+    builderElementId: string
+  ) {
+    try {
+      let param = new URLSearchParams();
+
+      param.append('builderElementId', builderElementId);
+      param.append('accountId', accountId);
+
+      const response = await this.httpClient.get(
+        apiUrl.getBuilderElementDetailForSnapShot,
+        param
+      );
+      if (response.data.Success) {
+        return BuilderElementModel.deserializeList(
+          response.data.Data.BuilderElementDetail,
+          ''
+        );
+      }
+      return BuilderElementModel;
+    } catch (error) {
+      console.log('error', error);
+      return BuilderElementModel;
+    }
+  }
 }
 
 export default new BuilderElementService();
