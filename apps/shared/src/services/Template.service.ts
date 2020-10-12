@@ -1,6 +1,6 @@
 import { HttpClient } from './http-client';
 import { apiUrl } from './api-urls';
-import { EmailTemplateModel } from '../models';
+import { EmailTemplateModel, SmsTemplateModel } from '../models';
 
 class TemplateService {
   private httpClient = new HttpClient({});
@@ -24,6 +24,28 @@ class TemplateService {
     } catch (error) {
       console.log('error', error);
       return EmailTemplateModel;
+    }
+  }
+
+  async getSmsTemplateBuilderDetailForSnapShot(
+    smsTemplateId: string,
+    subAccountId: string
+  ) {
+    try {
+      let param = new URLSearchParams();
+      param.append('smsTemplateId', smsTemplateId);
+      param.append('subAccountId', subAccountId);
+      const response = await this.httpClient.get(
+        apiUrl.getSmsTemplateBuilderDetailForSnapShot,
+        param
+      );
+      if (response.data.Success) {
+        return SmsTemplateModel.deserialize(response.data.Data);
+      }
+      return SmsTemplateModel;
+    } catch (error) {
+      console.log('error', error);
+      return SmsTemplateModel;
     }
   }
 }

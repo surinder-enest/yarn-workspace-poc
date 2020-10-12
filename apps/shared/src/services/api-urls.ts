@@ -19,4 +19,6 @@ export const apiUrl = {
   //TEMPLATE
   getEmailTemplateBuilderDetailForSnapShot:
     'api/EmailTemplate/GetEmailTemplateBuilderDetailForSnapShot',
+  getSmsTemplateBuilderDetailForSnapShot:
+    'api/SmsTemplate/GetSmsTemplateBuilderDetailForSnapShot',
 };
