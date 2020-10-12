@@ -5,7 +5,7 @@ import PageHeader from '../pageHeader/PageHeader';
 interface Props {
   mobilePageData: MobilePageModel;
   isActualRendering: boolean;
-  isSnapshot: boolean;
+  isSnapshot?: boolean;
 }
 
 class MobilePage extends React.Component<Props> {
@@ -39,7 +39,7 @@ class MobilePage extends React.Component<Props> {
         <PageHeader metaData={metaData} />
         <ToastContainer />
         <MobilePageComponent
-          isSnapshot={isSnapshot}
+          isSnapshot={isSnapshot || false}
           isActualRendering={isActualRendering}
           pageData={this.props.mobilePageData}
         />

@@ -29,6 +29,7 @@ export interface APIBackground {
   ImagePosition: string;
   Opacity: number;
   CloseIconColor: APIColor;
+  IsCoverBackground: boolean;
 }
 
 export interface APIBorder {

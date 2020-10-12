@@ -219,10 +219,11 @@ export default class Offer extends Component<IProps, IState> {
   }
 
   private getRedeemButtonHtml(): ReactNode {
-    const { isActualRendering } = this.props;
+    const { isActualRendering, isSnapshot } = this.props;
     const { isRedeemButtonClick, isValidContactFields } = this.state;
     const pointerEvents = isValidContactFields ? 'inherit' : 'none';
-    const opacity = !isActualRendering || isValidContactFields ? 1 : 0.7;
+    const opacity =
+      (!isActualRendering || isValidContactFields) && !isSnapshot ? 1 : 0.7;
     return (
       <>
         {!isRedeemButtonClick ? (

@@ -6,7 +6,7 @@ import {
   THANK_YOU_ACTION_TYPE,
   FORM_LAYOUT,
 } from '../../enums';
-import { FormModel, WebFormModel } from '../../models';
+import { FormModel, StyleModel, WebFormModel } from '../../models';
 import WebformService from '../../services/Webform.service';
 import { Form } from '../BuilderElement';
 
@@ -152,18 +152,8 @@ class WebForm extends React.Component<IProps, IState> {
     return false;
   }
 
-  private getHtmlWithFormLayoutType(): ReactNode {
+  private getFormHtml(): ReactNode {
     const { formData, isActualRendering } = this.props;
-    switch (formData.type) {
-      case FORM_TYPE.POPUP:
-        switch (formData.layout) {
-          case FORM_LAYOUT.BLANK:
-            break;
-        }
-        break;
-      default:
-        break;
-    }
     return (
       <Form
         elementId={formData.id}
@@ -178,14 +168,186 @@ class WebForm extends React.Component<IProps, IState> {
     );
   }
 
+  private getMediaHtml(): ReactNode {
+    const { imageUrl } = this.props.formData;
+    return (
+      <>
+        {!imageUrl && (
+          <>
+            <div className="row no-margin">
+              <div className="col-md-12 no-padding">
+                <div
+                  style={{
+                    background: `url("${config.APP_ENDPOINT}images/Image-blue-small.svg") no-repeat`,
+                    backgroundSize: '160px 160px',
+                    fontSize: '50px',
+                    position: 'relative',
+                    margin: '0 auto',
+                    height: '160px',
+                    width: '160px',
+                    marginBottom: '10px',
+                    marginTop: '10px',
+                  }}
+                ></div>
+              </div>
+            </div>
+            <div className="row no-margin">
+              <div
+                style={{
+                  color: '#789BB6',
+                  fontSize: '18px',
+                  fontWeight: 600,
+                  lineHeight: '24px',
+                  margin: '0 auto',
+                  textAlign: 'center',
+                }}
+              >
+                <div>Select in Media</div>
+              </div>
+            </div>
+          </>
+        )}
+      </>
+    );
+  }
+
+  private getHtmlWithFormLayoutType(): ReactNode {
+    const { formData, isActualRendering } = this.props;
+    const {
+      background,
+      backgroundColor,
+      minHeight,
+      opacity,
+    } = formData.imageStyle;
+    const styles = { background, backgroundColor, minHeight, opacity };
+    const crossIconHtml = !isActualRendering ? (
+      <div className="button-container">
+        <button
+          type="button"
+          className="close"
+          style={formData.modalCloseIconStyle}
+        ></button>
+      </div>
+    ) : (
+      <></>
+    );
+    switch (formData.type) {
+      case FORM_TYPE.POPUP:
+        switch (formData.layout) {
+          case FORM_LAYOUT.BLANK:
+            break;
+          case FORM_LAYOUT.IMAGE_LEFT:
+            return (
+              <div style={{ display: 'table-row' }}>
+                {crossIconHtml}
+                <div className="imageright-inside" style={styles}>
+                  {this.getMediaHtml()}
+                </div>
+                <div className="imageleft-inside">{this.getFormHtml()}</div>
+              </div>
+            );
+          case FORM_LAYOUT.IMAGE_RIGHT:
+            return (
+              <div style={{ display: 'table-row' }}>
+                {crossIconHtml}
+                <div className="imageleft-inside">{this.getFormHtml()}</div>
+                <div className="imageright-inside" style={styles}>
+                  {this.getMediaHtml()}
+                </div>
+              </div>
+            );
+          case FORM_LAYOUT.IMAGE_BEHIND:
+            break;
+          case FORM_LAYOUT.MEDIA_ABOVE:
+            return (
+              <>
+                <div
+                  className="col-md-12 no-padding image-above"
+                  style={{ display: 'table-row' }}
+                >
+                  <div className="row no-margin" style={styles}>
+                    {this.getMediaHtml()}
+                  </div>
+                </div>
+                <div className="row mediaabovelayout">
+                  <div
+                    className="col-md-12 no-padding"
+                    style={{ marginTop: '20px' }}
+                  >
+                    {this.getFormHtml()}
+                  </div>
+                </div>
+              </>
+            );
+        }
+        break;
+      default:
+        break;
+    }
+    return this.getFormHtml();
+  }
+
+  private getWrapperStyle() {
+    const { style, imageStyle, type, layout } = this.props.formData;
+    const isPopupType = type === FORM_TYPE.POPUP;
+    const isBlankLayout = isPopupType && layout === FORM_LAYOUT.BLANK;
+    const isBehindLayout = isPopupType && layout === FORM_LAYOUT.IMAGE_BEHIND;
+    const isAboveLayout = isPopupType && layout === FORM_LAYOUT.MEDIA_ABOVE;
+    const background = isBehindLayout ? imageStyle.background : '';
+    const backgroundColor = isBehindLayout
+      ? imageStyle.backgroundColor
+      : style.backgroundColor;
+    const minHeight =
+      isPopupType && !isBehindLayout && !isAboveLayout && !isBlankLayout
+        ? 'auto'
+        : '540px';
+    return {
+      paddingTop: '10px',
+      ...style,
+      background,
+      margin: !isPopupType ? '15px auto auto' : '0',
+      minHeight,
+      maxWidth: '670px',
+      borderRadius: '4px',
+      boxShadow: '0 2px 4px 0 #CCCCCC',
+      marginBottom: '10px',
+      padding: !isPopupType ? '30px' : '0px',
+      backgroundColor,
+    };
+  }
+
+  private getWrapperInsideStyle(): StyleModel {
+    const { type, layout, style } = this.props.formData;
+    if (type === FORM_TYPE.POPUP && layout === FORM_LAYOUT.IMAGE_BEHIND) {
+      return new StyleModel({
+        backgroundColor: style.backgroundColor,
+      });
+    }
+    return new StyleModel();
+  }
+
   render() {
-    const { formData } = this.props;
+    const { type, layout } = this.props.formData;
     const {
       isFormSubmitted,
       isSuccessfullySubmitted,
       submittedMessage,
       isShowThankYouMessage,
     } = this.state;
+    const wrapperClass =
+      type === FORM_TYPE.POPUP
+        ? layout === FORM_LAYOUT.MEDIA_ABOVE
+          ? 'imagemediaabove-container'
+          : 'image-wrapper'
+        : '';
+    const wrapperInnerClass =
+      type === FORM_TYPE.POPUP && layout !== FORM_LAYOUT.BLANK
+        ? layout === FORM_LAYOUT.IMAGE_BEHIND
+          ? 'imagebehindlayout'
+          : layout === FORM_LAYOUT.MEDIA_ABOVE
+          ? 'row no-margin'
+          : ''
+        : 'embedded-section';
     return (
       <div
         className="modal-body"
@@ -218,29 +380,92 @@ class WebForm extends React.Component<IProps, IState> {
           ) : (
             <div className="row no-margin">
               <div className="col-md-12 no-padding">
-                <div
-                  style={{
-                    paddingTop: '10px',
-                    ...formData.style,
-                    minHeight: '540px',
-                    maxWidth: '670px',
-                    borderRadius: '4px',
-                    backgroundColor: '#FFFFFF',
-                    boxShadow: '0 2px 4px 0 #CCCCCC',
-                    margin: '0 auto',
-                    marginTop: '15px',
-                    marginBottom: '10px',
-                    padding: '30px',
-                  }}
-                >
+                <style>
+                  {`.imageleft-inside {
+                      width: 360px;
+                      display: table-cell;
+                      padding-top: 30px;
+                      padding-left: 30px;
+                      padding-bottom: 40px;
+                      padding-right: 30px;
+                  }
+                  .imageright-inside {
+                    width: 310px;
+                    height: 300px;
+                    display: table-cell;
+                    vertical-align: middle;
+                  }
+                  .image-wrapper .button-container, .imageleft-wrapper .button-container {
+                    position: absolute
+                    width: 670px
+                    margin: 0 auto
+                  }
+                  .image-wrapper .button-container .close, .imageleft-wrapper .button-container .close{
+                    top: -20px
+                    left: 20px
+                  } 
+                  .image-wrapper,  .imageleft-wrapper {
+                    width: 670px;
+                    overflow: auto;
+                    display: table;
+                    margin: 0 auto;
+                    height: 300px;
+                    border-radius: 4px;
+                    background-color: #FFFFFF;
+                    box-shadow: 0 2px 4px 0 #CCCCCC;
+                    margin-top: 15px;
+                    margin-bottom: 10px;
+                  }
+                    .imageright-inside {
+                      width: 310px;
+                      height: 300px;
+                      display: table-cell;
+                      vertical-align: middle;
+                  }
+                  .embedded-section {
+                    max-width: 300px;
+                    margin: 0 auto;
+                    padding-top: 25px;
+                  }
+                  .imagebehindlayout {
+                    max-width: 300px;
+                    width: 100%;
+                    margin: 0 auto;
+                    position: relative;
+                    top: -32px;
+                  }
+                  .imagebehindlayout {
+                    top: 0;
+                    background: #fff;
+                    padding-top: 30px;
+                    padding-right: 30px;
+                    padding-bottom: 40px;
+                    padding-left: 30px;
+                    margin-bottom: 0;
+                    max-width: 366px;
+                    min-height: 505px;
+                    min-height: 540px;
+                  } 
+                  .imagemediaabove-container {
+                    padding: 0;
+                  }
+                  .imagemediaabove-container .image-above {
+                    position: relative;
+                  }
+                  .mediaabovelayout {
+                      max-width: 300px;
+                      margin: 0 auto;
+                  }
+                  .imagemediaabove-container .mediaabovelayout {
+                    padding-bottom: 40px;
+                  } 
+                `}
+                </style>
+                <div className={wrapperClass} style={this.getWrapperStyle()}>
                   <div
-                    style={{
-                      maxWidth: '300px',
-                      margin: '0 auto',
-                      paddingTop: '25px',
-                    }}
+                    className={wrapperInnerClass}
+                    style={this.getWrapperInsideStyle()}
                   >
-                    {' '}
                     {this.getHtmlWithFormLayoutType()}
                   </div>
                 </div>

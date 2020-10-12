@@ -27,7 +27,7 @@ class MobilePageSnapshotName extends Component<Props> {
   }
 
   render() {
-    return <MobilePage isActualRendering={false} mobilePageData={this.props.mobilePageData} />;
+    return <MobilePage isSnapshot={true} isActualRendering={false} mobilePageData={this.props.mobilePageData} />;
   }
 }
 

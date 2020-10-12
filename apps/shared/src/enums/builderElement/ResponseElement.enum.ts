@@ -13,4 +13,5 @@ export enum DOWNLOAD_LAYOUT {
 export enum ELEMENT_CALLED_FROM {
   MOBILE_PAGE = 'MobilePage',
   WEB_FORM = 'WebForm',
+  Offer = 'Offer',
 }

@@ -104,27 +104,29 @@ class MobilePage extends React.Component<IProps, IState> {
                           isPageNotFound={isPageNotFound}
                         />
                       ) : (
-                        builderElements.map(
-                          (detail: BuilderElementModel, idx: number) => (
-                            <BuilderElement
-                              key={idx}
-                              builderElement={detail}
-                              moduleId={id}
-                              contact={this.state.contact}
-                              accountId={accountId}
-                              accountCountryId={accountCountryId}
-                              isSnapshot={this.props.isSnapshot}
-                              responseCapturedFromModule={
-                                ELEMENT_CALLED_FROM.MOBILE_PAGE
-                              }
-                              countriesAndStates={countriesAndStates}
-                              isActualRendering={this.props.isActualRendering}
-                              setContactDetail={(contact: ContactModel) =>
-                                this.setContactDetail(contact)
-                              }
-                            />
-                          )
-                        )
+                        <div id="divScreenShotElements">
+                          {builderElements.map(
+                            (detail: BuilderElementModel, idx: number) => (
+                              <BuilderElement
+                                key={idx}
+                                builderElement={detail}
+                                moduleId={id}
+                                contact={this.state.contact}
+                                accountId={accountId}
+                                accountCountryId={accountCountryId}
+                                isSnapshot={this.props.isSnapshot}
+                                responseCapturedFromModule={
+                                  ELEMENT_CALLED_FROM.MOBILE_PAGE
+                                }
+                                countriesAndStates={countriesAndStates}
+                                isActualRendering={this.props.isActualRendering}
+                                setContactDetail={(contact: ContactModel) =>
+                                  this.setContactDetail(contact)
+                                }
+                              />
+                            )
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>

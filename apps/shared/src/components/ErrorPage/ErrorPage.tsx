@@ -14,7 +14,7 @@ function ErrorPage(props: Props) {
     >
       <div>
         <img
-          src={`${config.APP_ENDPOINT}/images/pagenotavaliable.svg`}
+          src={`${config.APP_ENDPOINT}images/pagenotavaliable.svg`}
           alt="Page Not Found"
           width="195px"
         />

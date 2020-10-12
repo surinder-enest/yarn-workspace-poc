@@ -11,6 +11,7 @@ export const apiUrl = {
   saveContactCapture: 'api/ContactCapture/SaveContactCapture',
   //OFFER
   saveContactAndRedeemOffer: 'api/Offer/SaveContactAndRedeemOffer',
+  getOfferDetailsForSnapShot: 'api/Offer/GetOfferDetailsForSnapShot',
   //WEB FORM
   getWebFormDetailById: 'api/WebForm/RenderWebFormDetailById',
   webFormContactCapturingResponse:
