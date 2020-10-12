@@ -11,7 +11,6 @@ class BuilderElementSnapShot extends Component<Props> {
   static async getInitialProps({ query: { accountId = '', elementId = '' } }) {
     if (!accountId && !elementId) return { elementList: {} };
     const apiResponse = await BuilderElementService.getBuilderElementDetailForSnapShot(accountId, elementId);
-
     return { elementList: apiResponse };
   }
   render() {
@@ -52,6 +51,7 @@ class BuilderElementSnapShot extends Component<Props> {
                             key={idx}
                             builderElement={detail}
                             responseCapturedFromModule="MobilePage"
+                            isSnapshot={true}
                             isActualRendering={false}
                           />
                         ))}

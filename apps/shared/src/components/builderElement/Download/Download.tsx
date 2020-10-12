@@ -9,6 +9,7 @@ interface Props {
   responseCapture: Function;
   isActualRendering: boolean;
   contact: ContactModel;
+  isSnapshot: boolean;
 }
 
 declare global {
@@ -40,7 +41,7 @@ export default class Download extends Component<Props> {
   }
 
   private getResponseMiddleHtml(): ReactNode {
-    const { download, isActualRendering, contact } = this.props;
+    const { download, isActualRendering, contact, isSnapshot } = this.props;
     return (
       <div
         style={{
@@ -57,6 +58,7 @@ export default class Download extends Component<Props> {
       >
         <ResponseCapture
           builderElementType={BUILDER_ELEMENTS.DOWNLOAD}
+          isSnapshot={isSnapshot}
           isActualRendering={isActualRendering}
           elementDetail={download.elementDetail}
           contact={contact}

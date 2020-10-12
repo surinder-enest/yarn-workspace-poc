@@ -23,6 +23,7 @@ interface IProps {
   moduleId: string;
   contact: ContactModel;
   accountId: string;
+  isSnapshot: boolean;
   responseCapturedFromModule: string;
 }
 
@@ -393,7 +394,7 @@ export default class Offer extends Component<IProps, IState> {
   }
 
   render() {
-    const { offer, isActualRendering } = this.props;
+    const { offer, isActualRendering, isSnapshot } = this.props;
     const { email, mobileNumber, isRedeemed, isShowTerms } = this.state;
     const {
       styles,
@@ -450,7 +451,7 @@ export default class Offer extends Component<IProps, IState> {
                     this.getRedeemedHtml()
                   ) : (
                     <div style={{ maxWidth: '450px', margin: '0 auto' }}>
-                      {isActualRendering && (
+                      {(isActualRendering || isSnapshot) && (
                         <>
                           <Contact
                             elementType={BUILDER_ELEMENTS.OFFER}

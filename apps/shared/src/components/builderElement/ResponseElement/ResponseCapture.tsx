@@ -16,6 +16,7 @@ interface IProps {
   isActualRendering: boolean;
   elementDetail: ResponseElementModel;
   contact: ContactModel;
+  isSnapshot: boolean;
   responseCapture: Function;
 }
 
@@ -306,6 +307,7 @@ export default class ResponseCapture extends Component<IProps, IState> {
       contact,
       isActualRendering,
       builderElementType,
+      isSnapshot,
     } = this.props;
     const {
       title,
@@ -345,7 +347,7 @@ export default class ResponseCapture extends Component<IProps, IState> {
             }}
           />
         )}
-        {isActualRendering &&
+        {(isActualRendering || isSnapshot) &&
           (!contact.id || isNotYouClicked) &&
           !isResponseCaptured && (
             <Contact

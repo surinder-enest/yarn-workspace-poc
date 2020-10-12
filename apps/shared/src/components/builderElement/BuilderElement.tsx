@@ -33,6 +33,7 @@ interface Props {
   countriesAndStates?: Array<CountryModel>;
   accountCountryId?: string;
   contact?: ContactModel;
+  isSnapshot?: boolean;
   setContactDetail?: Function;
 }
 
@@ -142,6 +143,7 @@ class BuilderElement extends React.Component<Props> {
       isActualRendering,
       countriesAndStates,
       accountCountryId,
+      isSnapshot,
     } = this.props;
     switch (builderElement.builderElementType) {
       case BUILDER_ELEMENTS.TITLE:
@@ -232,6 +234,7 @@ class BuilderElement extends React.Component<Props> {
             moduleId={moduleId || ''}
             contact={contact || new ContactModel()}
             accountId={accountId || ''}
+            isSnapshot={isSnapshot || false}
             responseCapturedFromModule={responseCapturedFromModule || ''}
           />
         );
@@ -243,6 +246,7 @@ class BuilderElement extends React.Component<Props> {
             elementDetail={builderElement.question}
             elementType={builderElement.builderElementType}
             isActualRendering={isActualRendering}
+            isSnapshot={isSnapshot || false}
             responseCapture={(
               email?: string,
               mobileNumber?: string,
@@ -257,6 +261,7 @@ class BuilderElement extends React.Component<Props> {
             elementDetail={builderElement.poll}
             elementType={builderElement.builderElementType}
             isActualRendering={isActualRendering}
+            isSnapshot={isSnapshot || false}
             responseCapture={(
               email?: string,
               mobileNumber?: string,
@@ -271,6 +276,7 @@ class BuilderElement extends React.Component<Props> {
             elementDetail={builderElement.feedback}
             elementType={builderElement.builderElementType}
             isActualRendering={isActualRendering}
+            isSnapshot={isSnapshot || false}
             responseCapture={(
               email?: string,
               mobileNumber?: string,
@@ -293,6 +299,7 @@ class BuilderElement extends React.Component<Props> {
           <Download
             download={builderElement.download}
             isActualRendering={isActualRendering}
+            isSnapshot={isSnapshot || false}
             responseCapture={(
               email?: string,
               mobileNumber?: string,

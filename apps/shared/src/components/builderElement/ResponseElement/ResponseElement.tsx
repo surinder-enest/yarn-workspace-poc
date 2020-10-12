@@ -8,6 +8,7 @@ interface IProps {
   isActualRendering: boolean;
   elementDetail: ResponseElementModel;
   contact: ContactModel;
+  isSnapshot: boolean;
   responseCapture: Function;
 }
 
@@ -19,6 +20,7 @@ export default class ResponseElement extends Component<IProps> {
       isActualRendering,
       contact,
       elementType,
+      isSnapshot,
     } = this.props;
     return (
       <div style={elementDetail.style}>
@@ -46,6 +48,7 @@ export default class ResponseElement extends Component<IProps> {
                     builderElementType={elementType}
                     isActualRendering={isActualRendering}
                     contact={contact}
+                    isSnapshot={isSnapshot}
                     elementDetail={elementDetail}
                     responseCapture={(
                       email?: string,

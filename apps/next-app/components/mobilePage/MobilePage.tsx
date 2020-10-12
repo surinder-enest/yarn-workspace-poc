@@ -5,6 +5,7 @@ import PageHeader from '../pageHeader/PageHeader';
 interface Props {
   mobilePageData: MobilePageModel;
   isActualRendering: boolean;
+  isSnapshot: boolean;
 }
 
 class MobilePage extends React.Component<Props> {
@@ -31,13 +32,17 @@ class MobilePage extends React.Component<Props> {
     }
   }
   render() {
-    const { mobilePageData, isActualRendering } = this.props;
+    const { mobilePageData, isActualRendering, isSnapshot } = this.props;
     const { metaData } = mobilePageData;
     return (
       <>
         <PageHeader metaData={metaData} />
         <ToastContainer />
-        <MobilePageComponent isActualRendering={isActualRendering} pageData={this.props.mobilePageData} />
+        <MobilePageComponent
+          isSnapshot={isSnapshot}
+          isActualRendering={isActualRendering}
+          pageData={this.props.mobilePageData}
+        />
       </>
     );
   }
