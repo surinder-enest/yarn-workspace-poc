@@ -6,7 +6,7 @@ import { MobilePage } from '../../components';
 interface Props {
   mobilePageData: MobilePageModel;
   router: any;
-  isActualRendering: boolean;
+  isSnapshot: boolean;
 }
 
 class MobilePageName extends React.Component<Props> {
@@ -24,11 +24,12 @@ class MobilePageName extends React.Component<Props> {
       contId,
       snapShotPageId
     );
-    return { mobilePageData: apiResponse };
+    return { mobilePageData: apiResponse, isSnapshot: !snapShotPageId === false };
   }
 
   render() {
-    return <MobilePage isActualRendering={true} mobilePageData={this.props.mobilePageData} />;
+    const { isSnapshot, mobilePageData } = this.props;
+    return <MobilePage isActualRendering={!isSnapshot} isSnapshot={isSnapshot} mobilePageData={mobilePageData} />;
   }
 }
 export default withRouter(MobilePageName);
