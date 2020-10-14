@@ -39,6 +39,7 @@ interface IState {
   termsErrorMessage: string;
   isCaptchaConfigured: boolean;
   captchaErrorMessage: string;
+  isFormSubmitted: boolean;
 }
 
 export default class Form extends Component<IProps, IState> {
@@ -53,6 +54,7 @@ export default class Form extends Component<IProps, IState> {
       isTermsVisible: false,
       isCaptchaConfigured: false,
       captchaErrorMessage: '',
+      isFormSubmitted: false,
     };
   }
 
@@ -266,7 +268,7 @@ export default class Form extends Component<IProps, IState> {
       updatedForm.interest.selectedOptions = [
         ...interestResponse.selectedInterest,
       ];
-
+      this.setState({ isFormSubmitted: true });
       const isFormSubmitted = await responseCapture(updatedForm);
       if (isFormSubmitted) {
         switch (action) {
@@ -290,6 +292,7 @@ export default class Form extends Component<IProps, IState> {
         }
       }
     }
+    this.setState({ isFormSubmitted: false });
     return;
   }
 
@@ -360,6 +363,7 @@ export default class Form extends Component<IProps, IState> {
       termsErrorMessage,
       isTermsVisible,
       isAcceptedTerms,
+      isFormSubmitted,
     } = this.state;
     return (
       <>
@@ -390,7 +394,7 @@ export default class Form extends Component<IProps, IState> {
                   fieldDetails={fieldDetails}
                   countriesAndStates={countriesAndStates}
                   accountCountryId={accountCountryId}
-                  //IF NOT ACTUAL RENDERING THEN SHOWS FIELDS OF MODEL
+                  //IF NOT ACTUAL RENDERING THEN SHOWS FIELDS FROM PORPS STATE
                   fieldResponses={
                     isActualRendering ? fieldResponses : fieldDetails.fields
                   }
@@ -459,7 +463,13 @@ export default class Form extends Component<IProps, IState> {
                   position: 'relative',
                 }}
               >
-                <div style={buttonStyles} onClick={() => this.onSubmitButton()}>
+                <div
+                  style={{
+                    ...buttonStyles,
+                    pointerEvents: isFormSubmitted ? 'none' : 'inherit',
+                  }}
+                  onClick={() => this.onSubmitButton()}
+                >
                   {submitSettings.buttonText}
                 </div>
               </div>

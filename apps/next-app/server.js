@@ -62,6 +62,7 @@ try {
     agent: new https.Agent({
       keepAlive: true,
     }),
+    ca: ca,
     minVersion: 'TLSv1',
     maxVersion: 'TLSv1.3',
   };

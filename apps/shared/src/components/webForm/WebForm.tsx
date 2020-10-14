@@ -146,7 +146,7 @@ class WebForm extends React.Component<IProps, IState> {
           this.setState({
             submittedMessage: formData.form.submitSettings.thankYou.message,
             isSuccessfullySubmitted,
-            isFormSubmitted:true
+            isFormSubmitted: true,
           });
           switch (form.submitSettings.thankYou.action) {
             case THANK_YOU_ACTION_TYPE.MESSAGE:
@@ -390,7 +390,11 @@ class WebForm extends React.Component<IProps, IState> {
                 />
               )}
               {isShowThankYouMessage ? (
-                <h3 className="text-center">{`${submittedMessage} `}</h3>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: submittedMessage,
+                  }}
+                />
               ) : (
                 <h3 className="text-center">{`${submittedMessage} `}</h3>
               )}

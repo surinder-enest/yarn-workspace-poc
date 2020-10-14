@@ -156,7 +156,7 @@ export default class ResponseCapture extends Component<IProps, IState> {
               }}
               id={option.id}
               type="radio"
-              checked={option.id === selectedOption}
+              checked={option.id ? option.id === selectedOption : false}
               onChange={event => this.onSelectOption(event.currentTarget.id)}
             />
             <label style={optionLabelStyle} htmlFor={option.id}>
