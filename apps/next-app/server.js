@@ -96,12 +96,16 @@ try {
 function handleRequest(app, req, res) {
   const parsedUrl = parse(req.url, true);
   const { pathname, query } = parsedUrl;
-  if (pathname === '/a') {
-    app.render(req, res, '/a', query);
-  } else if (pathname === '/b') {
-    app.render(req, res, '/b', query);
+  if (pathname === '/testconnection') {
+    res.end('OK');
   } else {
-    handle(req, res, parsedUrl);
+    if (pathname === '/a') {
+      app.render(req, res, '/a', query);
+    } else if (pathname === '/b') {
+      app.render(req, res, '/b', query);
+    } else {
+      handle(req, res, parsedUrl);
+    }
   }
 }
 

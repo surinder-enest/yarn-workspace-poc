@@ -33,6 +33,23 @@ class WebForm extends React.Component<IProps, IState> {
     };
   }
 
+  componentDidMount() {
+    setTimeout(function() {
+      if (typeof document !== 'undefined') {
+        var elements = document.body.getElementsByClassName('webform-render');
+        var bodyHeight = document.body.offsetHeight;
+        if (elements && elements.length > 0) {
+          bodyHeight = elements[0].scrollHeight;
+        }
+        var bodyWidth = document.body.offsetWidth;
+        window.parent.postMessage(
+          JSON.stringify({ docHeight: bodyHeight, docWidth: bodyWidth }),
+          '*'
+        );
+      }
+    }, 300);
+  }
+
   private async contactCaptureResponse(form: FormModel) {
     const { formData, isActualRendering } = this.props;
     if (!isActualRendering) return false;
@@ -126,18 +143,19 @@ class WebForm extends React.Component<IProps, IState> {
             }
           }
         } else if (IsContactAdded) {
+          this.setState({
+            submittedMessage: formData.form.submitSettings.thankYou.message,
+            isSuccessfullySubmitted,
+            isFormSubmitted:true
+          });
           switch (form.submitSettings.thankYou.action) {
             case THANK_YOU_ACTION_TYPE.MESSAGE:
               this.setState({ isShowThankYouMessage: true });
-              break;
+              return false;
             case THANK_YOU_ACTION_TYPE.REDIRECT_TO_WEBSITE:
             case THANK_YOU_ACTION_TYPE.REDIRECT_TO_MOBILE_PAGE:
               return true;
           }
-          this.setState({
-            submittedMessage: formData.form.submitSettings.thankYou.message,
-            isSuccessfullySubmitted,
-          });
         } else {
           this.setState({
             submittedMessage,
@@ -350,7 +368,7 @@ class WebForm extends React.Component<IProps, IState> {
         : 'embedded-section';
     return (
       <div
-        className="modal-body"
+        className="webform-render modal-body"
         style={{
           overflowY: 'auto',
           overflowX: 'hidden',

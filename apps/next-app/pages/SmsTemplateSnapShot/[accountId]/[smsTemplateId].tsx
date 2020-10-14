@@ -2,23 +2,37 @@ import { ErrorPage, SmsTemplateModel, TemplateService } from '@mindme/shared';
 import React, { Component } from 'react';
 import { PageHeader, SnapShotWrapper } from '../../../components';
 
-interface Props {
+interface IProps {
   templateData: SmsTemplateModel;
   router: any;
 }
 
-export default class SmsTemplate extends Component<Props> {
+interface IState {
+  messageHTML: string;
+}
+
+export default class SmsTemplate extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      messageHTML: '',
+    };
+  }
+
   static async getInitialProps({ query: { accountId = '', smsTemplateId = '' } }) {
     if (!accountId && !smsTemplateId) return { elementList: {} };
     const apiResponse = await TemplateService.getSmsTemplateBuilderDetailForSnapShot(smsTemplateId, accountId);
-    console.log(apiResponse);
     return { templateData: apiResponse };
+  }
+
+  componentDidMount() {
+    const { templateMessage, tinyBaseURL } = this.props.templateData.templateInitialSettings;
+    const { message } = templateMessage;
+    this.replaceMessageSpanLinkWithTinyUrl(message, tinyBaseURL);
   }
 
   private replaceMessageSpanLinkWithTinyUrl(messageHTML: string, tinyBaseURL: string) {
     let updatedMessageHTML = '';
-
-    if (!messageHTML) return updatedMessageHTML;
     if (typeof document !== 'undefined') {
       let dummyDivElement = null;
       dummyDivElement = document.createElement('div');
@@ -28,25 +42,27 @@ export default class SmsTemplate extends Component<Props> {
       document.getElementById('__next')?.appendChild(dummyDivElement);
       const smsSpanLinks = document.querySelectorAll('#message_native_receiver1 [data-target="sms-tiny-link"]');
       for (let j = 0; j < smsSpanLinks.length; j++) {
-        smsSpanLinks[j].style = 'color:#3AA6DD;';
-        smsSpanLinks[j].innerText = `${tinyBaseURL}#####`;
-        smsSpanLinks[j].className = '';
         smsSpanLinks[j].removeAttribute('data-target');
         smsSpanLinks[j].removeAttribute('name');
+        smsSpanLinks[j].innerHTML = `${tinyBaseURL}#####`;
+        smsSpanLinks[j].className = 'textColor';
       }
       updatedMessageHTML = dummyDivElement.innerHTML;
       dummyDivElement.remove();
     }
-    return updatedMessageHTML;
+    this.setState({ messageHTML: updatedMessageHTML });
   }
 
   render() {
     const { isNotFoundOrDeleted, isSubAccountDeleted, templateInitialSettings } = this.props.templateData;
-    const { sourceNumber, templateMessage, tinyBaseURL } = templateInitialSettings;
-    const { fromName, message } = templateMessage;
+    const { sourceNumber, templateMessage } = templateInitialSettings;
+    const { fromName } = templateMessage;
     return (
       <>
         <style type="text/css">{`
+          .textColor{
+            color:#3AA6DD;
+          }
           .phoneWrapper{
             display: flex;
             justify-content: space-between;
@@ -184,7 +200,7 @@ export default class SmsTemplate extends Component<Props> {
                           className="messageBuilderBoxWrapper"
                           contentEditable={true}
                           dangerouslySetInnerHTML={{
-                            __html: this.replaceMessageSpanLinkWithTinyUrl(message, tinyBaseURL),
+                            __html: this.state.messageHTML,
                           }}
                         />
                       </div>
