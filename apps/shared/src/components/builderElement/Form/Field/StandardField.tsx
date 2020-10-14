@@ -73,25 +73,12 @@ export default class StandardField extends Component<Props> {
     const { month, day, year } = dateOfBirth;
     let birthday = new Date();
     switch (birthdayFormatType) {
-      case BIRTHDAY_FORMAT_TYPE.MONTH:
-        if (month > 0) {
-          birthday.setMonth(month - 1);
-          dateOfBirth.dob = birthday.toString();
-        }
-        break;
-      case BIRTHDAY_FORMAT_TYPE.MONTH_DAY:
-        if (month > 0 && day > 0) {
-          birthday.setMonth(month - 1);
-          birthday.setDate(day);
-          dateOfBirth.dob = birthday.toString();
-        }
-        break;
       case BIRTHDAY_FORMAT_TYPE.DAY_MONTH_YEAR:
         if (month > 0 && day > 0 && year > 0) {
           birthday.setFullYear(year);
           birthday.setMonth(month - 1);
           birthday.setDate(day);
-          dateOfBirth.dob = birthday.toString();
+          dateOfBirth.dob = birthday.toISOString();
         }
         break;
     }
